@@ -597,6 +597,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <segue destination="pjD-h3-1YU" kind="show" identifier="showRecipeSegue" id="bnU-gz-wuO"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -640,6 +643,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xGm-q6-7rv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1750.7246376811595" y="-794.19642857142856"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="bpa-qB-oSu">
+            <objects>
+                <viewController id="pjD-h3-1YU" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VJ2-wx-LQd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qdb-NB-dwm">
+                                <rect key="frame" x="172" y="417" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Live Mode"/>
+                                <connections>
+                                    <segue destination="BTj-C3-YKC" kind="show" identifier="liveModeSegue" id="H1T-oh-JML"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="eLL-fH-SZH"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="O7E-ZM-6FI">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="Ed5-l4-lUb"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BrW-KG-zID" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2480" y="-1462"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ahf-qn-R83">
+            <objects>
+                <viewController id="BTj-C3-YKC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UoN-q1-JNm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="PMV-VD-KO2">
+                                <rect key="frame" x="20" y="108" width="374" height="2"/>
+                            </progressView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WIz-8Y-fyX">
+                                <rect key="frame" x="20" y="223" width="374" height="185"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgE-hG-90J">
+                                <rect key="frame" x="20" y="194" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyl-LM-hGp">
+                                <rect key="frame" x="20" y="683" width="374" height="30"/>
+                                <state key="normal" title="Next"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="PMV-VD-KO2" firstAttribute="leading" secondItem="UoN-q1-JNm" secondAttribute="leadingMargin" id="47z-df-kfT"/>
+                            <constraint firstItem="WIz-8Y-fyX" firstAttribute="top" secondItem="vgE-hG-90J" secondAttribute="bottom" constant="8" id="7mt-UG-xKc"/>
+                            <constraint firstItem="PMV-VD-KO2" firstAttribute="trailing" secondItem="UoN-q1-JNm" secondAttribute="trailingMargin" id="VLz-MB-ZPs"/>
+                            <constraint firstItem="Toq-Of-Phx" firstAttribute="bottom" secondItem="eyl-LM-hGp" secondAttribute="bottom" constant="100" id="Wrb-26-jeb"/>
+                            <constraint firstItem="PMV-VD-KO2" firstAttribute="top" secondItem="Toq-Of-Phx" secondAttribute="top" constant="20" id="XQu-9v-1dD"/>
+                            <constraint firstItem="vgE-hG-90J" firstAttribute="leading" secondItem="Toq-Of-Phx" secondAttribute="leading" constant="20" id="b8F-Wf-X76"/>
+                            <constraint firstItem="vgE-hG-90J" firstAttribute="top" secondItem="PMV-VD-KO2" secondAttribute="bottom" constant="84" id="cDf-Gc-XhH"/>
+                            <constraint firstItem="eyl-LM-hGp" firstAttribute="leading" secondItem="Toq-Of-Phx" secondAttribute="leading" constant="20" id="kBl-R4-MEK"/>
+                            <constraint firstItem="Toq-Of-Phx" firstAttribute="trailing" secondItem="WIz-8Y-fyX" secondAttribute="trailing" constant="20" id="lwG-QU-kOg"/>
+                            <constraint firstItem="WIz-8Y-fyX" firstAttribute="leading" secondItem="Toq-Of-Phx" secondAttribute="leading" constant="20" id="s7H-GP-Ehm"/>
+                            <constraint firstItem="Toq-Of-Phx" firstAttribute="trailing" secondItem="eyl-LM-hGp" secondAttribute="trailing" constant="20" id="sTD-NK-Kkd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Toq-Of-Phx"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ea4-dA-NNQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g80-7k-5vn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3215.9420289855075" y="-1463.1696428571429"/>
         </scene>
         <!--Create New Recipe-->
         <scene sceneID="38s-xR-scf">
@@ -780,6 +863,6 @@
         <image name="star.fill" catalog="system" width="64" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mGu-5d-SMN"/>
+        <segue reference="5LV-nX-KYY"/>
     </inferredMetricsTieBreakers>
 </document>
