@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B31A817E2472BA100047B73B /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A817D2472BA100047B73B /* Recipe.swift */; };
+		B31A81822472BF560047B73B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81812472BF560047B73B /* RecipeViewController.swift */; };
+		B31A81872472C56B0047B73B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81862472C56B0047B73B /* HomeViewController.swift */; };
 		B36678482464F935008574C6 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36678472464F935008574C6 /* BookmarksTableViewController.swift */; };
 		B36C1DC2246683400057CDDF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C1DC1246683400057CDDF /* GoogleService-Info.plist */; };
 		B36C1DC4246683950057CDDF /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36C1DC3246683950057CDDF /* Bookmarks.swift */; };
@@ -38,6 +41,9 @@
 		0DBF9824DEEF1A5F180B4FB3 /* Pods-Delicious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delicious.debug.xcconfig"; path = "Target Support Files/Pods-Delicious/Pods-Delicious.debug.xcconfig"; sourceTree = "<group>"; };
 		1E86F0826DDD1097ADEEE2E5 /* Pods-Delicious.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delicious.release.xcconfig"; path = "Target Support Files/Pods-Delicious/Pods-Delicious.release.xcconfig"; sourceTree = "<group>"; };
 		71E690339C779CB4A071D114 /* Pods_Delicious.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Delicious.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B31A817D2472BA100047B73B /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		B31A81812472BF560047B73B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
+		B31A81862472C56B0047B73B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B36678472464F935008574C6 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		B36C1DC1246683400057CDDF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B36C1DC3246683950057CDDF /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
@@ -85,6 +91,23 @@
 				1E86F0826DDD1097ADEEE2E5 /* Pods-Delicious.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B31A817C2472B9DB0047B73B /* Recipes */ = {
+			isa = PBXGroup;
+			children = (
+				B31A817D2472BA100047B73B /* Recipe.swift */,
+				B31A81812472BF560047B73B /* RecipeViewController.swift */,
+			);
+			path = Recipes;
+			sourceTree = "<group>";
+		};
+		B31A81832472C3340047B73B /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B31A81862472C56B0047B73B /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		B36678462464F909008574C6 /* Bookmarks */ = {
@@ -142,10 +165,13 @@
 		B3E394BC24550D6E00C95A66 /* Delicious */ = {
 			isa = PBXGroup;
 			children = (
+				B3E394C524550D6E00C95A66 /* Main.storyboard */,
 				B36C1DC1246683400057CDDF /* GoogleService-Info.plist */,
 				B36C1DC924668A1E0057CDDF /* DatabaseProtocol.swift */,
 				B36C1DC5246684520057CDDF /* FirebaseController.swift */,
 				B36C1DC7246684B80057CDDF /* MulticastDelegate.swift */,
+				B31A81832472C3340047B73B /* Home */,
+				B31A817C2472B9DB0047B73B /* Recipes */,
 				B36678462464F909008574C6 /* Bookmarks */,
 				B37BBB80246FBCAC001554EC /* Shopping List */,
 				B37BBB89246FDD5B001554EC /* Kitchen Wishlist */,
@@ -153,7 +179,6 @@
 				B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */,
 				B3E394C124550D6E00C95A66 /* FirstViewController.swift */,
 				B3E394C324550D6E00C95A66 /* SecondViewController.swift */,
-				B3E394C524550D6E00C95A66 /* Main.storyboard */,
 				B3E394C824550D6F00C95A66 /* Assets.xcassets */,
 				B3E394CA24550D6F00C95A66 /* LaunchScreen.storyboard */,
 				B3E394CD24550D6F00C95A66 /* Info.plist */,
@@ -291,15 +316,18 @@
 				B36C1DCC246698470057CDDF /* BookmarksTableViewCell.swift in Sources */,
 				B36C1DC6246684520057CDDF /* FirebaseController.swift in Sources */,
 				B37BBB84246FC2F6001554EC /* ShoppingListTableViewController.swift in Sources */,
+				B31A81872472C56B0047B73B /* HomeViewController.swift in Sources */,
 				B36678482464F935008574C6 /* BookmarksTableViewController.swift in Sources */,
 				B37BBB7B246E6F78001554EC /* EditBookmarkViewController.swift in Sources */,
 				B36C1DC8246684B80057CDDF /* MulticastDelegate.swift in Sources */,
+				B31A817E2472BA100047B73B /* Recipe.swift in Sources */,
 				B36C1DCE24669B940057CDDF /* EditBookmarksListTableViewController.swift in Sources */,
 				B37BBB9124700089001554EC /* KitchenWishlistTableViewCell.swift in Sources */,
 				B3E394C224550D6E00C95A66 /* FirstViewController.swift in Sources */,
 				B37BBB82246FBCD5001554EC /* ShoppingList.swift in Sources */,
 				B37BBB88246FD9CC001554EC /* EditShoppingItemViewController.swift in Sources */,
 				B3E394BE24550D6E00C95A66 /* AppDelegate.swift in Sources */,
+				B31A81822472BF560047B73B /* RecipeViewController.swift in Sources */,
 				B3E394C024550D6E00C95A66 /* SceneDelegate.swift in Sources */,
 				B37BBB9324700ED5001554EC /* EditKitchenWishlistViewController.swift in Sources */,
 				B36C1DC4246683950057CDDF /* Bookmarks.swift in Sources */,
