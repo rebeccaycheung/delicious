@@ -27,6 +27,8 @@
 		B37BBB8F2470006A001554EC /* Wishlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37BBB8E2470006A001554EC /* Wishlist.swift */; };
 		B37BBB9124700089001554EC /* KitchenWishlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37BBB9024700089001554EC /* KitchenWishlistTableViewCell.swift */; };
 		B37BBB9324700ED5001554EC /* EditKitchenWishlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37BBB9224700ED5001554EC /* EditKitchenWishlistViewController.swift */; };
+		B3874B0B2473F7DE0015B373 /* RecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3874B0A2473F7DE0015B373 /* RecipeCollectionViewCell.swift */; };
+		B3874B0F2473FCF70015B373 /* RecipeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3874B0E2473FCF70015B373 /* RecipeCollectionViewController.swift */; };
 		B3E394BE24550D6E00C95A66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394BD24550D6E00C95A66 /* AppDelegate.swift */; };
 		B3E394C024550D6E00C95A66 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */; };
 		B3E394C224550D6E00C95A66 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394C124550D6E00C95A66 /* FirstViewController.swift */; };
@@ -61,6 +63,8 @@
 		B37BBB8E2470006A001554EC /* Wishlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wishlist.swift; sourceTree = "<group>"; };
 		B37BBB9024700089001554EC /* KitchenWishlistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenWishlistTableViewCell.swift; sourceTree = "<group>"; };
 		B37BBB9224700ED5001554EC /* EditKitchenWishlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditKitchenWishlistViewController.swift; sourceTree = "<group>"; };
+		B3874B0A2473F7DE0015B373 /* RecipeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		B3874B0E2473FCF70015B373 /* RecipeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCollectionViewController.swift; sourceTree = "<group>"; };
 		B3E394BA24550D6E00C95A66 /* Delicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E394BD24550D6E00C95A66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				B31A81862472C56B0047B73B /* HomeViewController.swift */,
+				B3874B0A2473F7DE0015B373 /* RecipeCollectionViewCell.swift */,
+				B3874B0E2473FCF70015B373 /* RecipeCollectionViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -310,10 +316,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3874B0B2473F7DE0015B373 /* RecipeCollectionViewCell.swift in Sources */,
 				B37BBB86246FC37A001554EC /* ShoppingListTableViewCell.swift in Sources */,
 				B37BBB8D246FDDA2001554EC /* KitchenWishlistTableViewController.swift in Sources */,
 				B3E394C424550D6E00C95A66 /* SecondViewController.swift in Sources */,
 				B36C1DCC246698470057CDDF /* BookmarksTableViewCell.swift in Sources */,
+				B3874B0F2473FCF70015B373 /* RecipeCollectionViewController.swift in Sources */,
 				B36C1DC6246684520057CDDF /* FirebaseController.swift in Sources */,
 				B37BBB84246FC2F6001554EC /* ShoppingListTableViewController.swift in Sources */,
 				B31A81872472C56B0047B73B /* HomeViewController.swift in Sources */,
