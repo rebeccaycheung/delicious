@@ -29,9 +29,9 @@ class EditKitchenWishlistViewController: UIViewController {
             brand.text = wishlistItem?.brand
             price.text = NSString(format: "%.2f", wishlistItem!.price) as String
         } else {
-            name.text = "Enter name of item"
-            brand.text = "Enter brand"
-            price.text = "Enter a price"
+            name.text = ""
+            brand.text = ""
+            price.text = ""
         }
     }
     

@@ -15,6 +15,8 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     let CELL_BOOKMARKS = "bookmarksCell"
     var bookmarksList: [Bookmarks] = []
     
+    var deleteBookmarks: [Bookmarks] = []
+    
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .bookmarks
     
@@ -82,13 +84,20 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         if editingStyle == .delete && indexPath.section == SECTION_BOOKMARKS {
             tableView.performBatchUpdates({
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
+                deleteBookmarks.append(bookmarksList[indexPath.row])
                 tableView.reloadSections([SECTION_BOOKMARKS], with: .automatic)
             }, completion: nil)
         }
     }
     
     @IBAction func doneEditing(_ sender: Any) {
-        
+        if deleteBookmarks.count > 0 {
+            for bookmark in deleteBookmarks {
+                databaseController?.deleteBookmark(bookmark: bookmark)
+            }
+        }
+        navigationController?.popViewController(animated: true)
+        return
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

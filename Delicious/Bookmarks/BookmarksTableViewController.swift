@@ -58,8 +58,18 @@ class BookmarksTableViewController: UITableViewController, DatabaseListener {
             return bookmarksCell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOKMARKS, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOKMARKS, for: indexPath) as! BookmarksTableViewCell
+        cell.name.text = "No bookmarks saved"
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if bookmarksList.count > 0 {
+            let url = bookmarksList[indexPath.row].url
+            UIApplication.shared.open(URL(string: "\(url)")!)
+        } else {
+            tableView.allowsSelection = false
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

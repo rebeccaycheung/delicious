@@ -27,8 +27,8 @@ class EditBookmarkViewController: UIViewController {
             nameTextField.text = bookmark?.name
             urlTextField.text = bookmark?.url
         } else {
-            nameTextField.text = "Enter bookmark name"
-            urlTextField.text = "Enter bookmark url"
+            nameTextField.text = ""
+            urlTextField.text = ""
         }
     }
     

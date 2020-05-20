@@ -29,9 +29,9 @@ class EditShoppingItemViewController: UIViewController {
             brand.text = shoppingItem?.brand
             price.text = NSString(format: "%.2f", shoppingItem!.price) as String
         } else {
-            item.text = "Enter name of item"
-            brand.text = "Enter brand"
-            price.text = "Enter a price"
+            item.text = ""
+            brand.text = ""
+            price.text = ""
         }
     }
 
