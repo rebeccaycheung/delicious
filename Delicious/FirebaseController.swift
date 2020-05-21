@@ -251,18 +251,14 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return bookmarks
     }
     
-    func updateBookmark(name: String, url: String) -> Bookmarks {
-        let bookmarks = Bookmarks()
-        bookmarks.name = name
-        bookmarks.url = url
-        if let bookmarkRef = bookmarksRef?.document(bookmarks.id) {
-            bookmarkRef.updateData(["name": name, "url": url])
+    func updateBookmark(bookmark: Bookmarks) {
+        if let bookmarksRef = bookmarksRef?.document(bookmark.id!) {
+            bookmarksRef.updateData(["name": bookmark.name, "url": bookmark.url])
         }
-        return bookmarks
     }
     
     func deleteBookmark(bookmark: Bookmarks) {
-        bookmarksRef?.document(bookmark.id).delete() { (error) in
+        bookmarksRef?.document(bookmark.id!).delete() { (error) in
             if let error = error {
                 print("Error removing document: \(error)")
             } else {
@@ -271,19 +267,32 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
-//    func addShoppingItem(brand: String, item: String, price: Float) -> ShoppingList {
-//        let shoppingItem = ShoppingList()
-//        shoppingItem.brand = brand
-//        shoppingItem.item = item
-//        shoppingItem.price = price
-//        if let bookmarksRef = bookmarksRef?.addDocument(data: ["brand": brand, "item": item, "price": price]) {
-//            shoppingItem.id = shoppingListRef.documentID
-//        }
-//        return shoppingItem
-//    }
+    func addShoppingItem(item: String, brand: String, price: Float) -> ShoppingList {
+        let shoppingItem = ShoppingList()
+        shoppingItem.item = item
+        shoppingItem.brand = brand
+        shoppingItem.price = price
+        shoppingItem.checked = false
+        if let shoppingListRef = shoppingListRef?.addDocument(data: ["item": item, "brand": brand, "price": price, "checked": false]) {
+            shoppingItem.id = shoppingListRef.documentID
+        }
+        return shoppingItem
+    }
+    
+    func updateShoppingItem(item: ShoppingList) {
+        if let shoppingListRef = shoppingListRef?.document(item.id!) {
+            shoppingListRef.updateData(["item": item.item, "brand": item.brand, "price": item.price])
+        }
+    }
+    
+    func checkShoppingItem(item: ShoppingList, checked: Bool) {
+        if let shoppingListRef = shoppingListRef?.document(item.id!) {
+            shoppingListRef.updateData(["checked": checked])
+        }
+    }
     
     func deleteShoppingItem(shoppingItem: ShoppingList) {
-        shoppingListRef?.document(shoppingItem.id).delete() { (error) in
+        shoppingListRef?.document(shoppingItem.id!).delete() { (error) in
             if let error = error {
                 print("Error removing document: \(error)")
             } else {
@@ -292,8 +301,30 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    func addWishlistItem(name: String, brand: String, price: Float) {
+        let wishlist = Wishlist()
+        wishlist.name = name
+        wishlist.brand = brand
+        wishlist.price = price
+        if let wishlistRef = wishlistRef?.addDocument(data: ["name": name, "brand": brand, "price": price, "checked": false]) {
+            wishlist.id = wishlistRef.documentID
+        }
+    }
+    
+    func updateWishlistItem(item: Wishlist) {
+        if let wishlistRef = wishlistRef?.document(item.id!) {
+            wishlistRef.updateData(["name": item.name, "brand": item.brand, "price": item.price])
+        }
+    }
+    
+    func checkWishlistItem(item: Wishlist, checked: Bool) {
+        if let wishlistRef = wishlistRef?.document(item.id!) {
+            wishlistRef.updateData(["checked": checked])
+        }
+    }
+
     func deleteWishlistItem(wishlistItem: Wishlist) {
-        wishlistRef?.document(wishlistItem.id).delete() { (error) in
+        wishlistRef?.document(wishlistItem.id!).delete() { (error) in
             if let error = error {
                 print("Error removing document: \(error)")
             } else {

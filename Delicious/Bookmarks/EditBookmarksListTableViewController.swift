@@ -23,6 +23,9 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
     }
@@ -83,9 +86,9 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_BOOKMARKS {
             tableView.performBatchUpdates({
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
                 deleteBookmarks.append(bookmarksList[indexPath.row])
-                tableView.reloadSections([SECTION_BOOKMARKS], with: .automatic)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                self.tableView.reloadSections([SECTION_BOOKMARKS], with: .automatic)
             }, completion: nil)
         }
     }

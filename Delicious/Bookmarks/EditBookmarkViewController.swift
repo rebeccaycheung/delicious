@@ -14,11 +14,15 @@ class EditBookmarkViewController: UIViewController {
     @IBOutlet weak var urlTextField: UITextField!
     
     var bookmark: Bookmarks?
+    var isAdd = false
     
     weak var databaseController: DatabaseProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
@@ -28,13 +32,20 @@ class EditBookmarkViewController: UIViewController {
             urlTextField.text = bookmark?.url
         } else {
             nameTextField.text = ""
-            urlTextField.text = ""
+            urlTextField.text = "https://"
+            isAdd = true
         }
     }
-    
+
     @IBAction func saveBookmark(_ sender: Any) {
         if nameTextField.text != "", urlTextField.text != "" {
-            let _ = databaseController?.updateBookmark(name: nameTextField.text!, url: urlTextField.text!)
+            if (isAdd) {
+                let _ = databaseController?.addBookmark(name: nameTextField.text!, url: urlTextField.text!)
+            } else {
+                bookmark?.name = nameTextField.text!
+                bookmark?.url = urlTextField.text!
+                let _ = databaseController?.updateBookmark(bookmark: bookmark!)
+            }
             navigationController?.popViewController(animated: true)
             return
         } else {

@@ -10,6 +10,10 @@
 		B31A817E2472BA100047B73B /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A817D2472BA100047B73B /* Recipe.swift */; };
 		B31A81822472BF560047B73B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81812472BF560047B73B /* RecipeViewController.swift */; };
 		B31A81872472C56B0047B73B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81862472C56B0047B73B /* HomeViewController.swift */; };
+		B355DE4F2476216200FD113D /* EditShoppingListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE4E2476216200FD113D /* EditShoppingListTableViewController.swift */; };
+		B355DE55247691BB00FD113D /* EditWishlistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE54247691BB00FD113D /* EditWishlistTableViewController.swift */; };
+		B355DE572476AD4000FD113D /* EditRecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE562476AD4000FD113D /* EditRecipeTableViewController.swift */; };
+		B355DE592476B5E200FD113D /* EditRecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE582476B5E200FD113D /* EditRecipeTableViewCell.swift */; };
 		B36678482464F935008574C6 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36678472464F935008574C6 /* BookmarksTableViewController.swift */; };
 		B36C1DC2246683400057CDDF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C1DC1246683400057CDDF /* GoogleService-Info.plist */; };
 		B36C1DC4246683950057CDDF /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36C1DC3246683950057CDDF /* Bookmarks.swift */; };
@@ -46,6 +50,10 @@
 		B31A817D2472BA100047B73B /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		B31A81812472BF560047B73B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		B31A81862472C56B0047B73B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B355DE4E2476216200FD113D /* EditShoppingListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShoppingListTableViewController.swift; sourceTree = "<group>"; };
+		B355DE54247691BB00FD113D /* EditWishlistTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishlistTableViewController.swift; sourceTree = "<group>"; };
+		B355DE562476AD4000FD113D /* EditRecipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeTableViewController.swift; sourceTree = "<group>"; };
+		B355DE582476B5E200FD113D /* EditRecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeTableViewCell.swift; sourceTree = "<group>"; };
 		B36678472464F935008574C6 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		B36C1DC1246683400057CDDF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B36C1DC3246683950057CDDF /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
@@ -102,6 +110,8 @@
 			children = (
 				B31A817D2472BA100047B73B /* Recipe.swift */,
 				B31A81812472BF560047B73B /* RecipeViewController.swift */,
+				B355DE582476B5E200FD113D /* EditRecipeTableViewCell.swift */,
+				B355DE562476AD4000FD113D /* EditRecipeTableViewController.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -134,6 +144,7 @@
 				B37BBB81246FBCD5001554EC /* ShoppingList.swift */,
 				B37BBB85246FC37A001554EC /* ShoppingListTableViewCell.swift */,
 				B37BBB83246FC2F6001554EC /* ShoppingListTableViewController.swift */,
+				B355DE4E2476216200FD113D /* EditShoppingListTableViewController.swift */,
 				B37BBB87246FD9CC001554EC /* EditShoppingItemViewController.swift */,
 			);
 			path = "Shopping List";
@@ -145,6 +156,7 @@
 				B37BBB8E2470006A001554EC /* Wishlist.swift */,
 				B37BBB9024700089001554EC /* KitchenWishlistTableViewCell.swift */,
 				B37BBB8C246FDDA2001554EC /* KitchenWishlistTableViewController.swift */,
+				B355DE54247691BB00FD113D /* EditWishlistTableViewController.swift */,
 				B37BBB9224700ED5001554EC /* EditKitchenWishlistViewController.swift */,
 			);
 			path = "Kitchen Wishlist";
@@ -331,15 +343,19 @@
 				B31A817E2472BA100047B73B /* Recipe.swift in Sources */,
 				B36C1DCE24669B940057CDDF /* EditBookmarksListTableViewController.swift in Sources */,
 				B37BBB9124700089001554EC /* KitchenWishlistTableViewCell.swift in Sources */,
+				B355DE572476AD4000FD113D /* EditRecipeTableViewController.swift in Sources */,
 				B3E394C224550D6E00C95A66 /* FirstViewController.swift in Sources */,
 				B37BBB82246FBCD5001554EC /* ShoppingList.swift in Sources */,
 				B37BBB88246FD9CC001554EC /* EditShoppingItemViewController.swift in Sources */,
 				B3E394BE24550D6E00C95A66 /* AppDelegate.swift in Sources */,
+				B355DE55247691BB00FD113D /* EditWishlistTableViewController.swift in Sources */,
 				B31A81822472BF560047B73B /* RecipeViewController.swift in Sources */,
 				B3E394C024550D6E00C95A66 /* SceneDelegate.swift in Sources */,
 				B37BBB9324700ED5001554EC /* EditKitchenWishlistViewController.swift in Sources */,
 				B36C1DC4246683950057CDDF /* Bookmarks.swift in Sources */,
+				B355DE4F2476216200FD113D /* EditShoppingListTableViewController.swift in Sources */,
 				B37BBB8F2470006A001554EC /* Wishlist.swift in Sources */,
+				B355DE592476B5E200FD113D /* EditRecipeTableViewCell.swift in Sources */,
 				B36C1DCA24668A1E0057CDDF /* DatabaseProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

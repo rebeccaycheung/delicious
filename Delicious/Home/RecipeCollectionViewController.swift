@@ -28,7 +28,7 @@ class RecipeCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCollectionViewCell
-        cell.recipeTitleLabel.text = "label"
+        cell.recipeLabel.text = "label"
         return cell
     }
 

@@ -33,13 +33,17 @@ protocol DatabaseProtocol: AnyObject {
     func cleanup()
     
     func addBookmark(name: String, url: String) -> Bookmarks
-    func updateBookmark(name: String, url: String) -> Bookmarks
+    func updateBookmark(bookmark: Bookmarks)
     func deleteBookmark(bookmark: Bookmarks)
     
-    //func addShoppingItem(brand: String, item: String, price: Float) -> ShoppingList
+    func addShoppingItem(item: String, brand: String, price: Float) -> ShoppingList
+    func updateShoppingItem(item: ShoppingList)
+    func checkShoppingItem(item: ShoppingList, checked: Bool)
     func deleteShoppingItem(shoppingItem: ShoppingList)
     
-    //func addWishlistItem(brand: String, item: String, price: Float) -> ShoppingList
+    func addWishlistItem(name: String, brand: String, price: Float)
+    func updateWishlistItem(item: Wishlist)
+    func checkWishlistItem(item: Wishlist, checked: Bool)
     func deleteWishlistItem(wishlistItem: Wishlist)
     
     func addListener(listener: DatabaseListener)

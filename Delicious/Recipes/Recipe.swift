@@ -9,7 +9,7 @@
 import UIKit
 
 class Recipe: NSObject, Decodable {
-    var id: String = ""
+    var id: String?
     var name: String = ""
     var source: String = ""
     var cookTime: Int
@@ -21,6 +21,7 @@ class Recipe: NSObject, Decodable {
     var tag: [String] = []
     
     enum CodingKeys: String, CodingKey {
+        case id
         case name
         case source
         case cookTime

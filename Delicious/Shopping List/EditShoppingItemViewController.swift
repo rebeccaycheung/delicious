@@ -15,11 +15,15 @@ class EditShoppingItemViewController: UIViewController {
     @IBOutlet weak var price: UITextField!
     
     var shoppingItem: ShoppingList?
+    var isAdd = false
     
     weak var databaseController: DatabaseProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
@@ -32,11 +36,20 @@ class EditShoppingItemViewController: UIViewController {
             item.text = ""
             brand.text = ""
             price.text = ""
+            isAdd = true
         }
     }
-
+    
     @IBAction func saveShoppingItem(_ sender: Any) {
         if item.text != "", brand.text != "", price.text != "" {
+            if (isAdd) {
+                let _ = databaseController?.addShoppingItem(item: item.text!, brand: brand.text!, price: Float(price.text!)!)
+            } else {
+                shoppingItem?.item = item.text!
+                shoppingItem?.brand = brand.text!
+                shoppingItem?.price = Float(price.text!)!
+                let _ = databaseController?.updateShoppingItem(item: shoppingItem!)
+            }
             navigationController?.popViewController(animated: true)
             return
         } else {
