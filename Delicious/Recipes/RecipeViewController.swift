@@ -14,6 +14,8 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
     
+    var recipe: Recipe?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

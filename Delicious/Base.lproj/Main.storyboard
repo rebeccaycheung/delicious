@@ -603,51 +603,21 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4sS-vY-KRK">
-                                <rect key="frame" x="20" y="277" width="374" height="536"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kUr-WG-xKP">
-                                    <size key="itemSize" width="180" height="222"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeCell" id="zeG-FO-StX" customClass="RecipeCollectionViewCell" customModule="Delicious" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="180" height="222"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jpu-ia-4NW">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="222"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDT-5A-8eA">
-                                                    <rect key="frame" x="33" y="179" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </collectionViewCellContentView>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <size key="customSize" width="180" height="222"/>
-                                        <connections>
-                                            <segue destination="Aq6-vi-GLR" kind="show" identifier="showRecipeSegue" id="Rbd-wP-EgE"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Zf-yu-75a">
+                                <rect key="frame" x="0.0" y="344" width="414" height="470"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <segue destination="ka6-AD-ihx" kind="embed" identifier="embedRecipeCollectionSegue" id="EHD-qc-rzF"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="g03-wu-oKm" firstAttribute="top" secondItem="IIT-Kl-gJd" secondAttribute="bottom" constant="20" id="1VU-H0-tg7"/>
-                            <constraint firstItem="4sS-vY-KRK" firstAttribute="top" secondItem="mhP-qB-Uzf" secondAttribute="bottom" constant="20" id="20X-3K-woA"/>
                             <constraint firstItem="mhP-qB-Uzf" firstAttribute="top" secondItem="g03-wu-oKm" secondAttribute="bottom" constant="20" id="8jn-Jf-Ts1"/>
                             <constraint firstItem="g03-wu-oKm" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" constant="20" id="Lpk-L5-zqn"/>
-                            <constraint firstItem="4sS-vY-KRK" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" constant="20" id="QrN-oD-m1J"/>
                             <constraint firstItem="004-2h-epV" firstAttribute="trailing" secondItem="IIT-Kl-gJd" secondAttribute="trailing" constant="20" id="fJK-X0-mMg"/>
                             <constraint firstItem="IIT-Kl-gJd" firstAttribute="top" secondItem="004-2h-epV" secondAttribute="top" constant="20" id="jj8-cT-ife"/>
-                            <constraint firstItem="004-2h-epV" firstAttribute="trailing" secondItem="4sS-vY-KRK" secondAttribute="trailing" constant="20" id="l4G-DH-gzb"/>
                             <constraint firstItem="mhP-qB-Uzf" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" id="tcr-Ph-E9Y"/>
                             <constraint firstItem="mhP-qB-Uzf" firstAttribute="trailing" secondItem="004-2h-epV" secondAttribute="trailing" id="uXu-GL-fFh"/>
                             <constraint firstItem="IIT-Kl-gJd" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" constant="20" id="uax-7s-dTG"/>
@@ -662,12 +632,63 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="recipeCollection" destination="4sS-vY-KRK" id="ZRI-yH-Jkd"/>
+                        <segue destination="Aq6-vi-GLR" kind="show" identifier="showRecipeSegue" id="fT3-MC-QhU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xGm-q6-7rv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1750.7246376811595" y="-794.19642857142856"/>
+        </scene>
+        <!--Recipe Collection View Controller-->
+        <scene sceneID="Qd3-Cj-7Vq">
+            <objects>
+                <collectionViewController id="ka6-AD-ihx" customClass="RecipeCollectionViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ypB-e9-sEd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="470"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4ko-1a-ERn">
+                            <size key="itemSize" width="200" height="200"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeCell" id="qMO-0K-SvI" customClass="RecipeCollectionViewCell" customModule="Delicious" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ymV-Ok-EPI">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3IN-jH-O7U">
+                                            <rect key="frame" x="8" y="171.5" width="184" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="3IN-jH-O7U" secondAttribute="trailing" constant="8" id="6UO-JI-8oe"/>
+                                        <constraint firstAttribute="bottom" secondItem="3IN-jH-O7U" secondAttribute="bottom" constant="8" id="fE6-HK-6bs"/>
+                                        <constraint firstItem="3IN-jH-O7U" firstAttribute="leading" secondItem="ymV-Ok-EPI" secondAttribute="leading" constant="8" id="hYC-M3-UXs"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="recipeNameLabel" destination="3IN-jH-O7U" id="9j4-hV-AfW"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="ka6-AD-ihx" id="s7S-aa-iqP"/>
+                            <outlet property="delegate" destination="ka6-AD-ihx" id="3oK-NM-feB"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Vp-vm-yEN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1750.7246376811595" y="-1337.2767857142856"/>
         </scene>
         <!--Recipe View Controller-->
         <scene sceneID="Rs5-Ka-5V9">
@@ -830,7 +851,11 @@
                         <viewLayoutGuide key="safeArea" id="qRq-ej-RdD"/>
                     </view>
                     <navigationItem key="navigationItem" id="bdd-Uu-uQM">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="pwe-69-Pq3"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="pwe-69-Pq3">
+                            <connections>
+                                <segue destination="S2k-Ed-cS3" kind="show" id="tuc-mx-Xh6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cookTimeLabel" destination="4yh-3w-EnF" id="KsX-qk-aYZ"/>
@@ -851,15 +876,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" textLabel="QCy-F2-lnn" style="IBUITableViewCellStyleDefault" id="edD-xm-nw5" customClass="EditRecipeTableViewCell" customModule="Delicious" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="QCy-F2-lnn" style="IBUITableViewCellStyleDefault" id="edD-xm-nw5" customClass="EditRecipeTableViewCell" customModule="Delicious" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edD-xm-nw5" id="sZo-9s-KgM">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QCy-F2-lnn">
-                                            <rect key="frame" x="20" y="0.0" width="355" height="43.5"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -880,10 +905,49 @@
                     <navigationItem key="navigationItem" title="Create New Recipe" id="EmD-vm-HM7">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="4vd-gr-lR8"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="xjS-7X-aJi" kind="show" identifier="addMenuSegue" id="GSd-py-2L9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaL-AZ-Jdx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="-1446"/>
+            <point key="canvasLocation" x="3316" y="-1460"/>
+        </scene>
+        <!--Choose Menu-->
+        <scene sceneID="C4S-0b-7zH">
+            <objects>
+                <viewController id="xjS-7X-aJi" customClass="ChooseMenuViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BQi-7k-88W">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yZg-Rc-I2N">
+                                <rect key="frame" x="0.0" y="158" width="414" height="216"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MENU" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4i2-kI-sZ1">
+                                <rect key="frame" x="20" y="158" width="49" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUM-gu-H0Y">
+                                <rect key="frame" x="155" y="601" width="105" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add New Menu"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="VUq-fC-pRk"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Choose Menu" id="mcB-CR-n7O">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="DYh-oo-qSa"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7vI-V4-lwr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4059" y="-1182"/>
         </scene>
         <!--Shopping List-->
         <scene sceneID="fv3-DN-x9U">
@@ -1038,4 +1102,7 @@
         <image name="house.fill" catalog="system" width="64" height="52"/>
         <image name="star.fill" catalog="system" width="64" height="58"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="msO-q1-W8s"/>
+    </inferredMetricsTieBreakers>
 </document>

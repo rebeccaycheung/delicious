@@ -18,6 +18,7 @@ enum ListenerType {
     case bookmarks
     case shoppingList
     case wishlist
+    case recipe
     case all
 }
 
@@ -27,6 +28,7 @@ protocol DatabaseListener: AnyObject {
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks])
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList])
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist])
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe])
 }
 
 protocol DatabaseProtocol: AnyObject {
@@ -49,3 +51,4 @@ protocol DatabaseProtocol: AnyObject {
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)
 }
+

@@ -9,6 +9,10 @@
 import UIKit
 
 class EditRecipeTableViewController: UITableViewController, DatabaseListener {
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
     
     let SECTION_NAME = 0
     let SECTION_IMAGE = 1
@@ -26,11 +30,14 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
     let SECTION_MENU_LIST = 13
     let SECTION_ADD_MENU = 14
     
-    let ingredientList: [String] = []
-    let instructionList: [String] = []
-    let notesList: [String] = []
-    let tagsList: [String] = []
-    let menuList: [String] = []
+    var ingredientNameList: [String] = []
+    var ingredientMeasurementList: [String] = []
+    var instructionList: [String] = []
+    var notesList: [String] = []
+    var tagsList: [String] = []
+    var menuList: [String] = []
+    
+    var recipe: Recipe?
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .all
@@ -43,6 +50,27 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        
+        if (recipe != nil) {
+            if (recipe?.instructionsList != nil) {
+                instructionList = recipe!.instructionsList!
+            }
+            if (recipe?.ingredientNamesList != nil) {
+                ingredientNameList = recipe!.ingredientNamesList!
+            }
+            if (recipe?.ingredientMeasurementsList != nil) {
+                ingredientMeasurementList = recipe!.ingredientMeasurementsList!
+            }
+            if (recipe?.notesList != nil) {
+                notesList = recipe!.notesList!
+            }
+            if (recipe?.tagsList != nil) {
+                tagsList = recipe!.tagsList!
+            }
+            if (recipe?.menuList != nil) {
+                menuList = recipe!.menuList!
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +112,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
         case SECTION_SERVING_SIZE:
             return 1
         case SECTION_INGREDIENT_LIST:
-            return ingredientList.count
+            return ingredientNameList.count
         case SECTION_ADD_INGREDIENT:
             return 1
         case SECTION_INSTRUCTION_LIST:
@@ -108,31 +136,67 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case SECTION_NAME:
+            return "Recipe Name"
+        case SECTION_IMAGE:
+            return "Image/Video"
+        case SECTION_SOURCE:
+            return "Source"
+        case SECTION_COOK_TIME:
+            return "Cook time"
+        case SECTION_SERVING_SIZE:
+            return "Serving Size"
+        case SECTION_INGREDIENT_LIST:
+            return "Ingredients"
+        case SECTION_INSTRUCTION_LIST:
+            return "Instructions"
+        case SECTION_NOTES_LIST:
+            return "Notes"
+        case SECTION_TAGS_LIST:
+            return "Tags"
+        case SECTION_MENU_LIST:
+            return "Menu"
+        default:
+            return ""
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case SECTION_NAME:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            cell.label.text = recipe?.name ?? "Enter recipe name"
             return cell
         case SECTION_IMAGE:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            cell.label.text = "Upload an image"
             return cell
         case SECTION_SOURCE:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            cell.label.text = recipe?.source ?? "Enter source"
             return cell
         case SECTION_COOK_TIME:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            cell.label.text = NSString(format: "%.2f", recipe?.cookTime ?? "Enter cook time") as String
             return cell
         case SECTION_SERVING_SIZE:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            cell.label.text = NSString(format: "%.2f", recipe?.servingSize ?? "Enter serving size") as String
             return cell
         case SECTION_INGREDIENT_LIST:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            if ingredientNameList.count > 0 {
+                for ingredient in ingredientNameList {
+                    cell.label.text = ingredient
+                }
+            }
+            if ingredientMeasurementList.count > 0 {
+                for measurement in ingredientMeasurementList {
+                    cell.detailTextLabel?.text = measurement
+                }
+            }
             return cell
         case SECTION_ADD_INGREDIENT:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
@@ -140,7 +204,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             return cell
         case SECTION_INSTRUCTION_LIST:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            if instructionList.count > 0 {
+                for instruction in instructionList {
+                    cell.label.text = instruction
+                }
+            }
             return cell
         case SECTION_ADD_INSTRUCTION:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
@@ -148,7 +216,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             return cell
         case SECTION_NOTES_LIST:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            if notesList.count > 0 {
+                for note in notesList {
+                    cell.label.text = note
+                }
+            }
             return cell
         case SECTION_ADD_NOTES:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
@@ -156,7 +228,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             return cell
         case SECTION_TAGS_LIST:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            if tagsList.count > 0 {
+                for tag in tagsList {
+                    cell.label.text = tag
+                }
+            }
             return cell
         case SECTION_ADD_TAGS:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
@@ -164,7 +240,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             return cell
         case SECTION_MENU_LIST:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = ""
+            if menuList.count > 0 {
+                for menu in menuList {
+                    cell.label.text = menu
+                }
+            }
             return cell
         case SECTION_ADD_MENU:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
@@ -175,50 +255,18 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             return cell
         }
     }
- 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case SECTION_ADD_MENU:
+            performSegue(withIdentifier: "addMenuSegue", sender: self)
+        default:
+            tableView.deselectRow(at: indexPath, animated: false)
+            return
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+         
     }
-    */
-
 }

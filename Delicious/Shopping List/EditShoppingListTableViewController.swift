@@ -9,7 +9,7 @@
 import UIKit
 
 class EditShoppingListTableViewController: UITableViewController, DatabaseListener {
-
+    
     let SECTION_SHOPPING_LIST = 0
     let SECTION_ADD_SHOPPING_ITEM = 1
     let CELL_SHOPPING_ITEM = "shoppingItemCell"
@@ -114,6 +114,10 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     }
 
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         //
     }
 }

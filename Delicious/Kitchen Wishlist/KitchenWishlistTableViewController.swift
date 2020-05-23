@@ -9,6 +9,10 @@
 import UIKit
 
 class KitchenWishlistTableViewController: UITableViewController, DatabaseListener {
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
 
     let SECTION_WISHLIST = 0
     let SECTION_WISHLIST_TOTAL_PRICE = 1

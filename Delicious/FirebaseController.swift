@@ -16,6 +16,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var listeners = MulticastDelegate<DatabaseListener>()
     var database: Firestore
     
+    var recipeRef: CollectionReference?
+    var recipeList: [Recipe]
+    
     var bookmarksRef: CollectionReference?
     var bookmarksList: [Bookmarks]
     
@@ -32,13 +35,82 @@ class FirebaseController: NSObject, DatabaseProtocol {
         bookmarksList = [Bookmarks]()
         shoppingItemList = [ShoppingList]()
         wishlistList = [Wishlist]()
+        recipeList = [Recipe]()
         
         super.init()
         
         self.setUpBookmarksListener()
         self.setUpShoppingListListener()
         self.setUpWishlistListener()
+        self.setUpRecipeListener()
     }
+    
+    func setUpRecipeListener() {
+        recipeRef = database.collection("recipe")
+        recipeRef?.addSnapshotListener { (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            self.parseRecipeSnapshot(snapshot: querySnapshot)
+        }
+    }
+    
+    func parseRecipeSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { (change) in
+            let recipeID = change.document.documentID
+            print(recipeID)
+            
+            var parsedRecipe: Recipe?
+            
+            do {
+                parsedRecipe = try change.document.data(as: Recipe.self)
+            } catch {
+                print("Unable to decode recipe. Is the recipe malformed?")
+                return
+            }
+            
+            guard let recipe = parsedRecipe else {
+                print("Document doesn't exist")
+                return;
+            }
+            
+            recipe.id = recipeID
+            if change.type == .added {
+                recipeList.append(recipe)
+            } else if change.type == .modified {
+                let index = getRecipeIndexByID(recipeID)!
+                recipeList[index] = recipe
+            } else if change.type == .removed {
+                if let index = getRecipeIndexByID(recipeID) {
+                    recipeList.remove(at: index)
+                }
+            }
+        }
+        
+        listeners.invoke{ (listener) in
+            if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
+                listener.onRecipeListChange(change: .update, recipe: recipeList)
+            }
+        }
+    }
+    
+    func getRecipeIndexByID(_ id: String) -> Int? {
+        if let recipe = getRecipeByID(id) {
+            return recipeList.firstIndex(of: recipe)
+        }
+        return nil
+    }
+    
+    func getRecipeByID(_ id: String) -> Recipe? {
+        for recipe in recipeList {
+            if recipe.id == id {
+                return recipe
+            }
+        }
+        return nil
+    }
+    
     
     func setUpBookmarksListener() {
         bookmarksRef = database.collection("bookmarks")
@@ -341,6 +413,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
             listener.onShoppingListChange (change: .update, shoppingList: shoppingItemList)
         } else if listener.listenerType == ListenerType.wishlist || listener.listenerType == ListenerType.all {
             listener.onWishlistChange (change: .update, wishlist: wishlistList)
+        } else if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
+            listener.onRecipeListChange(change: .update, recipe: recipeList)
         }
     }
 

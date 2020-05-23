@@ -10,5 +10,5 @@ import UIKit
 
 class RecipeCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var recipeLabel: UILabel!
+    @IBOutlet weak var recipeNameLabel: UILabel!
 }

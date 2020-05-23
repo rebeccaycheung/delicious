@@ -11,14 +11,15 @@ import UIKit
 class Recipe: NSObject, Decodable {
     var id: String?
     var name: String = ""
-    var source: String = ""
+    var source: String?
     var cookTime: Int
     var servingSize: Int
-    var ingredientName: [String] = []
-    var ingredientMeasurement: [String] = []
-    var instruction: [String] = []
-    var note: [String] = []
-    var tag: [String] = []
+    var ingredientNamesList: [String]?
+    var ingredientMeasurementsList: [String]?
+    var instructionsList: [String]?
+    var notesList: [String]?
+    var tagsList: [String]?
+    var menuList: [String]?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -26,10 +27,11 @@ class Recipe: NSObject, Decodable {
         case source
         case cookTime
         case servingSize
-        case ingredientName
-        case ingredientMeasurement
-        case instruction
-        case note
-        case tag
+        case ingredientNamesList
+        case ingredientMeasurementsList
+        case instructionsList
+        case notesList
+        case tagsList
+        case menuList
     }
 }

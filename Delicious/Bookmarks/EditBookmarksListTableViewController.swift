@@ -9,6 +9,10 @@
 import UIKit
 
 class EditBookmarksListTableViewController: UITableViewController, DatabaseListener {
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
     
     let SECTION_BOOKMARKS = 0
     let SECTION_ADD_BOOKMARKS = 1

@@ -9,6 +9,10 @@
 import UIKit
 
 class ShoppingListTableViewController: UITableViewController, DatabaseListener {
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
     
     let SECTION_SHOPPING_LIST = 0
     let CELL_SHOPPING_ITEM = "shoppingItemCell"

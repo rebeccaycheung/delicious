@@ -9,6 +9,10 @@
 import UIKit
 
 class EditWishlistTableViewController: UITableViewController, DatabaseListener {
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
 
     let SECTION_WISHLIST = 0
     let SECTION_ADD_WISHLIST = 1
