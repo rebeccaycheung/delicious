@@ -179,11 +179,19 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             return cell
         case SECTION_COOK_TIME:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = NSString(format: "%.2f", recipe?.cookTime ?? "Enter cook time") as String
+            if let cookTime = recipe?.cookTime {
+                cell.label.text = String(cookTime)
+            } else {
+                cell.label.text = "Enter cook time"
+            }
             return cell
         case SECTION_SERVING_SIZE:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
-            cell.label.text = NSString(format: "%.2f", recipe?.servingSize ?? "Enter serving size") as String
+            if let servingSize = recipe?.servingSize {
+                cell.label.text = String(servingSize)
+            } else {
+                cell.label.text = "Enter serving size"
+            }
             return cell
         case SECTION_INGREDIENT_LIST:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
