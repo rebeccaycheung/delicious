@@ -9,6 +9,10 @@
 import UIKit
 
 class RecipeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, DatabaseListener {
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
     
     private let reuseIdentifier = "recipeCell"
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)

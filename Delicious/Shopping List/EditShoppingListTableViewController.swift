@@ -9,6 +9,10 @@
 import UIKit
 
 class EditShoppingListTableViewController: UITableViewController, DatabaseListener {
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
     
     let SECTION_SHOPPING_LIST = 0
     let SECTION_ADD_SHOPPING_ITEM = 1

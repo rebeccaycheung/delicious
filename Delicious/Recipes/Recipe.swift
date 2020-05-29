@@ -6,14 +6,14 @@
 //  Copyright © 2020 Rebecca Cheung. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class Recipe: NSObject, Decodable {
+class Recipe: NSObject, Codable {
     var id: String?
     var name: String = ""
     var source: String?
-    var cookTime: Int
-    var servingSize: Int
+    var cookTime: Int = 0
+    var servingSize: Int = 0
     var ingredientNamesList: [String]?
     var ingredientMeasurementsList: [String]?
     var instructionsList: [String]?

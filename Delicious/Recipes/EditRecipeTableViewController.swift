@@ -9,6 +9,10 @@
 import UIKit
 
 class EditRecipeTableViewController: UITableViewController, DatabaseListener {
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         //
     }
@@ -52,6 +56,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
         databaseController = appDelegate.databaseController
         
         if (recipe != nil) {
+            navigationItem.title = "Edit Recipe"
             if (recipe?.instructionsList != nil) {
                 instructionList = recipe!.instructionsList!
             }
@@ -70,6 +75,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             if (recipe?.menuList != nil) {
                 menuList = recipe!.menuList!
             }
+        } else {
+            navigationItem.title = "Create New Recipe"
         }
     }
     
@@ -266,8 +273,30 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
+        case SECTION_NAME:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_SOURCE:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_COOK_TIME:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_SERVING_SIZE:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_INGREDIENT_LIST:
+            performSegue(withIdentifier: "editIngredientSegue", sender: self)
+        case SECTION_ADD_INGREDIENT:
+            performSegue(withIdentifier: "editIngredientSegue", sender: self)
+        case SECTION_INSTRUCTION_LIST:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_ADD_INSTRUCTION:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_NOTES_LIST:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_ADD_NOTES:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_ADD_TAGS:
+            performSegue(withIdentifier: "addFromPickerSegue", sender: self)
         case SECTION_ADD_MENU:
-            performSegue(withIdentifier: "addMenuSegue", sender: self)
+            performSegue(withIdentifier: "addFromPickerSegue", sender: self)
         default:
             tableView.deselectRow(at: indexPath, animated: false)
             return
@@ -275,6 +304,61 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         
+        if segue.identifier == "editTextFieldSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditTextFieldViewController
+                switch selectedRow {
+                case SECTION_NAME:
+                    destination.labelTitle = "Recipe Name"
+                    if recipe != nil {
+                        destination.enteredText = recipe?.name
+                    }
+                case SECTION_SOURCE:
+                    destination.labelTitle = "Source Name"
+                    if recipe != nil {
+                        destination.enteredText = recipe?.source
+                    }
+                case SECTION_COOK_TIME:
+                    destination.labelTitle = "Cook Time"
+                    if recipe != nil, let cookTime = recipe?.cookTime {
+                        destination.enteredText = String(cookTime)
+                    }
+                case SECTION_SERVING_SIZE:
+                    destination.labelTitle = "Serving Size"
+                    if recipe != nil, let servingSize = recipe?.servingSize {
+                        destination.enteredText = String(servingSize)
+                    }
+                case SECTION_INSTRUCTION_LIST:
+                    destination.labelTitle = "Instructions"
+                    destination.enteredText = recipe?.instructionsList![indexPath.row]
+                case SECTION_ADD_INSTRUCTION:
+                    destination.labelTitle = "Instructions"
+                case SECTION_NOTES_LIST:
+                    destination.labelTitle = "Note"
+                    destination.enteredText = recipe?.notesList![indexPath.row]
+                case SECTION_ADD_NOTES:
+                    destination.labelTitle = "Note"
+                default:
+                    destination.labelTitle = ""
+                }
+            }
+        } else if segue.identifier == "editIngredientSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditIngredientViewController
+                switch selectedRow {
+                case SECTION_INGREDIENT_LIST:
+                    destination.selectedIngredient = recipe?.ingredientNamesList![indexPath.row]
+                    destination.selectedMeasurement = recipe?.ingredientMeasurementsList![indexPath.row]
+                case SECTION_ADD_INGREDIENT:
+                    destination.selectedIngredient = ""
+                    destination.selectedMeasurement = ""
+                default:
+                    destination.selectedIngredient = ""
+                    destination.selectedMeasurement = ""
+                }
+            }
+        }
     }
 }

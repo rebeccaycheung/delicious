@@ -9,6 +9,10 @@
 import UIKit
 
 class KitchenWishlistTableViewController: UITableViewController, DatabaseListener {
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         //
     }

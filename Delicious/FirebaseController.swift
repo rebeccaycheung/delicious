@@ -13,11 +13,15 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class FirebaseController: NSObject, DatabaseProtocol {
+    
     var listeners = MulticastDelegate<DatabaseListener>()
     var database: Firestore
     
     var recipeRef: CollectionReference?
     var recipeList: [Recipe]
+    
+    var tagRef: CollectionReference?
+    var tagList: [Tag]
     
     var bookmarksRef: CollectionReference?
     var bookmarksList: [Bookmarks]
@@ -36,6 +40,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         shoppingItemList = [ShoppingList]()
         wishlistList = [Wishlist]()
         recipeList = [Recipe]()
+        tagList = [Tag]()
         
         super.init()
         
@@ -43,6 +48,73 @@ class FirebaseController: NSObject, DatabaseProtocol {
         self.setUpShoppingListListener()
         self.setUpWishlistListener()
         self.setUpRecipeListener()
+        self.setUpTagListener()
+    }
+    
+    func setUpTagListener() {
+        tagRef = database.collection("tag")
+        tagRef?.addSnapshotListener { (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            self.parseTagSnapshot(snapshot: querySnapshot)
+        }
+    }
+    
+    func parseTagSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { (change) in
+            let tagID = change.document.documentID
+            print(tagID)
+            
+            var parsedTag: Tag?
+            
+            do {
+                parsedTag = try change.document.data(as: Tag.self)
+            } catch {
+                print("Unable to decode tag. Is the tag malformed?")
+                return
+            }
+            
+            guard let tag = parsedTag else {
+                print("Document doesn't exist")
+                return;
+            }
+            
+            tag.id = tagID
+            if change.type == .added {
+                tagList.append(tag)
+            } else if change.type == .modified {
+                let index = getTagIndexByID(tagID)!
+                tagList[index] = tag
+            } else if change.type == .removed {
+                if let index = getTagIndexByID(tagID) {
+                    tagList.remove(at: index)
+                }
+            }
+        }
+        
+        listeners.invoke{ (listener) in
+            if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all {
+                listener.onTagListChange(change: .update, tag: tagList)
+            }
+        }
+    }
+    
+    func getTagIndexByID(_ id: String) -> Int? {
+        if let tag = getTagByID(id) {
+            return tagList.firstIndex(of: tag)
+        }
+        return nil
+    }
+    
+    func getTagByID(_ id: String) -> Tag? {
+        for tag in tagList {
+            if tag.id == id {
+                return tag
+            }
+        }
+        return nil
     }
     
     func setUpRecipeListener() {
@@ -110,7 +182,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         return nil
     }
-    
     
     func setUpBookmarksListener() {
         bookmarksRef = database.collection("bookmarks")
@@ -313,6 +384,69 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func cleanup() {
     }
     
+    func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String], menuList: [String]) {
+        let recipe = Recipe()
+        recipe.name = name
+        recipe.source = source
+        recipe.cookTime = cookTime
+        recipe.servingSize = servingSize
+        recipe.ingredientNamesList = ingredientsList
+        recipe.ingredientMeasurementsList = measurementList
+        recipe.instructionsList = instructionsList
+        recipe.notesList = notesList
+        recipe.tagsList = tagsList
+        recipe.menuList = menuList
+        
+        do {
+            if let recipeRef = try recipeRef?.addDocument(from: recipe) {
+                recipe.id = recipeRef.documentID
+            }
+        } catch {
+            print("Failed to serialize recipe")
+        }
+    }
+    
+    func updateRecipe(recipe: Recipe) {
+        if let recipeRef = recipeRef?.document(recipe.id!) {
+            recipeRef.updateData(["name": recipe.name, "source": recipe.source, "cookTime": recipe.cookTime, "servingSize": recipe.servingSize, "ingredientNamesList": recipe.ingredientNamesList, "ingredientMeasurementsList": recipe.ingredientMeasurementsList, "instructionsList": recipe.instructionsList, "notesList": recipe.notesList, "tagsList": recipe.tagsList, "menuList": recipe.menuList])
+        }
+    }
+    
+    func deleteRecipe(recipe: Recipe) {
+        recipeRef?.document(recipe.id!).delete() { (error) in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed")
+            }
+        }
+    }
+    
+    func addTag(name: String) {
+        let tag = Tag()
+        tag.name = name
+        
+        if let tagRef = tagRef?.addDocument(data: ["name": name]) {
+            tag.id = tagRef.documentID
+        }
+    }
+    
+    func updateTag(tag: Tag) {
+        if let tagRef = tagRef?.document(tag.id!) {
+            tagRef.updateData(["name": tag.name])
+        }
+    }
+    
+    func deleteTag(tag: Tag) {
+        tagRef?.document(tag.id!).delete() { (error) in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed")
+            }
+        }
+    }
+    
     func addBookmark(name: String, url: String) -> Bookmarks {
         let bookmarks = Bookmarks()
         bookmarks.name = name
@@ -415,6 +549,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
             listener.onWishlistChange (change: .update, wishlist: wishlistList)
         } else if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
             listener.onRecipeListChange(change: .update, recipe: recipeList)
+        }  else if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all {
+            listener.onTagListChange(change: .update, tag: tagList)
         }
     }
 
