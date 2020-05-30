@@ -332,14 +332,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="cYM-wf-aiC" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cYM-wf-aiC" id="bFZ-nT-2qd">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-9c-mOL">
-                                            <rect key="frame" x="162" y="11" width="232" height="21"/>
+                                            <rect key="frame" x="162" y="11" width="232" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -946,7 +946,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Create New Recipe" id="EmD-vm-HM7">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="4vd-gr-lR8"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="4vd-gr-lR8">
+                            <connections>
+                                <action selector="save:" destination="S2k-Ed-cS3" id="yAh-hi-h5A"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="xjS-7X-aJi" kind="show" identifier="addFromPickerSegue" id="GSd-py-2L9"/>
@@ -1004,14 +1008,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="HnC-Yc-lYL" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HnC-Yc-lYL" id="xM7-LY-xy3">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56a-uD-uMt">
-                                            <rect key="frame" x="162" y="11" width="213" height="21.5"/>
+                                            <rect key="frame" x="162" y="11" width="213" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1233,7 +1237,11 @@
                         <viewLayoutGuide key="safeArea" id="nTM-hm-aVW"/>
                     </view>
                     <navigationItem key="navigationItem" id="jt8-7k-OuY">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="afI-jo-mL8"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="afI-jo-mL8">
+                            <connections>
+                                <action selector="save:" destination="tim-Fx-201" id="glX-3G-PzV"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="label" destination="h9W-5Q-Giu" id="oS4-cT-CbC"/>

@@ -8,15 +8,7 @@
 
 import UIKit
 
-class EditRecipeTableViewController: UITableViewController, DatabaseListener {
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
+class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
     
     let SECTION_NAME = 0
     let SECTION_IMAGE = 1
@@ -88,6 +80,14 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
     override func viewWillDisappear(_ animated: Bool) {
        super.viewWillDisappear(animated)
        databaseController?.removeListener(listener: self)
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
     }
     
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
@@ -171,21 +171,18 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
         switch indexPath.section {
         case SECTION_NAME:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = recipe?.name ?? "Enter recipe name"
             return cell
         case SECTION_IMAGE:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = "Upload an image"
             return cell
         case SECTION_SOURCE:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = recipe?.source ?? "Enter source"
             return cell
         case SECTION_COOK_TIME:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if let cookTime = recipe?.cookTime {
                 cell.label.text = String(cookTime)
             } else {
@@ -193,7 +190,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_SERVING_SIZE:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if let servingSize = recipe?.servingSize {
                 cell.label.text = String(servingSize)
             } else {
@@ -201,7 +197,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_INGREDIENT_LIST:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if ingredientNameList.count > 0 {
                 for ingredient in ingredientNameList {
                     cell.label.text = ingredient
@@ -214,11 +209,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_ADD_INGREDIENT:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = "Add new ingredient"
             return cell
         case SECTION_INSTRUCTION_LIST:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if instructionList.count > 0 {
                 for instruction in instructionList {
                     cell.label.text = instruction
@@ -226,11 +219,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_ADD_INSTRUCTION:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = "Add new instruction"
             return cell
         case SECTION_NOTES_LIST:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if notesList.count > 0 {
                 for note in notesList {
                     cell.label.text = note
@@ -238,11 +229,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_ADD_NOTES:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = "Add new note"
             return cell
         case SECTION_TAGS_LIST:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if tagsList.count > 0 {
                 for tag in tagsList {
                     cell.label.text = tag
@@ -250,11 +239,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_ADD_TAGS:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = "Add new tag"
             return cell
         case SECTION_MENU_LIST:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             if menuList.count > 0 {
                 for menu in menuList {
                     cell.label.text = menu
@@ -262,11 +249,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             }
             return cell
         case SECTION_ADD_MENU:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
             cell.label.text = "Add to menu"
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             return cell
         }
     }
@@ -308,37 +293,46 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let selectedRow = indexPath.section
                 let destination = segue.destination as! EditTextFieldViewController
+                destination.recipeDelegate = self
                 switch selectedRow {
                 case SECTION_NAME:
                     destination.labelTitle = "Recipe Name"
                     if recipe != nil {
                         destination.enteredText = recipe?.name
                     }
+                    break
                 case SECTION_SOURCE:
                     destination.labelTitle = "Source Name"
                     if recipe != nil {
                         destination.enteredText = recipe?.source
                     }
+                    break
                 case SECTION_COOK_TIME:
                     destination.labelTitle = "Cook Time"
                     if recipe != nil, let cookTime = recipe?.cookTime {
                         destination.enteredText = String(cookTime)
                     }
+                    break
                 case SECTION_SERVING_SIZE:
                     destination.labelTitle = "Serving Size"
                     if recipe != nil, let servingSize = recipe?.servingSize {
                         destination.enteredText = String(servingSize)
                     }
+                    break
                 case SECTION_INSTRUCTION_LIST:
                     destination.labelTitle = "Instructions"
                     destination.enteredText = recipe?.instructionsList![indexPath.row]
+                    break
                 case SECTION_ADD_INSTRUCTION:
                     destination.labelTitle = "Instructions"
+                    break
                 case SECTION_NOTES_LIST:
                     destination.labelTitle = "Note"
                     destination.enteredText = recipe?.notesList![indexPath.row]
+                    break
                 case SECTION_ADD_NOTES:
                     destination.labelTitle = "Note"
+                    break
                 default:
                     destination.labelTitle = ""
                 }
@@ -360,5 +354,32 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener {
                 }
             }
         }
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        //Check fields if they are empty
+        //Save to firebase
+    }
+    
+    func addToRecipe(type: String, value: String) {
+        if recipe == nil {
+            recipe = Recipe()
+        }
+        if type == "Recipe Name" {
+            recipe?.name = value
+        } else if type == "Source Name" {
+            recipe?.source = value
+        } else if type == "Cook Time" {
+            recipe?.cookTime = Int(value)!
+        } else if type == "Serving Size" {
+            recipe?.servingSize = Int(value)!
+        } else if type == "Instructions" {
+            self.instructionList.append(value)
+            recipe?.instructionsList = instructionList
+        } else if type == "Note" {
+            self.notesList.append(value)
+            recipe?.notesList = notesList
+        }
+        tableView.reloadData()
     }
 }
