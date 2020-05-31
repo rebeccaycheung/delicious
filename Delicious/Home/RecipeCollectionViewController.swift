@@ -9,16 +9,14 @@
 import UIKit
 
 class RecipeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, DatabaseListener {
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
     
     private let reuseIdentifier = "recipeCell"
-    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    private let sectionInsets = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 50.0, right: 20.0)
     private let itemsPerRow: CGFloat = 2
     
-    var recipeList: [Recipe] = []
+    var selectedControl: String?
+    
+    var dataList: [Recipe] = []
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .recipe
     
@@ -29,6 +27,12 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        
+        if selectedControl == "Recipe" {
+            dataList = [Recipe]()
+        } else if selectedControl == "Menu" {
+            dataList = []
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,7 +46,7 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        recipeList = recipe
+        dataList = recipe
         collectionView.reloadData()
     }
     
@@ -58,17 +62,21 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
         //
     }
     
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recipeList.count
+        return dataList.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCollectionViewCell
-        let recipe = recipeList[indexPath.row]
+        let recipe = dataList[indexPath.row]
         cell.recipeNameLabel.text = recipe.name
         return cell
     }
@@ -89,7 +97,7 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let _ = showRecipeDelegate?.showRecipe(recipe: recipeList[indexPath.row])
+        let _ = showRecipeDelegate?.showRecipe(recipe: dataList[indexPath.row])
         return true
     }
     

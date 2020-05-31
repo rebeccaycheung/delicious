@@ -50,7 +50,7 @@ protocol DatabaseProtocol: AnyObject {
     func checkWishlistItem(item: Wishlist, checked: Bool)
     func deleteWishlistItem(wishlistItem: Wishlist)
     
-    func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String], menuList: [String])
+    func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String])
     func updateRecipe(recipe: Recipe)
     func deleteRecipe(recipe: Recipe)
     

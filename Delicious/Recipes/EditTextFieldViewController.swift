@@ -21,7 +21,7 @@ class EditTextFieldViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        label.text = labelTitle ?? ""
+        label.text = labelTitle
         textField.text = enteredText ?? ""
     }
     

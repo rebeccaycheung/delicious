@@ -383,7 +383,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func cleanup() {
     }
     
-    func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String], menuList: [String]) {
+    func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String]) {
         let recipe = Recipe()
         recipe.name = name
         recipe.source = source
@@ -394,7 +394,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         recipe.instructionsList = instructionsList
         recipe.notesList = notesList
         recipe.tagsList = tagsList
-        recipe.menuList = menuList
+//        recipe.menuList = menuList
         
         do {
             if let recipeRef = try recipeRef?.addDocument(from: recipe) {
@@ -407,7 +407,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func updateRecipe(recipe: Recipe) {
         if let recipeRef = recipeRef?.document(recipe.id!) {
-            recipeRef.updateData(["name": recipe.name, "source": recipe.source, "cookTime": recipe.cookTime, "servingSize": recipe.servingSize, "ingredientNamesList": recipe.ingredientNamesList, "ingredientMeasurementsList": recipe.ingredientMeasurementsList, "instructionsList": recipe.instructionsList, "notesList": recipe.notesList, "tagsList": recipe.tagsList, "menuList": recipe.menuList])
+            recipeRef.updateData(["name": recipe.name, "source": recipe.source, "cookTime": recipe.cookTime, "servingSize": recipe.servingSize, "ingredientNamesList": recipe.ingredientNamesList, "ingredientMeasurementsList": recipe.ingredientMeasurementsList, "instructionsList": recipe.instructionsList, "notesList": recipe.notesList, "tagsList": recipe.tagsList])
         }
     }
     

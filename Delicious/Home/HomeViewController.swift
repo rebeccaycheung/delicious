@@ -10,6 +10,10 @@ import UIKit
 
 class HomeViewController: UIViewController, ShowRecipeDelegate {
     
+    @IBOutlet weak var segment: UISegmentedControl!
+    
+    var selectedView = "Recipe"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -17,9 +21,23 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
         navigationItem.largeTitleDisplayMode = .always
     }
     
+    @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
+        switch segment.selectedSegmentIndex {
+        case 0:
+            selectedView = "Recipe"
+            break
+        case 1:
+            selectedView = "Menu"
+            break
+        default:
+            break
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedRecipeCollectionSegue" {
             let destination = segue.destination as? RecipeCollectionViewController
+            destination?.selectedControl = selectedView
             destination?.showRecipeDelegate = self
         }
     }

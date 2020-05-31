@@ -26,12 +26,12 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     let SECTION_MENU_LIST = 13
     let SECTION_ADD_MENU = 14
     
-    var ingredientNameList: [String] = []
-    var ingredientMeasurementList: [String] = []
-    var instructionList: [String] = []
-    var notesList: [String] = []
-    var tagsList: [String] = []
-    var menuList: [String] = []
+//    var ingredientNameList: [String] = []
+//    var ingredientMeasurementList: [String] = []
+//    var instructionList: [String] = []
+//    var notesList: [String] = []
+//    var tagsList: [String] = []
+//    var menuList: [String] = []
     
     var recipe: Recipe?
     
@@ -49,24 +49,24 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         
         if (recipe != nil) {
             navigationItem.title = "Edit Recipe"
-            if (recipe?.instructionsList != nil) {
-                instructionList = recipe!.instructionsList!
-            }
-            if (recipe?.ingredientNamesList != nil) {
-                ingredientNameList = recipe!.ingredientNamesList!
-            }
-            if (recipe?.ingredientMeasurementsList != nil) {
-                ingredientMeasurementList = recipe!.ingredientMeasurementsList!
-            }
-            if (recipe?.notesList != nil) {
-                notesList = recipe!.notesList!
-            }
-            if (recipe?.tagsList != nil) {
-                tagsList = recipe!.tagsList!
-            }
-            if (recipe?.menuList != nil) {
-                menuList = recipe!.menuList!
-            }
+//            if (recipe?.instructionsList != nil) {
+//                instructionList = recipe!.instructionsList!
+//            }
+//            if (recipe?.ingredientNamesList != nil) {
+//                ingredientNameList = recipe!.ingredientNamesList!
+//            }
+//            if (recipe?.ingredientMeasurementsList != nil) {
+//                ingredientMeasurementList = recipe!.ingredientMeasurementsList!
+//            }
+//            if (recipe?.notesList != nil) {
+//                notesList = recipe!.notesList!
+//            }
+//            if (recipe?.tagsList != nil) {
+//                tagsList = recipe!.tagsList!
+//            }
+//            if (recipe?.menuList != nil) {
+//                menuList = recipe!.menuList!
+//            }
         } else {
             navigationItem.title = "Create New Recipe"
         }
@@ -119,23 +119,23 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_SERVING_SIZE:
             return 1
         case SECTION_INGREDIENT_LIST:
-            return ingredientNameList.count
+            return recipe?.ingredientNamesList?.count ?? 0
         case SECTION_ADD_INGREDIENT:
             return 1
         case SECTION_INSTRUCTION_LIST:
-            return instructionList.count
+            return recipe?.instructionsList?.count ?? 0
         case SECTION_ADD_INSTRUCTION:
             return 1
         case SECTION_NOTES_LIST:
-            return notesList.count
+            return recipe?.notesList?.count ?? 0
         case SECTION_ADD_NOTES:
             return 1
         case SECTION_TAGS_LIST:
-            return tagsList.count
+            return recipe?.tagsList?.count ?? 0
         case SECTION_ADD_TAGS:
             return 1
-        case SECTION_MENU_LIST:
-            return menuList.count
+//        case SECTION_MENU_LIST:
+//            return menuList.count
         case SECTION_ADD_MENU:
             return 1
         default:
@@ -197,14 +197,18 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
             return cell
         case SECTION_INGREDIENT_LIST:
-            if ingredientNameList.count > 0 {
-                for ingredient in ingredientNameList {
-                    cell.label.text = ingredient
+            if let ingredientNameList = recipe?.ingredientNamesList {
+                if ingredientNameList.count > 0 {
+                    for ingredient in ingredientNameList {
+                        cell.label.text = ingredient
+                    }
                 }
             }
-            if ingredientMeasurementList.count > 0 {
-                for measurement in ingredientMeasurementList {
-                    cell.detailTextLabel?.text = measurement
+            if let ingredientMeasurementList = recipe?.ingredientMeasurementsList {
+                if ingredientMeasurementList.count > 0 {
+                    for measurement in ingredientMeasurementList {
+                        cell.label.text = measurement
+                    }
                 }
             }
             return cell
@@ -212,9 +216,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             cell.label.text = "Add new ingredient"
             return cell
         case SECTION_INSTRUCTION_LIST:
-            if instructionList.count > 0 {
-                for instruction in instructionList {
-                    cell.label.text = instruction
+            if let instructionList = recipe?.instructionsList {
+                if instructionList.count > 0 {
+                    for instruction in instructionList {
+                        cell.label.text = instruction
+                    }
                 }
             }
             return cell
@@ -222,9 +228,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             cell.label.text = "Add new instruction"
             return cell
         case SECTION_NOTES_LIST:
-            if notesList.count > 0 {
-                for note in notesList {
-                    cell.label.text = note
+            if let notesList = recipe?.notesList {
+                if notesList.count > 0 {
+                    for note in notesList {
+                        cell.label.text = note
+                    }
                 }
             }
             return cell
@@ -232,25 +240,27 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             cell.label.text = "Add new note"
             return cell
         case SECTION_TAGS_LIST:
-            if tagsList.count > 0 {
-                for tag in tagsList {
-                    cell.label.text = tag
+            if let tagsList = recipe?.tagsList {
+                if tagsList.count > 0 {
+                    for tag in tagsList {
+                        cell.label.text = tag
+                    }
                 }
             }
             return cell
         case SECTION_ADD_TAGS:
             cell.label.text = "Add new tag"
             return cell
-        case SECTION_MENU_LIST:
-            if menuList.count > 0 {
-                for menu in menuList {
-                    cell.label.text = menu
-                }
-            }
-            return cell
-        case SECTION_ADD_MENU:
-            cell.label.text = "Add to menu"
-            return cell
+//        case SECTION_MENU_LIST:
+//            if menuList.count > 0 {
+//                for menu in menuList {
+//                    cell.label.text = menu
+//                }
+//            }
+//            return cell
+//        case SECTION_ADD_MENU:
+//            cell.label.text = "Add to menu"
+//            return cell
         default:
             return cell
         }
@@ -341,6 +351,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             if let indexPath = tableView.indexPathForSelectedRow {
                 let selectedRow = indexPath.section
                 let destination = segue.destination as! EditIngredientViewController
+                destination.recipeDelegate = self
                 switch selectedRow {
                 case SECTION_INGREDIENT_LIST:
                     destination.selectedIngredient = recipe?.ingredientNamesList![indexPath.row]
@@ -353,17 +364,61 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                     destination.selectedMeasurement = ""
                 }
             }
+        } else if segue.identifier == "addFromPickerSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditUIPickerViewController
+                destination.recipeDelegate = self
+                switch selectedRow {
+                case SECTION_ADD_TAGS:
+                    destination.selectedLabel = "Add Tag"
+                case SECTION_ADD_MENU:
+                    destination.selectedLabel = "Add Menu"
+                default:
+                    destination.selectedLabel = ""
+                }
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && indexPath.section == SECTION_INGREDIENT_LIST {
+            tableView.performBatchUpdates({
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
+                self.tableView.reloadSections([SECTION_INGREDIENT_LIST], with: .automatic)
+            }, completion: nil)
         }
     }
     
     @IBAction func save(_ sender: Any) {
-        //Check fields if they are empty
-        //Save to firebase
+        if recipe?.name != nil, recipe?.source != nil, recipe?.cookTime != nil, recipe?.servingSize != nil, recipe?.ingredientNamesList != nil, recipe?.ingredientMeasurementsList != nil, recipe?.instructionsList != nil, recipe?.notesList != nil, recipe?.tagsList != nil {
+            if recipe?.id != nil {
+                let _ = databaseController?.updateRecipe(recipe: recipe!)
+            } else {
+                let _ = databaseController?.addRecipe(name: recipe!.name, source: recipe!.source!, cookTime: recipe!.cookTime, servingSize: recipe!.servingSize, ingredientsList: recipe!.ingredientNamesList!, measurementList: recipe!.ingredientMeasurementsList!, instructionsList: recipe!.instructionsList!, notesList: recipe!.notesList!, tagsList: recipe!.tagsList!)
+            }
+            navigationController?.popViewController(animated: true)
+            return
+        } else {
+            var errorMsg = "Please ensure all fields are filled:\n"
+            displayMessage(title: "Not all fields filled", message: errorMsg)
+        }
+    }
+    
+    func displayMessage(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func addToRecipe(type: String, value: String) {
         if recipe == nil {
             recipe = Recipe()
+            recipe?.ingredientNamesList = [String]()
+            recipe?.ingredientMeasurementsList = [String]()
+            recipe?.instructionsList = [String]()
+            recipe?.tagsList = [String]()
+            recipe?.notesList = [String]()
         }
         if type == "Recipe Name" {
             recipe?.name = value
@@ -374,11 +429,15 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Serving Size" {
             recipe?.servingSize = Int(value)!
         } else if type == "Instructions" {
-            self.instructionList.append(value)
-            recipe?.instructionsList = instructionList
+            recipe?.instructionsList?.append(value)
         } else if type == "Note" {
-            self.notesList.append(value)
-            recipe?.notesList = notesList
+            recipe?.notesList?.append(value)
+        } else if type == "Ingredient" {
+            recipe?.ingredientNamesList?.append(value)
+        } else if type == "Measurement" {
+            recipe?.ingredientMeasurementsList?.append(value)
+        } else if type == "Tag" {
+            recipe?.tagsList?.append(value)
         }
         tableView.reloadData()
     }
