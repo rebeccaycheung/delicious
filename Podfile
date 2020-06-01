@@ -7,6 +7,7 @@ target 'Delicious' do
 
   # Pods for Delicious
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
 

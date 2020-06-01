@@ -11,6 +11,9 @@
 		B31A81822472BF560047B73B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81812472BF560047B73B /* RecipeViewController.swift */; };
 		B31A81872472C56B0047B73B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81862472C56B0047B73B /* HomeViewController.swift */; };
 		B33E94ED247BE277008E42AE /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33E94EC247BE277008E42AE /* Tag.swift */; };
+		B350A4E52485252C00E6FA07 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B350A4E42485252C00E6FA07 /* StartViewController.swift */; };
+		B350A4E724852DF200E6FA07 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B350A4E624852DF200E6FA07 /* SignInViewController.swift */; };
+		B350A4E924852E4300E6FA07 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B350A4E824852E4300E6FA07 /* SignUpViewController.swift */; };
 		B355DE4F2476216200FD113D /* EditShoppingListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE4E2476216200FD113D /* EditShoppingListTableViewController.swift */; };
 		B355DE55247691BB00FD113D /* EditWishlistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE54247691BB00FD113D /* EditWishlistTableViewController.swift */; };
 		B355DE572476AD4000FD113D /* EditRecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B355DE562476AD4000FD113D /* EditRecipeTableViewController.swift */; };
@@ -62,6 +65,9 @@
 		B31A81812472BF560047B73B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		B31A81862472C56B0047B73B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B33E94EC247BE277008E42AE /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		B350A4E42485252C00E6FA07 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		B350A4E624852DF200E6FA07 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		B350A4E824852E4300E6FA07 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B355DE4E2476216200FD113D /* EditShoppingListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShoppingListTableViewController.swift; sourceTree = "<group>"; };
 		B355DE54247691BB00FD113D /* EditWishlistTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWishlistTableViewController.swift; sourceTree = "<group>"; };
 		B355DE562476AD4000FD113D /* EditRecipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeTableViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +172,16 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
+		B350A4E1248523CC00E6FA07 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				B350A4E42485252C00E6FA07 /* StartViewController.swift */,
+				B350A4E624852DF200E6FA07 /* SignInViewController.swift */,
+				B350A4E824852E4300E6FA07 /* SignUpViewController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		B3532DC12477F7CE001FA091 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +259,7 @@
 				B36C1DC924668A1E0057CDDF /* DatabaseProtocol.swift */,
 				B36C1DC5246684520057CDDF /* FirebaseController.swift */,
 				B36C1DC7246684B80057CDDF /* MulticastDelegate.swift */,
+				B350A4E1248523CC00E6FA07 /* Authentication */,
 				B31A81832472C3340047B73B /* Home */,
 				B31A817C2472B9DB0047B73B /* Recipes */,
 				B3532DC12477F7CE001FA091 /* Menu */,
@@ -387,7 +404,9 @@
 			files = (
 				B3874B0B2473F7DE0015B373 /* RecipeCollectionViewCell.swift in Sources */,
 				B37BBB86246FC37A001554EC /* ShoppingListTableViewCell.swift in Sources */,
+				B350A4E52485252C00E6FA07 /* StartViewController.swift in Sources */,
 				B37BBB8D246FDDA2001554EC /* KitchenWishlistTableViewController.swift in Sources */,
+				B350A4E924852E4300E6FA07 /* SignUpViewController.swift in Sources */,
 				B3E394C424550D6E00C95A66 /* SecondViewController.swift in Sources */,
 				B36C1DCC246698470057CDDF /* BookmarksTableViewCell.swift in Sources */,
 				B3874B0F2473FCF70015B373 /* RecipeCollectionViewController.swift in Sources */,
@@ -398,6 +417,7 @@
 				B37BBB7B246E6F78001554EC /* EditBookmarkViewController.swift in Sources */,
 				B3B34DD024796E0F0053679B /* ShowRecipeDelegate.swift in Sources */,
 				B36C1DC8246684B80057CDDF /* MulticastDelegate.swift in Sources */,
+				B350A4E724852DF200E6FA07 /* SignInViewController.swift in Sources */,
 				B31A817E2472BA100047B73B /* Recipe.swift in Sources */,
 				B36C1DCE24669B940057CDDF /* EditBookmarksListTableViewController.swift in Sources */,
 				B3E3C954248003C5003988BB /* EditTextFieldViewController.swift in Sources */,

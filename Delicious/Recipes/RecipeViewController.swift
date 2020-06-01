@@ -31,6 +31,7 @@ class RecipeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedIngredientsTableSegue" {
             let destination = segue.destination as? IngredientsTableViewController
+            destination?.view.translatesAutoresizingMaskIntoConstraints = false
             destination?.ingredientsList = recipe!.ingredientNamesList!
             destination?.measurementsList = recipe!.ingredientMeasurementsList!
         }

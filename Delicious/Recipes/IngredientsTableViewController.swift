@@ -27,22 +27,10 @@ class IngredientsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientsTableViewCell
-        for ingredient in ingredientsList {
-            cell.ingredientLabel.text = ingredient
-        }
-        for measurement in measurementsList {
-            cell.measurementLabel.text = measurement
-        }
+        let ingredient = ingredientsList[indexPath.row]
+        let measurement = measurementsList[indexPath.row]
+        cell.ingredientLabel.text = ingredient
+        cell.measurementLabel.text = measurement
         return cell
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
