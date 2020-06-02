@@ -332,14 +332,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="cYM-wf-aiC" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cYM-wf-aiC" id="bFZ-nT-2qd">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-9c-mOL">
-                                            <rect key="frame" x="162" y="11" width="232" height="21.5"/>
+                                            <rect key="frame" x="162" y="11" width="232" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1077,14 +1077,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="HnC-Yc-lYL" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HnC-Yc-lYL" id="xM7-LY-xy3">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56a-uD-uMt">
-                                            <rect key="frame" x="162" y="11" width="213" height="21"/>
+                                            <rect key="frame" x="162" y="11" width="213" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1325,7 +1325,7 @@
             </objects>
             <point key="canvasLocation" x="4058" y="-2473"/>
         </scene>
-        <!--Sign In View Controller-->
+        <!--Delicious-->
         <scene sceneID="OYh-AX-uGb">
             <objects>
                 <viewController id="2Nt-wS-Dvo" customClass="SignInViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
@@ -1376,7 +1376,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CXq-E5-bQm"/>
                     </view>
-                    <navigationItem key="navigationItem" id="FQi-zD-sjW"/>
+                    <navigationItem key="navigationItem" title="Delicious" id="FQi-zD-sjW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Il1-hb-oT5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1452,7 +1452,7 @@
                                 </constraints>
                                 <state key="normal" title="Login"/>
                                 <connections>
-                                    <segue destination="49e-Tb-3d3" kind="show" identifier="loginSegue" id="C89-oW-o9D"/>
+                                    <action selector="login:" destination="d3d-ul-fY5" eventType="touchUpInside" id="E41-au-Kk5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1486,6 +1486,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="vjc-Tp-mU5" id="K2E-Ow-VbJ"/>
                         <outlet property="passwordTextField" destination="MaD-A2-Owb" id="v32-gB-2Eh"/>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="loginSegue" id="ysS-hI-Mw9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozN-pe-hbX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1543,7 +1544,7 @@
                                 </constraints>
                                 <state key="normal" title="Sign up"/>
                                 <connections>
-                                    <segue destination="49e-Tb-3d3" kind="show" identifier="loginSegue" id="0w9-tL-Bt3"/>
+                                    <action selector="login:" destination="9oJ-2E-4gH" eventType="touchUpInside" id="iGe-iN-HUg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1577,6 +1578,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="SmU-KP-kIi" id="4fi-fL-mfI"/>
                         <outlet property="passwordTextField" destination="wpn-Go-0AY" id="sS0-4U-VG8"/>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="loginSegue" id="MAr-qo-y8h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CNf-mx-yhq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1610,6 +1612,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tuc-mx-Xh6"/>
-        <segue reference="0w9-tL-Bt3"/>
+        <segue reference="ysS-hI-Mw9"/>
     </inferredMetricsTieBreakers>
 </document>

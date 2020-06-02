@@ -8,12 +8,14 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class FirebaseController: NSObject, DatabaseProtocol {
     
     var listeners = MulticastDelegate<DatabaseListener>()
+    var authController: Auth
     var database: Firestore
     
     var recipeRef: CollectionReference?
@@ -32,7 +34,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var wishlistList: [Wishlist]
     
     override init() {
-        FirebaseApp.configure()
+        //FirebaseApp.configure()
+        authController = Auth.auth()
         database = Firestore.firestore()
         
         bookmarksList = [Bookmarks]()
@@ -42,6 +45,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         tagList = [Tag]()
         
         super.init()
+        
+        guard let userID = Auth.auth().currentUser?.uid else {
+            return
+        }
         
         self.setUpBookmarksListener()
         self.setUpShoppingListListener()
