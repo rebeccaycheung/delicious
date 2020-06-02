@@ -15,7 +15,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var handle: AuthStateDidChangeListenerHandle?
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
@@ -23,11 +23,13 @@ class SignInViewController: UIViewController {
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
         })
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handle!)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewDidLoad() {
@@ -48,6 +50,11 @@ class SignInViewController: UIViewController {
                 self.displayErrorMessage(error.localizedDescription)
             }
         }
+    }
+    
+    @IBAction func signUp(_ sender: Any) {
+        let destination = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController
+        self.navigationController?.pushViewController(destination!, animated: true)
     }
     
     func displayErrorMessage(_ message: String) {

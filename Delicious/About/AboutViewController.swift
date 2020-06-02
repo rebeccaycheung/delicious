@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class AboutViewController: UIViewController {
 
@@ -15,5 +16,14 @@ class AboutViewController: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
+    }
+    
+    @IBAction func logOut(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Log out error: \(error.localizedDescription)")
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 }

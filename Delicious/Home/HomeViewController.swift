@@ -20,7 +20,17 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
     }
-    
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: false)
+//    }
+//    
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
         switch segment.selectedSegmentIndex {
         case 0:

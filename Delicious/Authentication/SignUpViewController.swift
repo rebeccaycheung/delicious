@@ -14,23 +14,21 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     var handle: AuthStateDidChangeListenerHandle?
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
             if user != nil {
-                self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                self.performSegue(withIdentifier: "registerSegue", sender: nil)
             }
         })
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handle!)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     @IBAction func login(_ sender: Any) {
@@ -47,6 +45,11 @@ class SignUpViewController: UIViewController {
                 self.displayErrorMessage(error.localizedDescription)
             }
         }
+    }
+    
+    @IBAction func moveToLogin(_ sender: Any) {
+        let destination = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as? SignInViewController
+        self.navigationController?.pushViewController(destination!, animated: true)
     }
     
     func displayErrorMessage(_ message: String) {
