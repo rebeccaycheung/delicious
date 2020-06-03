@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class HomeViewController: UIViewController, ShowRecipeDelegate {
     
@@ -20,17 +21,14 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
     }
-//    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: false)
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: false)
-//    }
-//    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+        guard let userID = Auth.auth().currentUser?.uid else {
+            return
+        }
+    }
+    
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
         switch segment.selectedSegmentIndex {
         case 0:

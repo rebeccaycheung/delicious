@@ -170,8 +170,8 @@
             filePath = "Delicious/FirebaseController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "FirebaseController"
             landmarkType = "3">
          </BreakpointContent>
@@ -195,22 +195,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "933039CB-147C-427C-9DB0-B1B0DC9D85AE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Delicious/Home/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "FA7FC93D-43B3-47DE-8FDD-757736FA3F5E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -218,8 +202,8 @@
             filePath = "Delicious/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "segmentedControlPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>

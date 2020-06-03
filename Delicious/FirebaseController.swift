@@ -34,7 +34,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var wishlistList: [Wishlist]
     
     override init() {
-        //FirebaseApp.configure()
+        FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
         
@@ -45,10 +45,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         tagList = [Tag]()
         
         super.init()
-        
-        guard let userID = Auth.auth().currentUser?.uid else {
-            return
-        }
         
         self.setUpBookmarksListener()
         self.setUpShoppingListListener()
