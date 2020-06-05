@@ -9,6 +9,10 @@
 import UIKit
 
 class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
+    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+        //
+    }
+    
     
     let SECTION_NAME = 0
     let SECTION_IMAGE = 1
@@ -25,13 +29,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     let SECTION_ADD_TAGS = 12
     let SECTION_MENU_LIST = 13
     let SECTION_ADD_MENU = 14
-    
-//    var ingredientNameList: [String] = []
-//    var ingredientMeasurementList: [String] = []
-//    var instructionList: [String] = []
-//    var notesList: [String] = []
-//    var tagsList: [String] = []
-//    var menuList: [String] = []
+    let SECTION_DELETE_RECIPE = 15
     
     var recipe: Recipe?
     
@@ -49,24 +47,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         
         if (recipe != nil) {
             navigationItem.title = "Edit Recipe"
-//            if (recipe?.instructionsList != nil) {
-//                instructionList = recipe!.instructionsList!
-//            }
-//            if (recipe?.ingredientNamesList != nil) {
-//                ingredientNameList = recipe!.ingredientNamesList!
-//            }
-//            if (recipe?.ingredientMeasurementsList != nil) {
-//                ingredientMeasurementList = recipe!.ingredientMeasurementsList!
-//            }
-//            if (recipe?.notesList != nil) {
-//                notesList = recipe!.notesList!
-//            }
-//            if (recipe?.tagsList != nil) {
-//                tagsList = recipe!.tagsList!
-//            }
-//            if (recipe?.menuList != nil) {
-//                menuList = recipe!.menuList!
-//            }
         } else {
             navigationItem.title = "Create New Recipe"
         }
@@ -103,7 +83,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 15
+        return 16
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,6 +118,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
 //            return menuList.count
         case SECTION_ADD_MENU:
             return 1
+        case SECTION_DELETE_RECIPE:
+            if recipe != nil {
+                    return 1
+            }
+            return 0
         default:
             return 0
         }
@@ -261,6 +246,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
 //        case SECTION_ADD_MENU:
 //            cell.label.text = "Add to menu"
 //            return cell
+        case SECTION_DELETE_RECIPE:
+            cell.label.text = "Delete recipe"
+            return cell
         default:
             return cell
         }
@@ -292,6 +280,19 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
         case SECTION_ADD_MENU:
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
+        case SECTION_DELETE_RECIPE:
+            let alertController = UIAlertController(title: "Delete Recipe", message: "Are you sure you want to delete this recipe permantently?", preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { action in self.databaseController?.deleteRecipe(recipe: self.recipe!)
+                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
+                for controller in self.navigationController!.viewControllers as Array {
+                    if controller.isKind(of: HomeViewController.self) {
+                        self.navigationController!.popToViewController(controller, animated: true)
+                        break
+                    }
+                }
+            }))
+            self.present(alertController, animated: true, completion: nil)
         default:
             tableView.deselectRow(at: indexPath, animated: false)
             return

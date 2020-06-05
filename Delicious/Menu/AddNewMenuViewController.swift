@@ -1,44 +1,39 @@
 //
-//  EditInstructionViewController.swift
+//  AddNewMenuViewController.swift
 //  Delicious
 //
-//  Created by Rebecca Cheung on 29/5/20.
+//  Created by Rebecca Cheung on 5/6/20.
 //  Copyright © 2020 Rebecca Cheung. All rights reserved.
 //
 
 import UIKit
 
-class EditTextFieldViewController: UIViewController {
+class AddNewMenuViewController: UIViewController {
 
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var menuNameTextField: UITextField!
     
-    var labelTitle: String?
-    var enteredText: String?
-    
-    weak var recipeDelegate: AddToRecipeDelegate?
+    weak var databaseController: DatabaseProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Add \(labelTitle!)"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
-        label.text = labelTitle
-        textField.text = enteredText ?? ""
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
     }
     
     @IBAction func save(_ sender: Any) {
-        if textField.text != "" {
-            recipeDelegate?.addToRecipe(type: label.text!, value: textField.text!)
+        if menuNameTextField.text != "" {
+            let _ = databaseController?.addMenu(name: menuNameTextField.text!)
             navigationController?.popViewController(animated: true)
             return
         } else {
             var errorMsg = "Please ensure all fields are filled:\n"
             
-            if textField.text == "" {
-                errorMsg += "Must provide a value \n"
+            if menuNameTextField.text == "" {
+                errorMsg += "Must provide a name \n"
             }
             
             displayMessage(title: "Not all fields filled", message: errorMsg)

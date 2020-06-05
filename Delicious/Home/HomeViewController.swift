@@ -42,11 +42,23 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
         }
     }
     
+    @IBAction func addItemButton(_ sender: Any) {
+        if selectedView == "Recipe" {
+            performSegue(withIdentifier: "addRecipeSegue", sender: self)
+        } else if selectedView == "Menu" {
+            performSegue(withIdentifier: "addMenuSegue", sender: self)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedRecipeCollectionSegue" {
             let destination = segue.destination as? RecipeCollectionViewController
             destination?.selectedControl = selectedView
             destination?.showRecipeDelegate = self
+        } else if segue.identifier == "addRecipeSegue", selectedView == "Recipe" {
+            let destination = segue.destination as? EditRecipeTableViewController
+        } else if segue.identifier == "addMenuSegue", selectedView == "Menu" {
+            let destination = segue.destination as? AddNewMenuViewController
         }
     }
     

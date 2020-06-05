@@ -8,7 +8,11 @@
 
 import UIKit
 
-class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, DatabaseListener {
+class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, DatabaseListener, AddToRecipeDelegate {
+    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+        //
+    }
+    
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var button: UIButton!
@@ -29,6 +33,8 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        
+        button.setTitle("Add new tag", for: .normal)
         
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
@@ -62,9 +68,10 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     func onTagListChange(change: DatabaseChange, tag: [Tag]) {
         for i in tag {
-            pickerData.append(i.name)
+            if !pickerData.contains(i.name) {
+                pickerData.append(i.name)
+            }
         }
-        
         self.pickerView.reloadAllComponents()
     }
     
@@ -80,10 +87,22 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         return pickerData[row]
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addNewItemSegue" {
+            let destination = segue.destination as! EditTextFieldViewController
+            destination.labelTitle = "New Tag"
+            destination.recipeDelegate = self
+        }
+    }
+    
     @IBAction func save(_ sender: Any) {
         let tag = pickerData[pickerView.selectedRow(inComponent: 0)]
         recipeDelegate?.addToRecipe(type: "Tag", value: tag)
         navigationController?.popViewController(animated: true)
         return
+    }
+    
+    func addToRecipe(type: String, value: String) {
+        databaseController?.addTag(name: value)
     }
 }

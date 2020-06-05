@@ -9,6 +9,10 @@
 import UIKit
 
 class ShoppingListTableViewController: UITableViewController, DatabaseListener {
+    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+        //
+    }
+    
     func onTagListChange(change: DatabaseChange, tag: [Tag]) {
         //
     }

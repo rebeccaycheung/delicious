@@ -18,6 +18,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var authController: Auth
     var database: Firestore
     
+    var menuRef: CollectionReference?
+    let DEFAULT_MENU_NAME = "Default Menu"
+    var defaultMenu: Menu
+    
     var recipeRef: CollectionReference?
     var recipeList: [Recipe]
     
@@ -38,19 +42,120 @@ class FirebaseController: NSObject, DatabaseProtocol {
         authController = Auth.auth()
         database = Firestore.firestore()
         
+        defaultMenu = Menu()
+        
+        recipeList = [Recipe]()
+        tagList = [Tag]()
         bookmarksList = [Bookmarks]()
         shoppingItemList = [ShoppingList]()
         wishlistList = [Wishlist]()
-        recipeList = [Recipe]()
-        tagList = [Tag]()
         
         super.init()
         
+        self.setUpRecipeListener()
+        self.setUpMenuListener()
+        self.setUpTagListener()
         self.setUpBookmarksListener()
         self.setUpShoppingListListener()
         self.setUpWishlistListener()
-        self.setUpRecipeListener()
-        self.setUpTagListener()
+    }
+    
+    func setUpRecipeListener() {
+        recipeRef = database.collection("recipe")
+        recipeRef?.addSnapshotListener { (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            self.parseRecipeSnapshot(snapshot: querySnapshot)
+            self.setUpMenuListener()
+        }
+    }
+    
+    func parseRecipeSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { (change) in
+            let recipeID = change.document.documentID
+            print(recipeID)
+            
+            var parsedRecipe: Recipe?
+            
+            do {
+                parsedRecipe = try change.document.data(as: Recipe.self)
+            } catch {
+                print("Unable to decode recipe. Is the recipe malformed?")
+                return
+            }
+            
+            guard let recipe = parsedRecipe else {
+                print("Document doesn't exist")
+                return;
+            }
+            
+            recipe.id = recipeID
+            if change.type == .added {
+                recipeList.append(recipe)
+            } else if change.type == .modified {
+                let index = getRecipeIndexByID(recipeID)!
+                recipeList[index] = recipe
+            } else if change.type == .removed {
+                if let index = getRecipeIndexByID(recipeID) {
+                    recipeList.remove(at: index)
+                }
+            }
+        }
+        
+        listeners.invoke{ (listener) in
+            if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
+                listener.onRecipeListChange(change: .update, recipe: recipeList)
+            }
+        }
+    }
+    
+    func getRecipeIndexByID(_ id: String) -> Int? {
+        if let recipe = getRecipeByID(id) {
+            return recipeList.firstIndex(of: recipe)
+        }
+        return nil
+    }
+    
+    func getRecipeByID(_ id: String) -> Recipe? {
+        for recipe in recipeList {
+            if recipe.id == id {
+                return recipe
+            }
+        }
+        return nil
+    }
+    
+    func setUpMenuListener() {
+        menuRef = database.collection("menu")
+        menuRef?.whereField("name", isEqualTo: DEFAULT_MENU_NAME).addSnapshotListener {
+            (querySnapshot, error) in
+            guard let querySnapshot = querySnapshot, let menuSnapshot = querySnapshot.documents.first else {
+                print("Error fetching teams: \(error!)")
+                return
+            }
+            self.parseMenuSnapshot(snapshot: menuSnapshot)
+        }
+    }
+    
+    func parseMenuSnapshot(snapshot: QueryDocumentSnapshot) {
+        defaultMenu = Menu()
+        defaultMenu.name = snapshot.data()["name"] as! String
+        defaultMenu.id = snapshot.documentID
+        if let recipeReferences = snapshot.data()["menu"] as? [DocumentReference] {
+            for reference in recipeReferences {
+                if let recipe = getRecipeByID(reference.documentID) {
+                    defaultMenu.recipes.append(recipe)
+                }
+            }
+        }
+        
+        listeners.invoke{ (listener) in
+            if listener.listenerType == ListenerType.menu || listener.listenerType == ListenerType.all {
+                listener.onMenuChange(change: .update, menuRecipes: defaultMenu.recipes)
+            }
+        }
     }
     
     func setUpTagListener() {
@@ -114,72 +219,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         for tag in tagList {
             if tag.id == id {
                 return tag
-            }
-        }
-        return nil
-    }
-    
-    func setUpRecipeListener() {
-        recipeRef = database.collection("recipe")
-        recipeRef?.addSnapshotListener { (querySnapshot, error) in
-            guard let querySnapshot = querySnapshot else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-            self.parseRecipeSnapshot(snapshot: querySnapshot)
-        }
-    }
-    
-    func parseRecipeSnapshot(snapshot: QuerySnapshot) {
-        snapshot.documentChanges.forEach { (change) in
-            let recipeID = change.document.documentID
-            print(recipeID)
-            
-            var parsedRecipe: Recipe?
-            
-            do {
-                parsedRecipe = try change.document.data(as: Recipe.self)
-            } catch {
-                print("Unable to decode recipe. Is the recipe malformed?")
-                return
-            }
-            
-            guard let recipe = parsedRecipe else {
-                print("Document doesn't exist")
-                return;
-            }
-            
-            recipe.id = recipeID
-            if change.type == .added {
-                recipeList.append(recipe)
-            } else if change.type == .modified {
-                let index = getRecipeIndexByID(recipeID)!
-                recipeList[index] = recipe
-            } else if change.type == .removed {
-                if let index = getRecipeIndexByID(recipeID) {
-                    recipeList.remove(at: index)
-                }
-            }
-        }
-        
-        listeners.invoke{ (listener) in
-            if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
-                listener.onRecipeListChange(change: .update, recipe: recipeList)
-            }
-        }
-    }
-    
-    func getRecipeIndexByID(_ id: String) -> Int? {
-        if let recipe = getRecipeByID(id) {
-            return recipeList.firstIndex(of: recipe)
-        }
-        return nil
-    }
-    
-    func getRecipeByID(_ id: String) -> Recipe? {
-        for recipe in recipeList {
-            if recipe.id == id {
-                return recipe
             }
         }
         return nil
@@ -386,6 +425,39 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func cleanup() {
     }
     
+    func addMenu(name: String) -> Menu {
+        let menu = Menu()
+        menu.name = name
+        if let menuRef = menuRef?.addDocument(data: ["name" : name, "recipes": []]) {
+            menu.id = menuRef.documentID
+        }
+        return menu
+    }
+    
+    func addRecipeToMenu(recipe: Recipe, menu: Menu) -> Bool {
+        guard let recipeID = recipe.id, let menuID = menu.id else {
+            return false
+        }
+        if let newRecipeRef = recipeRef?.document(recipeID) {
+            menuRef?.document(menuID).updateData(["recipes" : FieldValue.arrayUnion([newRecipeRef])] )
+        }
+        return true
+    }
+    
+    func deleteMenu(menu: Menu) {
+        if let menuID = menu.id {
+            menuRef?.document(menuID).delete()
+        }
+    }
+    
+    func removeRecipeFromMenu(recipe: Recipe, menu: Menu) {
+        if menu.recipes.contains(recipe), let menuID = menu.id, let recipeID = recipe.id {
+            if let removedRef = recipeRef?.document(recipeID) {
+                menuRef?.document(menuID).updateData(["recipes": FieldValue.arrayRemove([removedRef])] )
+            }
+        }
+    }
+    
     func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String]) {
         let recipe = Recipe()
         recipe.name = name
@@ -551,8 +623,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
             listener.onWishlistChange (change: .update, wishlist: wishlistList)
         } else if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
             listener.onRecipeListChange(change: .update, recipe: recipeList)
-        }  else if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all {
+        } else if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all {
             listener.onTagListChange(change: .update, tag: tagList)
+        } else if listener.listenerType == ListenerType.menu || listener.listenerType == ListenerType.all {
+            listener.onMenuChange(change: .update, menuRecipes: defaultMenu.recipes)
         }
     }
 

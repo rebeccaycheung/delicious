@@ -11,6 +11,7 @@ import Foundation
 class Recipe: NSObject, Codable {
     var id: String?
     var name: String = ""
+    var imageReference: String?
     var source: String?
     var cookTime: Int = 0
     var servingSize: Int = 0
@@ -24,6 +25,7 @@ class Recipe: NSObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case imageReference
         case source
         case cookTime
         case servingSize

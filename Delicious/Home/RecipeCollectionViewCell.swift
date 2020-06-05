@@ -9,6 +9,6 @@
 import UIKit
 
 class RecipeCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var recipeNameLabel: UILabel!
+    @IBOutlet weak var recipeImage: UIImageView!
 }
