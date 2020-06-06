@@ -21,6 +21,10 @@ class EditIngredientViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "Add Ingredient"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
         ingredient.text = selectedIngredient ?? ""
         measurement.text = selectedMeasurement ?? ""
     }

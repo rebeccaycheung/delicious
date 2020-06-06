@@ -12,10 +12,6 @@ import FirebaseFirestore
 import FirebaseStorage
 
 class RecipeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
-        //
-    }
-    
     
     private let reuseIdentifier = "recipeCell"
     private let sectionInsets = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 50.0, right: 20.0)
@@ -23,14 +19,12 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     var selectedControl: String?
     
-    var dataList: [Recipe] = []
+    var dataList = [Recipe]()
     var imageList: [UIImage] = []
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .recipe
     
-    var usersReference = Firestore.firestore().collection("users")
     var storageReference = Storage.storage()
-    var snapshotListener: ListenerRegistration?
     
     weak var showRecipeDelegate: ShowRecipeDelegate?
     
@@ -39,33 +33,45 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
-        
-        if selectedControl == "Recipe" {
-            dataList = [Recipe]()
-        } else if selectedControl == "Menu" {
-            dataList = []
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
         
-        if let imageReference = dataList[0].imageReference {
-            let ref = self.storageReference.reference(forURL: imageReference)
-            ref.getData(maxSize: 1 * 1024 * 1024, completion: { (data, error) in
+//        if selectedControl == "Recipe" {
+//            print("recipe")
+//            listenerType = .recipe
+//        } else if selectedControl == "Menu" {
+//            print("menu")
+//            listenerType = .menu
+//        }
+        
+        var imageReference = dataList[0].imageReference
+        let ref = self.storageReference.reference(forURL: imageReference!)
+        let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            do {
                 if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let image = UIImage(data: data) {
-                    self.imageList.append(image)
+                    print(error)
+                } else {
+                    let image = UIImage(data: data!)
+                    self.imageList.append(image!)
+                    self.collectionView.reloadSections([0])
                 }
-            })
+            } catch let err {
+                print(err)
+            }
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
+    }
+    
+    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+        dataList = menuRecipes
+        collectionView.reloadData()
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
@@ -101,9 +107,12 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCollectionViewCell
         let recipe = dataList[indexPath.row]
         cell.recipeNameLabel.text = recipe.name
+        cell.layer.cornerRadius = 12
+        
         if imageList.count > 0 {
             let image = imageList[indexPath.row]
             cell.recipeImage.image = image
+            cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
         }
         return cell
     }

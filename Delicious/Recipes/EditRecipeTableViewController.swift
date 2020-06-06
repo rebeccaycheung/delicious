@@ -182,19 +182,10 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
             return cell
         case SECTION_INGREDIENT_LIST:
-            if let ingredientNameList = recipe?.ingredientNamesList {
-                if ingredientNameList.count > 0 {
-                    for ingredient in ingredientNameList {
-                        cell.label.text = ingredient
-                    }
-                }
-            }
-            if let ingredientMeasurementList = recipe?.ingredientMeasurementsList {
-                if ingredientMeasurementList.count > 0 {
-                    for measurement in ingredientMeasurementList {
-                        cell.label.text = measurement
-                    }
-                }
+            if let ingredientNameList = recipe?.ingredientNamesList, let ingredientMeasurementList = recipe?.ingredientMeasurementsList{
+                    let ingredient = ingredientNameList[indexPath.row]
+                    let measurement = ingredientMeasurementList[indexPath.row]
+                    cell.label.text = ingredient
             }
             return cell
         case SECTION_ADD_INGREDIENT:
@@ -202,11 +193,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             return cell
         case SECTION_INSTRUCTION_LIST:
             if let instructionList = recipe?.instructionsList {
-                if instructionList.count > 0 {
-                    for instruction in instructionList {
-                        cell.label.text = instruction
-                    }
-                }
+                let instruction = instructionList[indexPath.row]
+                cell.label.text = instruction
             }
             return cell
         case SECTION_ADD_INSTRUCTION:
@@ -214,11 +202,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             return cell
         case SECTION_NOTES_LIST:
             if let notesList = recipe?.notesList {
-                if notesList.count > 0 {
-                    for note in notesList {
-                        cell.label.text = note
-                    }
-                }
+                let note = notesList[indexPath.row]
+                cell.label.text = note
             }
             return cell
         case SECTION_ADD_NOTES:
@@ -226,11 +211,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             return cell
         case SECTION_TAGS_LIST:
             if let tagsList = recipe?.tagsList {
-                if tagsList.count > 0 {
-                    for tag in tagsList {
-                        cell.label.text = tag
-                    }
-                }
+                let tag = tagsList[indexPath.row]
+                cell.label.text = tag
             }
             return cell
         case SECTION_ADD_TAGS:
