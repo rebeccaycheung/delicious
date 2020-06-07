@@ -9,12 +9,16 @@
 import UIKit
 import FirebaseStorage
 
-class RecipeViewController: UIViewController {
+class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var cookTimeLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
+    
+    @IBOutlet weak var ingredientsTable: UITableView!
+    
+    @IBOutlet weak var liveModeButton: UIButton!
     
     var recipe: Recipe?
     
@@ -49,6 +53,21 @@ class RecipeViewController: UIViewController {
                 print(err)
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recipe!.ingredientNamesList!.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! IngredientsTableViewCell
+        let ingredientsList = recipe!.ingredientNamesList!
+        let measurementsList = recipe!.ingredientMeasurementsList!
+        let ingredient = ingredientsList[indexPath.row]
+        let measurement = measurementsList[indexPath.row]
+        cell.ingredientLabel.text = ingredient
+        cell.measurementLabel.text = measurement
+        return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
