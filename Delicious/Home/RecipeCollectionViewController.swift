@@ -14,7 +14,7 @@ import FirebaseStorage
 class RecipeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, DatabaseListener {
     
     private let reuseIdentifier = "recipeCell"
-    private let sectionInsets = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 50.0, right: 20.0)
+    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 50.0, right: 20.0)
     private let itemsPerRow: CGFloat = 2
     
     var selectedControl: String?
@@ -47,21 +47,21 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
 //            listenerType = .menu
 //        }
         
-        var imageReference = dataList[0].imageReference
-        let ref = self.storageReference.reference(forURL: imageReference!)
-        let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-            do {
-                if let error = error {
-                    print(error)
-                } else {
-                    let image = UIImage(data: data!)
-                    self.imageList.append(image!)
-                    self.collectionView.reloadSections([0])
-                }
-            } catch let err {
-                print(err)
-            }
-        }
+//        var imageReference = dataList[0].imageReference
+//        let ref = self.storageReference.reference(forURL: imageReference!)
+//        let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+//            do {
+//                if let error = error {
+//                    print(error)
+//                } else {
+//                    let image = UIImage(data: data!)
+//                    self.imageList.append(image!)
+//                    self.collectionView.reloadSections([0])
+//                }
+//            } catch let err {
+//                print(err)
+//            }
+//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

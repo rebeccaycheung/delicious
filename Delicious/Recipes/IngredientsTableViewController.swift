@@ -10,8 +10,8 @@ import UIKit
 
 class IngredientsTableViewController: UITableViewController {
     
-    var ingredientsList: [String] = []
-    var measurementsList: [String] = []
+    var titleDataList: [String] = []
+    var detailDataList: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,15 +22,19 @@ class IngredientsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ingredientsList.count
+        return titleDataList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ingredientCell", for: indexPath) as! IngredientsTableViewCell
-        let ingredient = ingredientsList[indexPath.row]
-        let measurement = measurementsList[indexPath.row]
-        cell.ingredientLabel.text = ingredient
-        cell.measurementLabel.text = measurement
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! IngredientsTableViewCell
+        let title = titleDataList[indexPath.row]
+        cell.titleLabel.text = title
+        if detailDataList.count > 0 {
+            let detail = detailDataList[indexPath.row]
+            cell.detailLabel.text = detail
+        } else {
+            cell.detailLabel.text = ""
+        }
         return cell
     }
 }

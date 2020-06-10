@@ -49,8 +49,6 @@
 		B3D40B8C248BAB6300D91970 /* SegmentControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D40B8B248BAB6300D91970 /* SegmentControlDelegate.swift */; };
 		B3E0568D247A2F6A0046CBEE /* IngredientsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E0568C247A2F6A0046CBEE /* IngredientsTableViewCell.swift */; };
 		B3E0568F247A32CE0046CBEE /* IngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E0568E247A32CE0046CBEE /* IngredientsTableViewController.swift */; };
-		B3E05691247A36850046CBEE /* InstructionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E05690247A36850046CBEE /* InstructionsTableViewController.swift */; };
-		B3E05693247A36A70046CBEE /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E05692247A36A70046CBEE /* InstructionTableViewCell.swift */; };
 		B3E394BE24550D6E00C95A66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394BD24550D6E00C95A66 /* AppDelegate.swift */; };
 		B3E394C024550D6E00C95A66 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */; };
 		B3E394C224550D6E00C95A66 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394C124550D6E00C95A66 /* FirstViewController.swift */; };
@@ -109,8 +107,6 @@
 		B3D40B8B248BAB6300D91970 /* SegmentControlDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlDelegate.swift; sourceTree = "<group>"; };
 		B3E0568C247A2F6A0046CBEE /* IngredientsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsTableViewCell.swift; sourceTree = "<group>"; };
 		B3E0568E247A32CE0046CBEE /* IngredientsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsTableViewController.swift; sourceTree = "<group>"; };
-		B3E05690247A36850046CBEE /* InstructionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsTableViewController.swift; sourceTree = "<group>"; };
-		B3E05692247A36A70046CBEE /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		B3E394BA24550D6E00C95A66 /* Delicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E394BD24550D6E00C95A66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,8 +151,6 @@
 				B355DE562476AD4000FD113D /* EditRecipeTableViewController.swift */,
 				B3E0568C247A2F6A0046CBEE /* IngredientsTableViewCell.swift */,
 				B3E0568E247A32CE0046CBEE /* IngredientsTableViewController.swift */,
-				B3E05692247A36A70046CBEE /* InstructionTableViewCell.swift */,
-				B3E05690247A36850046CBEE /* InstructionsTableViewController.swift */,
 				B3E3C953248003C5003988BB /* EditTextFieldViewController.swift */,
 				B3E3C951247FFC3F003988BB /* EditIngredientViewController.swift */,
 				B38BC00724834902006CCD3E /* EditUIPickerViewController.swift */,
@@ -448,7 +442,6 @@
 				B3CDC6B424829A7F00BD2041 /* AddToRecipeDelegate.swift in Sources */,
 				B3C090D6248A5355004F0C74 /* Menu.swift in Sources */,
 				B37BBB82246FBCD5001554EC /* ShoppingList.swift in Sources */,
-				B3E05691247A36850046CBEE /* InstructionsTableViewController.swift in Sources */,
 				B37BBB88246FD9CC001554EC /* EditShoppingItemViewController.swift in Sources */,
 				B3E394BE24550D6E00C95A66 /* AppDelegate.swift in Sources */,
 				B3C090D4248A501B004F0C74 /* AddNewMenuViewController.swift in Sources */,
@@ -461,7 +454,6 @@
 				B37BBB9324700ED5001554EC /* EditKitchenWishlistViewController.swift in Sources */,
 				B36C1DC4246683950057CDDF /* Bookmarks.swift in Sources */,
 				B355DE4F2476216200FD113D /* EditShoppingListTableViewController.swift in Sources */,
-				B3E05693247A36A70046CBEE /* InstructionTableViewCell.swift in Sources */,
 				B37BBB8F2470006A001554EC /* Wishlist.swift in Sources */,
 				B355DE592476B5E200FD113D /* EditRecipeTableViewCell.swift in Sources */,
 				B36C1DCA24668A1E0057CDDF /* DatabaseProtocol.swift in Sources */,

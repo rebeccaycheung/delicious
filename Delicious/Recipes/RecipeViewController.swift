@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseStorage
 
-class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecipeViewController: UIViewController {
     
     @IBOutlet weak var cookTimeLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
@@ -55,35 +55,18 @@ class RecipeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipe!.ingredientNamesList!.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! IngredientsTableViewCell
-        let ingredientsList = recipe!.ingredientNamesList!
-        let measurementsList = recipe!.ingredientMeasurementsList!
-        let ingredient = ingredientsList[indexPath.row]
-        let measurement = measurementsList[indexPath.row]
-        cell.ingredientLabel.text = ingredient
-        cell.measurementLabel.text = measurement
-        return cell
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embedIngredientsTableSegue" {
+        if segue.identifier == "ingredientsSegue" {
             let destination = segue.destination as? IngredientsTableViewController
-            destination?.view.translatesAutoresizingMaskIntoConstraints = false
-            destination?.ingredientsList = recipe!.ingredientNamesList!
-            destination?.measurementsList = recipe!.ingredientMeasurementsList!
-        }
-        
-        if segue.identifier == "embedInstructionsTableSegue" {
-            let destination = segue.destination as? InstructionsTableViewController
-            destination?.instructionsList = recipe!.instructionsList!
-        }
-        
-        if segue.identifier == "editRecipeSegue" {
+            destination?.titleDataList = recipe!.ingredientNamesList!
+            destination?.detailDataList = recipe!.ingredientMeasurementsList!
+        } else if segue.identifier == "instructionsSegue" {
+            let destination = segue.destination as? IngredientsTableViewController
+            destination?.titleDataList = recipe!.instructionsList!
+        } else if segue.identifier == "notesSegue" {
+            let destination = segue.destination as? IngredientsTableViewController
+            destination?.titleDataList = recipe!.notesList!
+        } else if segue.identifier == "editRecipeSegue" {
             let destination = segue.destination as? EditRecipeTableViewController
             destination?.recipe = recipe
         }
