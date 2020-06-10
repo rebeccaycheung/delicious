@@ -19,7 +19,8 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     var selectedControl: String?
     
-    var dataList = [Recipe]()
+    var recipeDataList: [Recipe]?
+    var menuDataList: [Menu]?
     var imageList: [UIImage] = []
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .recipe
@@ -27,6 +28,7 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     var storageReference = Storage.storage()
     
     weak var showRecipeDelegate: ShowRecipeDelegate?
+    weak var showMenuDelegate: ShowMenuDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +39,16 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        databaseController?.addListener(listener: self)
         
-//        if selectedControl == "Recipe" {
-//            print("recipe")
-//            listenerType = .recipe
-//        } else if selectedControl == "Menu" {
-//            print("menu")
-//            listenerType = .menu
-//        }
+        if selectedControl == "Recipe" {
+            print("recipe")
+            listenerType = .recipe
+        } else if selectedControl == "Menu" {
+            print("menu")
+            listenerType = .menu
+        }
+        
+        databaseController?.addListener(listener: self)
         
 //        var imageReference = dataList[0].imageReference
 //        let ref = self.storageReference.reference(forURL: imageReference!)
@@ -69,13 +72,13 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
         databaseController?.removeListener(listener: self)
     }
     
-    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
-        dataList = menuRecipes
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        menuDataList = menu
         collectionView.reloadData()
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        dataList = recipe
+        recipeDataList = recipe
         collectionView.reloadData()
     }
     
@@ -100,13 +103,21 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataList.count
+        if selectedControl == "Recipe" {
+            return recipeDataList!.count
+        }
+        return menuDataList!.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCollectionViewCell
-        let recipe = dataList[indexPath.row]
-        cell.recipeNameLabel.text = recipe.name
+        if selectedControl == "Recipe" {
+            let recipe = recipeDataList![indexPath.row]
+            cell.recipeNameLabel.text = recipe.name
+        } else {
+            let menu = menuDataList![indexPath.row]
+            cell.recipeNameLabel.text = menu.name
+        }
         cell.layer.cornerRadius = 12
         
         if imageList.count > 0 {
@@ -133,7 +144,11 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let _ = showRecipeDelegate?.showRecipe(recipe: dataList[indexPath.row])
+        if selectedControl == "Recipe" {
+            let _ = showRecipeDelegate?.showRecipe(recipe: recipeDataList![indexPath.row])
+        } else {
+            let _ = showMenuDelegate?.showMenu(menu: menuDataList![indexPath.row])
+        }
         return true
     }
     

@@ -42,6 +42,7 @@
 		B3B34DD024796E0F0053679B /* ShowRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B34DCF24796E0F0053679B /* ShowRecipeDelegate.swift */; };
 		B3C090D4248A501B004F0C74 /* AddNewMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C090D3248A501B004F0C74 /* AddNewMenuViewController.swift */; };
 		B3C090D6248A5355004F0C74 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C090D5248A5355004F0C74 /* Menu.swift */; };
+		B3C8A0172490E66800C2167C /* ShowMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C8A0162490E66800C2167C /* ShowMenuDelegate.swift */; };
 		B3CDC6B424829A7F00BD2041 /* AddToRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CDC6B324829A7F00BD2041 /* AddToRecipeDelegate.swift */; };
 		B3D40B86248B755B00D91970 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D40B85248B755B00D91970 /* MenuViewController.swift */; };
 		B3D40B88248B756700D91970 /* EditMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D40B87248B756700D91970 /* EditMenuTableViewController.swift */; };
@@ -100,6 +101,7 @@
 		B3B34DCF24796E0F0053679B /* ShowRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRecipeDelegate.swift; sourceTree = "<group>"; };
 		B3C090D3248A501B004F0C74 /* AddNewMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMenuViewController.swift; sourceTree = "<group>"; };
 		B3C090D5248A5355004F0C74 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		B3C8A0162490E66800C2167C /* ShowMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMenuDelegate.swift; sourceTree = "<group>"; };
 		B3CDC6B324829A7F00BD2041 /* AddToRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToRecipeDelegate.swift; sourceTree = "<group>"; };
 		B3D40B85248B755B00D91970 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B3D40B87248B756700D91970 /* EditMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuTableViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				B3874B0A2473F7DE0015B373 /* RecipeCollectionViewCell.swift */,
 				B3874B0E2473FCF70015B373 /* RecipeCollectionViewController.swift */,
 				B3B34DCF24796E0F0053679B /* ShowRecipeDelegate.swift */,
+				B3C8A0162490E66800C2167C /* ShowMenuDelegate.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				B350A4E724852DF200E6FA07 /* SignInViewController.swift in Sources */,
 				B31A817E2472BA100047B73B /* Recipe.swift in Sources */,
 				B36C1DCE24669B940057CDDF /* EditBookmarksListTableViewController.swift in Sources */,
+				B3C8A0172490E66800C2167C /* ShowMenuDelegate.swift in Sources */,
 				B3E3C954248003C5003988BB /* EditTextFieldViewController.swift in Sources */,
 				B37BBB9124700089001554EC /* KitchenWishlistTableViewCell.swift in Sources */,
 				B3D40B8A248B760E00D91970 /* EditMenuTableViewCell.swift in Sources */,

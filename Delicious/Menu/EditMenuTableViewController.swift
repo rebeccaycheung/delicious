@@ -48,7 +48,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
         //
     }
     
-    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         //
     }
     
@@ -77,7 +77,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
         case SECTION_NAME:
             return 1
         case SECTION_INCLUDED_RECIPES:
-            return menu?.recipes.count ?? 0
+            return menu?.recipes?.count ?? 0
         case SECTION_ADD_RECIPE:
             return 1
         case SECTION_IMAGE:
@@ -107,17 +107,13 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
             return ""
         }
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
         return cell
     }
-    */
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

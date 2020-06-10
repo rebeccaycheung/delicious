@@ -9,7 +9,7 @@
 import UIKit
 
 class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, DatabaseListener, AddToRecipeDelegate {
-    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         //
     }
     

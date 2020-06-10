@@ -15,9 +15,6 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
-    
-    @IBOutlet weak var ingredientsTable: UITableView!
-    
     @IBOutlet weak var liveModeButton: UIButton!
     
     var recipe: Recipe?

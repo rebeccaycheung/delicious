@@ -11,7 +11,7 @@ import UIKit
 class Menu: NSObject, Codable {
     var id: String?
     var name: String = ""
-    var recipes: [Recipe] = []
+    var recipes: [Recipe]?
     
     enum CodingKeys: String, CodingKey {
         case id

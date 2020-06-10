@@ -9,7 +9,7 @@
 import UIKit
 
 class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
-    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         //
     }
     

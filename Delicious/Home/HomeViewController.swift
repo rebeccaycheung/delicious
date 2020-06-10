@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class HomeViewController: UIViewController, ShowRecipeDelegate {
+class HomeViewController: UIViewController, ShowRecipeDelegate, ShowMenuDelegate {
     
     @IBOutlet weak var segment: UISegmentedControl!
     
@@ -30,12 +30,18 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
     }
     
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
+        //Reference - https://stackoverflow.com/questions/30484268/refresh-container-view-holding-uitableview-swift/30485630
+        var collection: RecipeCollectionViewController = self.children[0] as! RecipeCollectionViewController
         switch segment.selectedSegmentIndex {
         case 0:
             selectedView = "Recipe"
+            collection.selectedControl = selectedView
+            collection.viewWillAppear(true)
             break
         case 1:
             selectedView = "Menu"
+            collection.selectedControl = selectedView
+            collection.viewWillAppear(true)
             break
         default:
             break
@@ -55,6 +61,7 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
             let destination = segue.destination as? RecipeCollectionViewController
             destination?.selectedControl = selectedView
             destination?.showRecipeDelegate = self
+            destination?.showMenuDelegate = self
         } else if segue.identifier == "addRecipeSegue", selectedView == "Recipe" {
             let destination = segue.destination as? EditRecipeTableViewController
         } else if segue.identifier == "addMenuSegue", selectedView == "Menu" {
@@ -66,6 +73,13 @@ class HomeViewController: UIViewController, ShowRecipeDelegate {
         let chosenRecipe = recipe
         let destination = self.storyboard?.instantiateViewController(withIdentifier: "RecipeViewController") as? RecipeViewController
         destination?.recipe = chosenRecipe
+        self.navigationController?.pushViewController(destination!, animated: true)
+    }
+    
+    func showMenu(menu: Menu) {
+        let chosenMenu = menu
+        let destination = self.storyboard?.instantiateViewController(withIdentifier: "MenuViewController") as? MenuViewController
+        destination?.menu = chosenMenu
         self.navigationController?.pushViewController(destination!, animated: true)
     }
 }

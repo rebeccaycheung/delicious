@@ -1683,7 +1683,7 @@
         <!--Menu View Controller-->
         <scene sceneID="D5a-Ze-iXA">
             <objects>
-                <viewController id="2Sm-k2-R0D" customClass="MenuViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="MenuViewController" storyboardIdentifier="MenuViewController" id="2Sm-k2-R0D" customClass="MenuViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LZV-uK-8N0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1818,7 +1818,7 @@
                     <navigationItem key="navigationItem" id="9c0-sC-gHD">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="0Jo-VJ-mEu">
                             <connections>
-                                <segue destination="VyG-n5-vSg" kind="show" id="vvh-Y0-x5G"/>
+                                <segue destination="VyG-n5-vSg" kind="show" identifier="editMenuSegue" id="vvh-Y0-x5G"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1884,7 +1884,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="Bde-fh-UXb"/>
         <segue reference="tuc-mx-Xh6"/>
-        <segue reference="MJa-PR-DLO"/>
+        <segue reference="HB1-b7-nLK"/>
         <segue reference="sh1-MQ-4b1"/>
     </inferredMetricsTieBreakers>
 </document>

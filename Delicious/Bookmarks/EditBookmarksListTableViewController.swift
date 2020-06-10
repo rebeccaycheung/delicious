@@ -9,7 +9,7 @@
 import UIKit
 
 class EditBookmarksListTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe]) {
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         //
     }
     
