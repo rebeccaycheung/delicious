@@ -9,10 +9,6 @@
 import UIKit
 
 class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, DatabaseListener, AddToRecipeDelegate {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var button: UIButton!
@@ -20,6 +16,8 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     var selectedLabel: String?
     var pickerData: [String] = []
+    var menuList: [Menu] = []
+    var recipeList: [Recipe] = []
     
     weak var recipeDelegate: AddToRecipeDelegate?
     
@@ -29,12 +27,20 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        label.text = selectedLabel
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
+        navigationItem.title = "Edit \(selectedLabel!)"
+        
+        label.text = "Add \(selectedLabel!)"
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
-        button.setTitle("Add new tag", for: .normal)
+        if selectedLabel == "Recipe" {
+            button.isHidden = true
+        }
+        button.setTitle("Add new \(selectedLabel!)", for: .normal)
         
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
@@ -42,6 +48,19 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        switch selectedLabel {
+        case "Tag":
+            listenerType = .tag
+            break
+        case "Menu":
+            listenerType = .menu
+            break
+        case "Recipe":
+            listenerType = .recipe
+            break
+        default:
+            break
+        }
         databaseController?.addListener(listener: self)
     }
     
@@ -63,7 +82,23 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
+        for i in recipe {
+            if !pickerData.contains(i.name) {
+                pickerData.append(i.name)
+                recipeList.append(i)
+            }
+        }
+        self.pickerView.reloadAllComponents()
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        for i in menu {
+            if !pickerData.contains(i.name) {
+                pickerData.append(i.name)
+                menuList.append(i)
+            }
+        }
+        self.pickerView.reloadAllComponents()
     }
     
     func onTagListChange(change: DatabaseChange, tag: [Tag]) {
@@ -90,19 +125,50 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addNewItemSegue" {
             let destination = segue.destination as! EditTextFieldViewController
-            destination.labelTitle = "New Tag"
+            destination.labelTitle = "New \(selectedLabel!)"
             destination.recipeDelegate = self
         }
     }
     
+    @IBAction func addNewItem(_ sender: Any) {
+        switch selectedLabel {
+        case "Tag":
+            performSegue(withIdentifier: "addNewItemSegue", sender: self)
+            break
+        case "Menu":
+            performSegue(withIdentifier: "addNewItemSegue", sender: self)
+            break
+        default:
+            break
+        }
+    }
+    
     @IBAction func save(_ sender: Any) {
-        let tag = pickerData[pickerView.selectedRow(inComponent: 0)]
-        recipeDelegate?.addToRecipe(type: "Tag", value: tag)
+        let item = pickerData[pickerView.selectedRow(inComponent: 0)]
+        switch selectedLabel {
+        case "Tag":
+            recipeDelegate?.addToRecipe(type: selectedLabel!, value: item)
+            break
+        case "Menu":
+            recipeDelegate?.addToRecipe(type: selectedLabel!, value: item)
+            break
+        default:
+            break
+        }
         navigationController?.popViewController(animated: true)
         return
     }
     
     func addToRecipe(type: String, value: String) {
-        databaseController?.addTag(name: value)
+        switch type {
+        case "New Tag":
+            databaseController?.addTag(name: value)
+            break
+        case "New Menu":
+            databaseController?.addMenu(name: value)
+            break
+        default:
+            break
+        }
     }
 }

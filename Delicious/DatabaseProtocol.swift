@@ -62,6 +62,7 @@ protocol DatabaseProtocol: AnyObject {
     func deleteTag(tag: Tag)
     
     func addMenu(name: String) -> Menu
+    func updateMenu(menu: Menu)
     func addRecipeToMenu(recipe: Recipe, menu: Menu) -> Bool
     func deleteMenu(menu: Menu)
     func removeRecipeFromMenu(recipe: Recipe, menu: Menu)

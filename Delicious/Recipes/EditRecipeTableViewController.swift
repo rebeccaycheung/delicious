@@ -9,10 +9,6 @@
 import UIKit
 
 class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
     
     let SECTION_NAME = 0
     let SECTION_IMAGE = 1
@@ -82,6 +78,10 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         //
     }
     
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 16
     }
@@ -114,8 +114,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             return recipe?.tagsList?.count ?? 0
         case SECTION_ADD_TAGS:
             return 1
-//        case SECTION_MENU_LIST:
-//            return menuList.count
+        case SECTION_MENU_LIST:
+            return recipe?.menuList?.count ?? 0
         case SECTION_ADD_MENU:
             return 1
         case SECTION_DELETE_RECIPE:
@@ -218,16 +218,15 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_ADD_TAGS:
             cell.label.text = "Add new tag"
             return cell
-//        case SECTION_MENU_LIST:
-//            if menuList.count > 0 {
-//                for menu in menuList {
-//                    cell.label.text = menu
-//                }
-//            }
-//            return cell
-//        case SECTION_ADD_MENU:
-//            cell.label.text = "Add to menu"
-//            return cell
+        case SECTION_MENU_LIST:
+            if let menuList = recipe?.menuList {
+                let menu = menuList[indexPath.row]
+                cell.label.text = menu
+            }
+            return cell
+        case SECTION_ADD_MENU:
+            cell.label.text = "Add to menu"
+            return cell
         case SECTION_DELETE_RECIPE:
             cell.label.text = "Delete recipe"
             return cell
@@ -240,28 +239,40 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         switch indexPath.section {
         case SECTION_NAME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_SOURCE:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_COOK_TIME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_SERVING_SIZE:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_INGREDIENT_LIST:
             performSegue(withIdentifier: "editIngredientSegue", sender: self)
+            break
         case SECTION_ADD_INGREDIENT:
             performSegue(withIdentifier: "editIngredientSegue", sender: self)
+            break
         case SECTION_INSTRUCTION_LIST:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_ADD_INSTRUCTION:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_NOTES_LIST:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_ADD_NOTES:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_ADD_TAGS:
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
+            break
         case SECTION_ADD_MENU:
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
+            break
         case SECTION_DELETE_RECIPE:
             let alertController = UIAlertController(title: "Delete Recipe", message: "Are you sure you want to delete this recipe permantently?", preferredStyle: UIAlertController.Style.alert)
             alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
@@ -327,7 +338,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                     destination.labelTitle = "Note"
                     break
                 default:
-                    destination.labelTitle = ""
+                    break
                 }
             }
         } else if segue.identifier == "editIngredientSegue" {
@@ -339,12 +350,13 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                 case SECTION_INGREDIENT_LIST:
                     destination.selectedIngredient = recipe?.ingredientNamesList![indexPath.row]
                     destination.selectedMeasurement = recipe?.ingredientMeasurementsList![indexPath.row]
+                    break
                 case SECTION_ADD_INGREDIENT:
                     destination.selectedIngredient = ""
                     destination.selectedMeasurement = ""
+                    break
                 default:
-                    destination.selectedIngredient = ""
-                    destination.selectedMeasurement = ""
+                    break
                 }
             }
         } else if segue.identifier == "addFromPickerSegue" {
@@ -354,11 +366,13 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                 destination.recipeDelegate = self
                 switch selectedRow {
                 case SECTION_ADD_TAGS:
-                    destination.selectedLabel = "Add Tag"
+                    destination.selectedLabel = "Tag"
+                    break
                 case SECTION_ADD_MENU:
-                    destination.selectedLabel = "Add Menu"
+                    destination.selectedLabel = "Menu"
+                    break
                 default:
-                    destination.selectedLabel = ""
+                    break
                 }
             }
         }
@@ -421,7 +435,10 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             recipe?.ingredientMeasurementsList?.append(value)
         } else if type == "Tag" {
             recipe?.tagsList?.append(value)
+        } else if type == "Menu" {
+            recipe?.menuList?.append(value)
         }
         tableView.reloadData()
     }
 }
+

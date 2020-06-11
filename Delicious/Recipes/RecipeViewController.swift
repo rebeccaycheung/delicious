@@ -28,6 +28,10 @@ class RecipeViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = recipe?.name
         
+        liveModeButton.layer.cornerRadius = 23
+        liveModeButton.layer.borderWidth = 1
+        liveModeButton.layer.borderColor = UIColor.systemYellow.cgColor
+        
         cookTimeLabel.text = String(recipe!.cookTime)
         servingSizeLabel.text = String(recipe!.servingSize)
         sourceLabel.text = recipe?.source

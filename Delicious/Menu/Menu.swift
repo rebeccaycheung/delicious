@@ -12,10 +12,14 @@ class Menu: NSObject, Codable {
     var id: String?
     var name: String = ""
     var recipes: [Recipe]?
+    var cookTime: Int?
+    var servingSize: Int?
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case recipes
+        case cookTime
+        case servingSize
     }
 }

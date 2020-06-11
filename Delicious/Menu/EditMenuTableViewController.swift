@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditMenuTableViewController: UITableViewController, DatabaseListener {
+class EditMenuTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
     
     let SECTION_NAME = 0
     let SECTION_INCLUDED_RECIPES = 1
@@ -16,6 +16,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
     let SECTION_IMAGE = 3
     let SECTION_COOK_TIME = 4
     let SECTION_SERVING_SIZE = 5
+    let SECTION_DELETE_MENU = 6
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .menu
@@ -69,7 +70,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,6 +86,8 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
         case SECTION_COOK_TIME:
             return 1
         case SECTION_SERVING_SIZE:
+            return 1
+        case SECTION_DELETE_MENU:
             return 1
         default:
             return 0
@@ -109,41 +112,144 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditMenuTableViewCell
+        switch indexPath.section {
+        case SECTION_NAME:
+            cell.label.text = menu?.name ?? "Enter menu name"
+            return cell
+        case SECTION_INCLUDED_RECIPES:
+            if let recipeList = menu?.recipes {
+                let recipe = recipeList[indexPath.row]
+                cell.label.text = recipe.name
+            }
+            return cell
+        case SECTION_ADD_RECIPE:
+            cell.label.text = "Add recipe"
+            return cell
+        case SECTION_IMAGE:
+            cell.label.text = "Upload an image"
+            return cell
+        case SECTION_COOK_TIME:
+            if let cookTime = menu?.cookTime {
+                cell.label.text = String(cookTime)
+            } else {
+                cell.label.text = "Enter cook time"
+            }
+            return cell
+        case SECTION_SERVING_SIZE:
+            if let servingSize = menu?.servingSize {
+                cell.label.text = String(servingSize)
+            } else {
+                cell.label.text = "Enter serving size"
+            }
+            return cell
+        case SECTION_DELETE_MENU:
+            cell.label.text = "Delete menu"
+            return cell
+        default:
+            return cell
+        }
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case SECTION_NAME:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_COOK_TIME:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_SERVING_SIZE:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+        case SECTION_ADD_RECIPE:
+            performSegue(withIdentifier: "addFromPickerSegue", sender: self)
+        case SECTION_DELETE_MENU:
+            let alertController = UIAlertController(title: "Delete Menu", message: "Are you sure you want to delete this menu permantently?", preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { action in self.databaseController?.deleteMenu(menu: self.menu!)
+                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
+                for controller in self.navigationController!.viewControllers as Array {
+                    if controller.isKind(of: HomeViewController.self) {
+                        self.navigationController!.popToViewController(controller, animated: true)
+                        break
+                    }
+                }
+            }))
+            self.present(alertController, animated: true, completion: nil)
+        default:
+            tableView.deselectRow(at: indexPath, animated: false)
+            return
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "editTextFieldSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditTextFieldViewController
+                destination.recipeDelegate = self
+                switch selectedRow {
+                case SECTION_NAME:
+                    destination.labelTitle = "Menu Name"
+                    if menu != nil {
+                        destination.enteredText = menu?.name
+                    }
+                    break
+                case SECTION_COOK_TIME:
+                    destination.labelTitle = "Cook Time"
+                    if menu != nil, let cookTime = menu?.cookTime {
+                        destination.enteredText = String(cookTime)
+                    }
+                    break
+                case SECTION_SERVING_SIZE:
+                    destination.labelTitle = "Serving Size"
+                    if menu != nil, let servingSize = menu?.servingSize {
+                        destination.enteredText = String(servingSize)
+                    }
+                    break
+                default:
+                    destination.labelTitle = ""
+                }
+            }
+        } else if segue.identifier == "addFromPickerSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditUIPickerViewController
+                destination.recipeDelegate = self
+                switch selectedRow {
+                case SECTION_ADD_RECIPE:
+                    destination.selectedLabel = "Recipe"
+                    break
+                default:
+                    break
+                }
+            }
+        }
     }
-    */
-
+    
     @IBAction func save(_ sender: Any) {
+        if menu?.name != nil, menu?.cookTime != nil, menu?.servingSize != nil {
+            let _ = databaseController?.updateMenu(menu: menu!)
+            navigationController?.popViewController(animated: true)
+            return
+        } else {
+            var errorMsg = "Please ensure all fields are filled:\n"
+            displayMessage(title: "Not all fields filled", message: errorMsg)
+        }
+    }
+    
+    func displayMessage(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func addToRecipe(type: String, value: String) {
+        if type == "Menu Name" {
+            menu?.name = value
+        } else if type == "Cook Time" {
+            menu?.cookTime = Int(value)
+        } else if type == "Serving Size" {
+            menu?.servingSize = Int(value)
+        }
+        tableView.reloadData()
     }
 }
