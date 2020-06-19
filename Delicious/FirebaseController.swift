@@ -524,17 +524,17 @@ class FirebaseController: NSObject, DatabaseProtocol {
 //        }
     }
     
-    func addRecipe(name: String, source: String, cookTime: Int, servingSize: Int, ingredientsList: [String], measurementList: [String], instructionsList: [String], notesList: [String], tagsList: [String]) {
-        let recipe = Recipe()
-        recipe.name = name
-        recipe.source = source
-        recipe.cookTime = cookTime
-        recipe.servingSize = servingSize
-        recipe.ingredientNamesList = ingredientsList
-        recipe.ingredientMeasurementsList = measurementList
-        recipe.instructionsList = instructionsList
-        recipe.notesList = notesList
-        recipe.tagsList = tagsList
+    func addRecipe(recipe: Recipe) {
+//        let recipe = Recipe()
+//        recipe.name = name
+//        recipe.source = source
+//        recipe.cookTime = cookTime
+//        recipe.servingSize = servingSize
+//        recipe.ingredientNamesList = ingredientsList
+//        recipe.ingredientMeasurementsList = measurementList
+//        recipe.instructionsList = instructionsList
+//        recipe.notesList = notesList
+//        recipe.tagsList = tagsList
 //        recipe.menuList = menuList
         
         do {

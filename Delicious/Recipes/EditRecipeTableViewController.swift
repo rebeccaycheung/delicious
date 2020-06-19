@@ -388,11 +388,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     }
     
     @IBAction func save(_ sender: Any) {
-        if recipe?.name != nil, recipe?.source != nil, recipe?.cookTime != nil, recipe?.servingSize != nil, recipe?.ingredientNamesList != nil, recipe?.ingredientMeasurementsList != nil, recipe?.instructionsList != nil, recipe?.notesList != nil, recipe?.tagsList != nil {
+        if recipe?.name != nil {
             if recipe?.id != nil {
                 let _ = databaseController?.updateRecipe(recipe: recipe!)
             } else {
-                let _ = databaseController?.addRecipe(name: recipe!.name, source: recipe!.source!, cookTime: recipe!.cookTime, servingSize: recipe!.servingSize, ingredientsList: recipe!.ingredientNamesList!, measurementList: recipe!.ingredientMeasurementsList!, instructionsList: recipe!.instructionsList!, notesList: recipe!.notesList!, tagsList: recipe!.tagsList!)
+                let _ = databaseController?.addRecipe(recipe: recipe!)
             }
             navigationController?.popViewController(animated: true)
             return

@@ -9,19 +9,7 @@
 import UIKit
 
 class KitchenWishlistTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
     
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
-
     let SECTION_WISHLIST = 0
     let SECTION_WISHLIST_TOTAL_PRICE = 1
     let SECTION_WISHLIST_TOTAL_PRICE_SPENT = 2
@@ -55,7 +43,27 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         self.wishlist = wishlist
         tableView.reloadData()
     }
-
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -90,12 +98,6 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
             let price = calculateTotalPrice()
             totalPriceCell.price.text = "$\(NSString(format: "%.2f", price) as String)"
             return totalPriceCell
-        } else if indexPath.section == SECTION_WISHLIST_TOTAL_PRICE_SPENT {
-            let totalPriceSpentCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            totalPriceSpentCell.name.text = "Total Price Spent"
-            let price = calculateTotalPriceSpent()
-            totalPriceSpentCell.price.text = "$\(NSString(format: "%.2f", price) as String)"
-            return totalPriceSpentCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)
             return cell
@@ -106,16 +108,6 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         var price = Float(0)
         for item in wishlist {
             price = price + item.price
-        }
-        return price
-    }
-    
-    func calculateTotalPriceSpent() -> Float {
-        var price = Float(0)
-        for item in wishlist {
-            if (item.checked) {
-                price = price + item.price
-            }
         }
         return price
     }
@@ -151,13 +143,5 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
             let destination = segue.destination as! EditWishlistTableViewController
             destination.wishlist = wishlist
         }
-    }
-    
-    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
-        //
-    }
-    
-    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
-        //
     }
 }

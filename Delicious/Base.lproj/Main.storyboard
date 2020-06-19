@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Wd-0X-73q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Wd-0X-73q">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -651,31 +651,33 @@
                                     <action selector="segmentedControlPressed:" destination="FGv-D9-7FU" eventType="valueChanged" id="Pc6-A8-suc"/>
                                 </connections>
                             </segmentedControl>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g03-wu-oKm">
-                                <rect key="frame" x="20" y="159" width="42" height="20.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNr-dh-eFn">
-                                        <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Zf-yu-75a">
-                                <rect key="frame" x="0.0" y="292" width="414" height="530"/>
+                                <rect key="frame" x="0.0" y="279" width="414" height="543"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <segue destination="ka6-AD-ihx" kind="embed" identifier="embedRecipeCollectionSegue" id="EHD-qc-rzF"/>
                                 </connections>
                             </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIQ-en-hRn">
+                                <rect key="frame" x="20" y="179" width="374" height="50"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ywu-wD-qh4"/>
+                                </constraints>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" title="Search Recipes"/>
+                                <connections>
+                                    <segue destination="6jQ-ni-F89" kind="show" identifier="searchRecipe" id="xbC-vy-7Mk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="g03-wu-oKm" firstAttribute="top" secondItem="IIT-Kl-gJd" secondAttribute="bottom" constant="20" id="1VU-H0-tg7"/>
-                            <constraint firstItem="g03-wu-oKm" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" constant="20" id="Lpk-L5-zqn"/>
+                            <constraint firstItem="MIQ-en-hRn" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" constant="20" id="2u1-iX-Z75"/>
                             <constraint firstItem="004-2h-epV" firstAttribute="trailing" secondItem="IIT-Kl-gJd" secondAttribute="trailing" constant="20" id="fJK-X0-mMg"/>
                             <constraint firstItem="IIT-Kl-gJd" firstAttribute="top" secondItem="004-2h-epV" secondAttribute="top" constant="20" id="jj8-cT-ife"/>
+                            <constraint firstItem="004-2h-epV" firstAttribute="trailing" secondItem="MIQ-en-hRn" secondAttribute="trailing" constant="20" id="s6G-tr-vBa"/>
+                            <constraint firstItem="MIQ-en-hRn" firstAttribute="top" secondItem="IIT-Kl-gJd" secondAttribute="bottom" constant="40" id="sUr-ei-fpA"/>
                             <constraint firstItem="IIT-Kl-gJd" firstAttribute="leading" secondItem="004-2h-epV" secondAttribute="leading" constant="20" id="uax-7s-dTG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="004-2h-epV"/>
@@ -688,6 +690,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchRecipeButton" destination="MIQ-en-hRn" id="oH6-9S-CB0"/>
                         <outlet property="segment" destination="IIT-Kl-gJd" id="HJG-XO-AG2"/>
                         <segue destination="Aq6-vi-GLR" kind="show" identifier="showRecipeSegue" id="fT3-MC-QhU"/>
                         <segue destination="k4J-m7-qWU" kind="show" identifier="addMenuSegue" id="qiH-0s-TcA"/>
@@ -699,12 +702,72 @@
             </objects>
             <point key="canvasLocation" x="2011.594202898551" y="-703.125"/>
         </scene>
+        <!--Search Recipes-->
+        <scene sceneID="Eod-fW-a44">
+            <objects>
+                <collectionViewController id="6jQ-ni-F89" customClass="SearchRecipesCollectionViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LCT-De-HxN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uFE-58-ZY5">
+                            <size key="itemSize" width="200" height="200"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="searchRecipeCell" id="We7-Ik-WWn" customClass="SearchRecipesCollectionViewCell" customModule="Delicious" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="D8r-cR-UeS">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfK-sT-CNc">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="120"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YD4-ex-IME">
+                                            <rect key="frame" x="8" y="171" width="184" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="YD4-ex-IME" secondAttribute="trailing" constant="8" id="Ms9-UO-rFk"/>
+                                        <constraint firstAttribute="bottom" secondItem="YD4-ex-IME" secondAttribute="bottom" constant="8.5" id="ccs-8j-EJf"/>
+                                        <constraint firstItem="xfK-sT-CNc" firstAttribute="leading" secondItem="D8r-cR-UeS" secondAttribute="leading" id="d2H-hV-hUq"/>
+                                        <constraint firstItem="xfK-sT-CNc" firstAttribute="top" secondItem="D8r-cR-UeS" secondAttribute="top" id="h7w-gk-Odd"/>
+                                        <constraint firstItem="YD4-ex-IME" firstAttribute="leading" secondItem="D8r-cR-UeS" secondAttribute="leading" constant="8" id="xWh-Rh-g2z"/>
+                                        <constraint firstAttribute="trailing" secondItem="xfK-sT-CNc" secondAttribute="trailing" id="z9D-2K-Kcm"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <size key="customSize" width="200" height="200"/>
+                                <connections>
+                                    <outlet property="recipeImage" destination="xfK-sT-CNc" id="Lxy-BL-SPQ"/>
+                                    <outlet property="recipeLabel" destination="YD4-ex-IME" id="UwA-Bw-aNa"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="6jQ-ni-F89" id="Lvu-9x-zB5"/>
+                            <outlet property="delegate" destination="6jQ-ni-F89" id="Eod-jH-P8N"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Search Recipes" id="0p7-Fc-GHu"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DJy-as-Udm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2202.898550724638" y="-1510.0446428571429"/>
+        </scene>
         <!--Recipe Collection View Controller-->
         <scene sceneID="Qd3-Cj-7Vq">
             <objects>
                 <collectionViewController id="ka6-AD-ihx" customClass="RecipeCollectionViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ypB-e9-sEd">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="530"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="543"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4ko-1a-ERn">
@@ -753,7 +816,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Vp-vm-yEN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2012" y="-42"/>
+            <point key="canvasLocation" x="1472" y="-1267"/>
         </scene>
         <!--Recipe View Controller-->
         <scene sceneID="Rs5-Ka-5V9">
@@ -796,9 +859,6 @@
                                 </constraints>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <state key="normal" title="Live Mode"/>
-                                <connections>
-                                    <segue destination="Vyg-Qx-Bqx" kind="show" identifier="liveModeSegue" id="xH5-US-HFh"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rvb-qC-50w">
                                 <rect key="frame" x="20" y="314.5" width="374" height="20.5"/>
@@ -936,51 +996,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNn-y3-VHs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4719" y="-2129"/>
-        </scene>
-        <!--Live Mode View Controller-->
-        <scene sceneID="Cnk-5I-3vB">
-            <objects>
-                <viewController id="Vyg-Qx-Bqx" customClass="LiveModeViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Tvq-iC-erl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Snj-7d-Z5J">
-                                <rect key="frame" x="0.0" y="825" width="414" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            </pageControl>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0If-j1-TvU">
-                                <rect key="frame" x="0.0" y="88" width="414" height="680"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="qca-MI-HnD"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="K9N-Rb-yEb"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Vyg-Qx-Bqx" id="fHz-bE-mTj"/>
-                                </connections>
-                            </scrollView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="CQS-3G-9gq">
-                                <rect key="frame" x="0.0" y="776" width="414" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="gotoPage:" destination="Vyg-Qx-Bqx" eventType="touchUpInside" id="VTY-Vc-rzq"/>
-                                </connections>
-                            </pageControl>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="bB1-uo-zpg"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="hjN-EI-H2O"/>
-                    <connections>
-                        <outlet property="pageControl" destination="CQS-3G-9gq" id="pjo-nM-sgI"/>
-                        <outlet property="scrollView" destination="0If-j1-TvU" id="JhN-Nu-uRD"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vvH-r0-edi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4718.840579710145" y="-1371.4285714285713"/>
         </scene>
         <!--Create New Recipe-->
         <scene sceneID="0P0-RS-238">
@@ -1723,7 +1738,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lgF-EJ-Q7V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2203" y="-1371"/>
+            <point key="canvasLocation" x="2012" y="-26"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="D5a-Ze-iXA">
@@ -1792,7 +1807,6 @@
                                 <state key="normal" title="Live Mode"/>
                                 <connections>
                                     <action selector="liveModeButton:" destination="2Sm-k2-R0D" eventType="touchUpInside" id="Oem-5P-P1J"/>
-                                    <segue destination="Vyg-Qx-Bqx" kind="show" identifier="liveModeSegue" id="VG5-Op-WcV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNC-Vs-l9G">
@@ -1929,18 +1943,17 @@
             <point key="canvasLocation" x="5742" y="-1371"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="bookmark.fill" catalog="system" width="56" height="64"/>
-        <image name="house.fill" catalog="system" width="64" height="52"/>
-        <image name="info.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="star.fill" catalog="system" width="64" height="58"/>
-    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="EDa-OQ-W4w"/>
+        <segue reference="enS-jz-boL"/>
         <segue reference="GSd-py-2L9"/>
-        <segue reference="tuc-mx-Xh6"/>
-        <segue reference="xH5-US-HFh"/>
+        <segue reference="nbg-fl-4jd"/>
         <segue reference="VXE-Lk-ODQ"/>
         <segue reference="sh1-MQ-4b1"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="info.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
+    </resources>
 </document>
