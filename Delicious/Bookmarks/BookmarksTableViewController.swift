@@ -9,18 +9,6 @@
 import UIKit
 
 class BookmarksTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
     
     let SECTION_BOOKMARKS = 0
     let CELL_BOOKMARKS = "bookmarksCell"
@@ -99,6 +87,18 @@ class BookmarksTableViewController: UITableViewController, DatabaseListener {
     }
 
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         //
     }
 }

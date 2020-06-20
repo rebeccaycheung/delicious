@@ -15,6 +15,9 @@ class IngredientsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 600
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

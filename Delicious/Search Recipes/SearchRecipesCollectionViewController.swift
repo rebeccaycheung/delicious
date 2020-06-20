@@ -21,6 +21,8 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     
     // Initialise the indicator for the loading
     var indicator = UIActivityIndicatorView()
+    
+    var searched = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +99,14 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
             } catch let err {
                 print(err)
             }
+            
+            // Wait for the response from the API
+            DispatchQueue.main.sync {
+                self.searched = true
+                print(self.allSearchRecipes.count)
+                print(self.searched)
+                self.collectionView.reloadData()
+            }
         }
         task.resume()
     }
@@ -106,16 +116,30 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return allSearchRecipes.count
+        if allSearchRecipes.count > 0 {
+            return allSearchRecipes.count
+        }
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SearchRecipesCollectionViewCell
-        let recipe = allSearchRecipes[indexPath.row]
-        cell.recipeLabel.text = recipe.name
-        //cell.recipeImage.image = imageList[indexPath.row]
-        cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+        //cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
         cell.layer.cornerRadius = 12
+        if !searched {
+            cell.recipeLabel.text = "Search for a recipe"
+        }
+        
+        if allSearchRecipes.count > 0 {
+            let recipe = allSearchRecipes[indexPath.row]
+            cell.recipeLabel.text = recipe.name
+            //cell.recipeImage.image = imageList[indexPath.row]
+        }
+        
+        if searched && allSearchRecipes.count == 0 {
+            cell.recipeLabel.text = "No recipes found"
+        }
+        
         return cell
     }
     

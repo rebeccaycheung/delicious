@@ -15,7 +15,6 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
-    @IBOutlet weak var liveModeButton: UIButton!
     
     var recipe: Recipe?
     
@@ -27,10 +26,6 @@ class RecipeViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = recipe?.name
-
-        liveModeButton.layer.cornerRadius = 23
-        liveModeButton.layer.borderWidth = 1
-        liveModeButton.layer.borderColor = UIColor.systemYellow.cgColor
         
         cookTimeLabel.text = String(recipe!.cookTime)
         servingSizeLabel.text = String(recipe!.servingSize)
@@ -59,15 +54,39 @@ class RecipeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ingredientsSegue" {
             let destination = segue.destination as? IngredientsTableViewController
-            destination?.titleDataList = recipe!.ingredientNamesList!
-            destination?.detailDataList = recipe!.ingredientMeasurementsList!
+            if let ingredientNamesList = recipe!.ingredientNamesList {
+                if ingredientNamesList.count > 0 {
+                    destination?.titleDataList = ingredientNamesList
+                } else {
+                    destination?.titleDataList = ["No ingredients"]
+                    }
+                if let ingredientMeasurementsList = recipe!.ingredientMeasurementsList {
+                    if ingredientMeasurementsList.count > 0 {
+                        destination?.detailDataList = ingredientMeasurementsList
+                    }
+                }
+            } else {
+                destination?.titleDataList = ["No instructions"]
+            }
         } else if segue.identifier == "instructionsSegue" {
             let destination = segue.destination as? IngredientsTableViewController
-            destination?.titleDataList = recipe!.instructionsList!
+            if let instructionsList = recipe!.instructionsList {
+                if instructionsList.count > 0 {
+                    destination?.titleDataList = instructionsList
+                } else {
+                    destination?.titleDataList = ["No instructions"]
+                }
+            } else {
+                destination?.titleDataList = ["No instructions"]
+            }
         } else if segue.identifier == "notesSegue" {
             let destination = segue.destination as? IngredientsTableViewController
             if let notesList = recipe!.notesList {
-                destination?.titleDataList = notesList
+                if notesList.count > 0 {
+                    destination?.titleDataList = notesList
+                } else {
+                    destination?.titleDataList = ["No notes"]
+                }
             } else {
                 destination?.titleDataList = ["No notes"]
             }

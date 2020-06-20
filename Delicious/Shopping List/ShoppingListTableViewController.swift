@@ -9,18 +9,6 @@
 import UIKit
 
 class ShoppingListTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
     
     let SECTION_SHOPPING_LIST = 0
     let CELL_SHOPPING_ITEM = "shoppingItemCell"
@@ -78,7 +66,8 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             return shoppingItemCell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath)
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: CELL_SHOPPING_ITEM)
+        cell.textLabel?.text = "No shopping items"
         return cell
     }
     
@@ -118,4 +107,17 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
         //
     }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
 }

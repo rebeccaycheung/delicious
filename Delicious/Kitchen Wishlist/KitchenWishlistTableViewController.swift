@@ -12,7 +12,6 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
     
     let SECTION_WISHLIST = 0
     let SECTION_WISHLIST_TOTAL_PRICE = 1
-    let SECTION_WISHLIST_TOTAL_PRICE_SPENT = 2
     let CELL_WISHLIST_ITEM = "kitchenWishlistItemCell"
     var wishlist: [Wishlist] = []
     
@@ -65,16 +64,17 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_WISHLIST:
-            return wishlist.count
-        case SECTION_WISHLIST_TOTAL_PRICE:
+            if wishlist.count > 0 {
+                return wishlist.count
+            }
             return 1
-        case SECTION_WISHLIST_TOTAL_PRICE_SPENT:
+        case SECTION_WISHLIST_TOTAL_PRICE:
             return 1
         default:
             return 0
@@ -83,20 +83,27 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_WISHLIST {
-            let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            let wishlistItem = wishlist[indexPath.row]
-            wishlistCell.name.text = wishlistItem.name
-            wishlistCell.brand.text = wishlistItem.brand
-            wishlistCell.price.text = "$\(NSString(format: "%.2f", wishlistItem.price) as String)"
-            if (wishlistItem.checked) {
-                wishlistCell.accessoryType = .checkmark
+            if wishlist.count > 0 {
+                let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
+                let wishlistItem = wishlist[indexPath.row]
+                wishlistCell.name.text = wishlistItem.name
+                wishlistCell.brand.text = wishlistItem.brand
+                wishlistCell.price.text = "$\(NSString(format: "%.2f", wishlistItem.price) as String)"
+                if (wishlistItem.checked) {
+                    wishlistCell.accessoryType = .checkmark
+                }
+                return wishlistCell
             }
+            
+            let wishlistCell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: CELL_WISHLIST_ITEM)
+            wishlistCell.textLabel?.text = "No wishlist items"
             return wishlistCell
         } else if indexPath.section == SECTION_WISHLIST_TOTAL_PRICE {
-            let totalPriceCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            totalPriceCell.name.text = "Total Price"
+            let totalPriceCell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: CELL_WISHLIST_ITEM)
+            totalPriceCell.textLabel?.text = "Total Price"
             let price = calculateTotalPrice()
-            totalPriceCell.price.text = "$\(NSString(format: "%.2f", price) as String)"
+            totalPriceCell.detailTextLabel?.text = "$\(NSString(format: "%.2f", price) as String)"
+            totalPriceCell.detailTextLabel?.textColor = UIColor.black
             return totalPriceCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)

@@ -9,14 +9,6 @@
 import UIKit
 
 class EditShoppingListTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
     
     let SECTION_SHOPPING_LIST = 0
     let SECTION_ADD_SHOPPING_ITEM = 1
@@ -77,8 +69,9 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
             shoppingItemCell.brand.text = shoppingItem.brand
             return shoppingItemCell
         } else if indexPath.section == SECTION_ADD_SHOPPING_ITEM {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
-            cell.item.text = "Add new shopping item"
+            let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath) as! ShoppingListTableViewCell
+            cell.textLabel?.text = "Add new shopping item"
+            cell.accessoryType = .disclosureIndicator
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath)
@@ -107,13 +100,17 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editShoppingItemSegue", let cell = sender as? ShoppingListTableViewCell {
-            if let indexPath = tableView.indexPath(for: cell) {
-                if indexPath.section == SECTION_SHOPPING_LIST {
-                    let destination = segue.destination as! EditShoppingItemViewController
-                    destination.shoppingItem = shoppingList[indexPath.row]
+        if segue.identifier == "editShoppingItemSegue" {
+            if let cell = sender as? ShoppingListTableViewCell {
+                if let indexPath = tableView.indexPath(for: cell) {
+                    if indexPath.section == SECTION_SHOPPING_LIST {
+                        let destination = segue.destination as! EditShoppingItemViewController
+                        destination.shoppingItem = shoppingList[indexPath.row]
+                    }
                 }
             }
+        } else if segue.identifier == "addNewItemSegue" {
+            let _ = segue.destination as! EditShoppingItemViewController
         }
     }
 
@@ -126,6 +123,14 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
         //
     }
 }

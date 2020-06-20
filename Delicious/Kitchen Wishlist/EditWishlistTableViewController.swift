@@ -9,19 +9,7 @@
 import UIKit
 
 class EditWishlistTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
     
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
-
     let SECTION_WISHLIST = 0
     let SECTION_ADD_WISHLIST = 1
     let CELL_WISHLIST_ITEM = "kitchenWishlistItemCell"
@@ -81,8 +69,9 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
             wishlistCell.price.text = NSString(format: "%.2f", wishlistItem.price) as String
             return wishlistCell
         } else if indexPath.section == SECTION_ADD_WISHLIST {
-            let totalPriceCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            totalPriceCell.name.text = "Add new wishlist item"
+            let totalPriceCell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath) as! KitchenWishlistTableViewCell
+            totalPriceCell.textLabel?.text = "Add new wishlist item"
+            totalPriceCell.accessoryType = .disclosureIndicator
             return totalPriceCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)
@@ -113,11 +102,13 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editWishlistItemSegue", let cell = sender as? KitchenWishlistTableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
+                let destination = segue.destination as! EditKitchenWishlistViewController
                 if indexPath.section == SECTION_WISHLIST {
-                    let destination = segue.destination as! EditKitchenWishlistViewController
                     destination.wishlistItem = wishlist[indexPath.row]
                 }
             }
+        } else if segue.identifier == "addNewItemSegue" {
+            let _ = segue.destination as! EditKitchenWishlistViewController
         }
     }
 
@@ -126,6 +117,18 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     }
     
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         //
     }
 }
