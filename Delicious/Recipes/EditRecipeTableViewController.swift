@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
+class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate, AddMenuDelegate {
     
     let SECTION_NAME = 0
     let SECTION_IMAGE = 1
@@ -157,6 +157,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
+        cell.detailLabel.isHidden = true
         switch indexPath.section {
         case SECTION_NAME:
             cell.label.text = recipe?.name ?? "Enter recipe name"
@@ -182,10 +183,12 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
             return cell
         case SECTION_INGREDIENT_LIST:
-            if let ingredientNameList = recipe?.ingredientNamesList, let ingredientMeasurementList = recipe?.ingredientMeasurementsList{
-                    let ingredient = ingredientNameList[indexPath.row]
-                    let measurement = ingredientMeasurementList[indexPath.row]
-                    cell.label.text = ingredient
+            if let ingredientNameList = recipe?.ingredientNamesList, let ingredientMeasurementList = recipe?.ingredientMeasurementsList {
+                let ingredient = ingredientNameList[indexPath.row]
+                let measurement = ingredientMeasurementList[indexPath.row]
+                cell.label.text = ingredient
+                cell.detailLabel.isHidden = false
+                cell.detailLabel.text = measurement
             }
             return cell
         case SECTION_ADD_INGREDIENT:
@@ -221,7 +224,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_MENU_LIST:
             if let menuList = recipe?.menuList {
                 let menu = menuList[indexPath.row]
-                cell.label.text = menu
+                cell.label.text = menu.name
             }
             return cell
         case SECTION_ADD_MENU:
@@ -363,13 +366,14 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             if let indexPath = tableView.indexPathForSelectedRow {
                 let selectedRow = indexPath.section
                 let destination = segue.destination as! EditUIPickerViewController
-                destination.recipeDelegate = self
                 switch selectedRow {
                 case SECTION_ADD_TAGS:
                     destination.selectedLabel = "Tag"
+                    destination.recipeDelegate = self
                     break
                 case SECTION_ADD_MENU:
                     destination.selectedLabel = "Menu"
+                    destination.menuDelegate = self
                     break
                 default:
                     break
@@ -391,6 +395,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         if recipe?.name != nil {
             if recipe?.id != nil {
                 let _ = databaseController?.updateRecipe(recipe: recipe!)
+                if recipe?.menuList != nil {
+                    for menu in recipe!.menuList! {
+                        let _ = databaseController?.addRecipeToMenu(recipe: recipe!, menu: menu)
+                    }
+                }
             } else {
                 let _ = databaseController?.addRecipe(recipe: recipe!)
             }
@@ -416,6 +425,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             recipe?.instructionsList = [String]()
             recipe?.tagsList = [String]()
             recipe?.notesList = [String]()
+            recipe?.menuList = [Menu]()
         }
         if type == "Recipe Name" {
             recipe?.name = value
@@ -435,9 +445,15 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             recipe?.ingredientMeasurementsList?.append(value)
         } else if type == "Tag" {
             recipe?.tagsList?.append(value)
-        } else if type == "Menu" {
-            recipe?.menuList?.append(value)
         }
+        tableView.reloadData()
+    }
+    
+    func addMenu(menu: Menu) {
+        if recipe?.menuList == nil {
+            recipe?.menuList = [Menu]()
+        }
+        recipe?.menuList?.append(menu)
         tableView.reloadData()
     }
 }

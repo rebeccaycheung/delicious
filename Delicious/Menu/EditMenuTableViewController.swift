@@ -120,7 +120,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         case SECTION_INCLUDED_RECIPES:
             if let recipeList = menu?.recipes {
                 let recipe = recipeList[indexPath.row]
-                cell.label.text = recipe.name
+                cell.label.text = recipe
             }
             return cell
         case SECTION_ADD_RECIPE:

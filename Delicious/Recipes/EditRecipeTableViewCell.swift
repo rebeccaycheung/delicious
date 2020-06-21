@@ -11,6 +11,7 @@ import UIKit
 class EditRecipeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet var detailLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

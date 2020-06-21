@@ -20,6 +20,7 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     var recipeList: [Recipe] = []
     
     weak var recipeDelegate: AddToRecipeDelegate?
+    weak var menuDelegate: AddMenuDelegate?
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .tag
@@ -150,7 +151,7 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
             recipeDelegate?.addToRecipe(type: selectedLabel!, value: item)
             break
         case "Menu":
-            recipeDelegate?.addToRecipe(type: selectedLabel!, value: item)
+            menuDelegate?.addMenu(menu: menuList[pickerView.selectedRow(inComponent: 0)])
             break
         default:
             break
