@@ -82,8 +82,9 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_SHOPPING_LIST {
             tableView.performBatchUpdates({
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
                 deleteShoppingItem.append(shoppingList[indexPath.row])
+                self.shoppingList.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .fade)
                 tableView.reloadSections([SECTION_SHOPPING_LIST], with: .automatic)
             }, completion: nil)
         }

@@ -47,11 +47,23 @@ class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveWishlistItem(_ sender: Any) {
         if name.text != "", brand.text != "", price.text != "" {
             if (isAdd) {
-                let _ = databaseController?.addWishlistItem(name: name.text!, brand: brand.text!, price: Float(price.text!)!)
+                let priceProcessed: Float? = Float(price.text!)
+                if priceProcessed != nil {
+                    let _ = databaseController?.addWishlistItem(name: name.text!, brand: brand.text!, price: priceProcessed!)
+                } else {
+                    let errorMsg = "Please ensure price is a number\n"
+                    displayMessage(title: "", message: errorMsg)
+                }
             } else {
                 wishlistItem?.name = name.text!
                 wishlistItem?.brand = brand.text!
-                wishlistItem?.price = Float(price.text!)!
+                let priceProcessed: Float? = Float(price.text!)
+                if priceProcessed != nil {
+                    wishlistItem?.price = priceProcessed!
+                } else {
+                    let errorMsg = "Please ensure price is a number\n"
+                    displayMessage(title: "", message: errorMsg)
+                }
                 let _ = databaseController?.updateWishlistItem(item: wishlistItem!)
             }
             navigationController?.popViewController(animated: true)

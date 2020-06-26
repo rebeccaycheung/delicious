@@ -9,18 +9,6 @@
 import UIKit
 
 class EditBookmarksListTableViewController: UITableViewController, DatabaseListener {
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
     
     let SECTION_BOOKMARKS = 0
     let SECTION_ADD_BOOKMARKS = 1
@@ -99,6 +87,7 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         if editingStyle == .delete && indexPath.section == SECTION_BOOKMARKS {
             tableView.performBatchUpdates({
                 deleteBookmarks.append(bookmarksList[indexPath.row])
+                self.bookmarksList.remove(at: indexPath.row)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 self.tableView.reloadSections([SECTION_BOOKMARKS], with: .automatic)
             }, completion: nil)
@@ -131,6 +120,18 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     }
     
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         //
     }
 }

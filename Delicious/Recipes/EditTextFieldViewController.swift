@@ -37,13 +37,8 @@ class EditTextFieldViewController: UIViewController, UITextFieldDelegate {
             navigationController?.popViewController(animated: true)
             return
         } else {
-            var errorMsg = "Please ensure all fields are filled:\n"
-            
-            if textField.text == "" {
-                errorMsg += "Must provide a value \n"
-            }
-            
-            displayMessage(title: "Not all fields filled", message: errorMsg)
+            var errorMsg = "Please ensure \(labelTitle!) field if filled\n"
+            displayMessage(title: "", message: errorMsg)
         }
     }
     

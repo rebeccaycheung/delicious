@@ -23,6 +23,8 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     
     var menu: Menu?
     
+    var removeRecipes = [Recipe]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -225,6 +227,19 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && indexPath.section == SECTION_INCLUDED_RECIPES {
+            tableView.performBatchUpdates({
+                if let recipes = menu?.recipes {
+                    removeRecipes.append(recipes[indexPath.row])
+                        menu!.recipes!.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
+                }
+            }, completion: nil)
+        }
+    }
+    
     @IBAction func save(_ sender: Any) {
         if menu?.name != nil, menu?.cookTime != nil, menu?.servingSize != nil {
             let _ = databaseController?.updateMenu(menu: menu!)
@@ -232,11 +247,27 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
                 for recipe in recipes {
                     let _ = databaseController?.addRecipeToMenu(recipe: recipe, menu: menu!)
                 }
+                if removeRecipes.count > 0 {
+                    for recipe in removeRecipes {
+                        let _ = databaseController?.removeRecipeFromMenu(recipe: recipe, menu: menu!)
+                    }
+                }
             }
             navigationController?.popViewController(animated: true)
             return
         } else {
             var errorMsg = "Please ensure all fields are filled:\n"
+            
+            if menu?.name == nil {
+                errorMsg += "Name\n"
+            }
+            if menu?.cookTime == nil {
+                errorMsg += "Cook time\n"
+            }
+            if menu?.servingSize == nil {
+                errorMsg += "Serving size\n"
+            }
+            
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
     }

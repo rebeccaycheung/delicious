@@ -500,11 +500,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     func removeRecipeFromMenu(recipe: Recipe, menu: Menu) {
-//        if menu.recipes?.contains(recipe), let menuID = menu.id, let recipeID = recipe.id {
-//            if let removedRef = recipeRef?.document(recipeID) {
-//                menuRef?.document(menuID).updateData(["recipes": FieldValue.arrayRemove([removedRef])] )
-//            }
-//        }
+        if (menu.recipes?.contains(recipe))!, let menuID = menu.id, let recipeID = recipe.id {
+            if let removedRef = recipeRef?.document(recipeID) {
+                menuRef?.document(menuID).updateData(["recipes": FieldValue.arrayRemove([removedRef])] )
+            }
+        }
     }
     
     func addRecipe(recipe: Recipe) {

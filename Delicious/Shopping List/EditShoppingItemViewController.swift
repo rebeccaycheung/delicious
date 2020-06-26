@@ -47,11 +47,24 @@ class EditShoppingItemViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveShoppingItem(_ sender: Any) {
         if item.text != "", brand.text != "", price.text != "" {
             if (isAdd) {
-                let _ = databaseController?.addShoppingItem(item: item.text!, brand: brand.text!, price: Float(price.text!)!)
+                let priceProcessed: Float? = Float(price.text!)
+                if priceProcessed != nil {
+                    let _ = databaseController?.addShoppingItem(item: item.text!, brand: brand.text!, price: priceProcessed!)
+                } else {
+                    let errorMsg = "Please ensure price is a number\n"
+                    displayMessage(title: "", message: errorMsg)
+                }
             } else {
                 shoppingItem?.item = item.text!
                 shoppingItem?.brand = brand.text!
-                shoppingItem?.price = Float(price.text!)!
+                let priceProcessed: Float? = Float(price.text!)
+                if priceProcessed != nil {
+                    shoppingItem?.price = priceProcessed!
+                } else {
+                    let errorMsg = "Please ensure price is a number\n"
+                    displayMessage(title: "", message: errorMsg)
+                }
+                
                 let _ = databaseController?.updateShoppingItem(item: shoppingItem!)
             }
             navigationController?.popViewController(animated: true)

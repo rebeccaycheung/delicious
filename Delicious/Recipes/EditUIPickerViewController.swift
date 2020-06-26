@@ -42,6 +42,10 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         }
         button.setTitle("Add new \(selectedLabel!)", for: .normal)
         
+        button.layer.cornerRadius = 23
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.white.cgColor
+        
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
     }

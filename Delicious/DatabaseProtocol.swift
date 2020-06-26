@@ -28,7 +28,6 @@ protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe])
-//    func onMenuChange(change: DatabaseChange, menuRecipes: [Recipe])
     func onMenuChange(change: DatabaseChange, menu: [Menu])
     func onTagListChange(change: DatabaseChange, tag: [Tag])
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks])

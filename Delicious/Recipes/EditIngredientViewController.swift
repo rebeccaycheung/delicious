@@ -42,11 +42,11 @@ class EditIngredientViewController: UIViewController, UITextFieldDelegate {
             var errorMsg = "Please ensure all fields are filled:\n"
             
             if ingredient.text == "" {
-                errorMsg += "Must provide an ingredient \n"
+                errorMsg += "Ingredient \n"
             }
             
             if measurement.text == "" {
-                errorMsg += "Must provide a measurement \n"
+                errorMsg += "Measurement \n"
             }
             
             displayMessage(title: "Not all fields filled", message: errorMsg)

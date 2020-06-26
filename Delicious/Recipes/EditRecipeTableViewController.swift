@@ -369,11 +369,36 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete && indexPath.section == SECTION_INGREDIENT_LIST {
-            tableView.performBatchUpdates({
-                self.tableView.deleteRows(at: [indexPath], with: .fade)
-                self.tableView.reloadSections([SECTION_INGREDIENT_LIST], with: .automatic)
-            }, completion: nil)
+        if editingStyle == .delete {
+            if indexPath.section == SECTION_INGREDIENT_LIST {
+                tableView.performBatchUpdates({
+                    recipe?.ingredientNamesList?.remove(at: indexPath.row)
+                    recipe?.ingredientMeasurementsList?.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.reloadSections([SECTION_INGREDIENT_LIST], with: .automatic)
+                }, completion: nil)
+            }
+            if indexPath.section == SECTION_INSTRUCTION_LIST {
+                tableView.performBatchUpdates({
+                    recipe?.instructionsList?.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.reloadSections([SECTION_INSTRUCTION_LIST], with: .automatic)
+                }, completion: nil)
+            }
+            if indexPath.section == SECTION_NOTES_LIST {
+                tableView.performBatchUpdates({
+                    recipe?.notesList?.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.reloadSections([SECTION_NOTES_LIST], with: .automatic)
+                }, completion: nil)
+            }
+            if indexPath.section == SECTION_TAGS_LIST {
+                tableView.performBatchUpdates({
+                    recipe?.tagsList?.remove(at: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    self.tableView.reloadSections([SECTION_TAGS_LIST], with: .automatic)
+                }, completion: nil)
+            }
         }
     }
     
@@ -392,8 +417,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             navigationController?.popViewController(animated: true)
             return
         } else {
-            var errorMsg = "Please ensure all fields are filled:\n"
-            displayMessage(title: "Not all fields filled", message: errorMsg)
+            var errorMsg = "Please ensure the name is filled\n"
+            displayMessage(title: "", message: errorMsg)
         }
     }
     

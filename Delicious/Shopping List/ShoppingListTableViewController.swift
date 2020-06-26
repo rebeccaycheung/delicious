@@ -39,6 +39,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
         self.shoppingList = shoppingList
+        print(self.shoppingList)
         tableView.reloadData()
     }
     

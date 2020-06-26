@@ -14,10 +14,8 @@
 		922A606624965ED80066660F /* RecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922A606524965ED80066660F /* RecipeData.swift */; };
 		929601D5249F1E3C0097E1E1 /* BookmarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601CD249F1E3B0097E1E1 /* BookmarksTableViewCell.swift */; };
 		929601D6249F1E3C0097E1E1 /* EditBookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601CE249F1E3C0097E1E1 /* EditBookmarkTableViewCell.swift */; };
-		929601D7249F1E3C0097E1E1 /* AddBookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601CF249F1E3C0097E1E1 /* AddBookmarkTableViewController.swift */; };
 		929601D8249F1E3C0097E1E1 /* EditBookmarksListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601D0249F1E3C0097E1E1 /* EditBookmarksListTableViewController.swift */; };
 		929601D9249F1E3C0097E1E1 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601D1249F1E3C0097E1E1 /* BookmarksTableViewController.swift */; };
-		929601DB249F1E3C0097E1E1 /* EditBookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601D3249F1E3C0097E1E1 /* EditBookmarkTableViewController.swift */; };
 		929601DC249F1E3C0097E1E1 /* EditBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601D4249F1E3C0097E1E1 /* EditBookmarkViewController.swift */; };
 		929601E2249F1F5D0097E1E1 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601E1249F1F5D0097E1E1 /* Bookmarks.swift */; };
 		92B6D17424A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17324A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift */; };
@@ -82,10 +80,8 @@
 		922A606524965ED80066660F /* RecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeData.swift; sourceTree = "<group>"; };
 		929601CD249F1E3B0097E1E1 /* BookmarksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewCell.swift; sourceTree = "<group>"; };
 		929601CE249F1E3C0097E1E1 /* EditBookmarkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkTableViewCell.swift; sourceTree = "<group>"; };
-		929601CF249F1E3C0097E1E1 /* AddBookmarkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookmarkTableViewController.swift; sourceTree = "<group>"; };
 		929601D0249F1E3C0097E1E1 /* EditBookmarksListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarksListTableViewController.swift; sourceTree = "<group>"; };
 		929601D1249F1E3C0097E1E1 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
-		929601D3249F1E3C0097E1E1 /* EditBookmarkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkTableViewController.swift; sourceTree = "<group>"; };
 		929601D4249F1E3C0097E1E1 /* EditBookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkViewController.swift; sourceTree = "<group>"; };
 		929601E1249F1F5D0097E1E1 /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
 		92B6D17324A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeToMenuDelegate.swift; sourceTree = "<group>"; };
@@ -197,11 +193,11 @@
 			isa = PBXGroup;
 			children = (
 				B3D40B8B248BAB6300D91970 /* SegmentControlDelegate.swift */,
+				B3B34DCF24796E0F0053679B /* ShowRecipeDelegate.swift */,
+				B3C8A0162490E66800C2167C /* ShowMenuDelegate.swift */,
 				B31A81862472C56B0047B73B /* HomeViewController.swift */,
 				B3874B0A2473F7DE0015B373 /* RecipeCollectionViewCell.swift */,
 				B3874B0E2473FCF70015B373 /* RecipeCollectionViewController.swift */,
-				B3B34DCF24796E0F0053679B /* ShowRecipeDelegate.swift */,
-				B3C8A0162490E66800C2167C /* ShowMenuDelegate.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -241,12 +237,10 @@
 			isa = PBXGroup;
 			children = (
 				929601E1249F1F5D0097E1E1 /* Bookmarks.swift */,
-				929601CF249F1E3C0097E1E1 /* AddBookmarkTableViewController.swift */,
 				929601CD249F1E3B0097E1E1 /* BookmarksTableViewCell.swift */,
 				929601D1249F1E3C0097E1E1 /* BookmarksTableViewController.swift */,
 				929601CE249F1E3C0097E1E1 /* EditBookmarkTableViewCell.swift */,
 				929601D0249F1E3C0097E1E1 /* EditBookmarksListTableViewController.swift */,
-				929601D3249F1E3C0097E1E1 /* EditBookmarkTableViewController.swift */,
 				929601D4249F1E3C0097E1E1 /* EditBookmarkViewController.swift */,
 			);
 			path = Bookmarks;
@@ -476,12 +470,10 @@
 				B3D40B8A248B760E00D91970 /* EditMenuTableViewCell.swift in Sources */,
 				B3E0568F247A32CE0046CBEE /* IngredientsTableViewController.swift in Sources */,
 				B355DE572476AD4000FD113D /* EditRecipeTableViewController.swift in Sources */,
-				929601D7249F1E3C0097E1E1 /* AddBookmarkTableViewController.swift in Sources */,
 				92B6D17A24A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift in Sources */,
 				B3D40B8C248BAB6300D91970 /* SegmentControlDelegate.swift in Sources */,
 				B3CDC6B424829A7F00BD2041 /* AddToRecipeDelegate.swift in Sources */,
 				92B6D17424A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift in Sources */,
-				929601DB249F1E3C0097E1E1 /* EditBookmarkTableViewController.swift in Sources */,
 				B3C090D6248A5355004F0C74 /* Menu.swift in Sources */,
 				922A606624965ED80066660F /* RecipeData.swift in Sources */,
 				929601E2249F1F5D0097E1E1 /* Bookmarks.swift in Sources */,
