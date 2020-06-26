@@ -103,7 +103,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
             totalPriceCell.textLabel?.text = "Total Price"
             let price = calculateTotalPrice()
             totalPriceCell.detailTextLabel?.text = "$\(NSString(format: "%.2f", price) as String)"
-            totalPriceCell.detailTextLabel?.textColor = UIColor.black
+            totalPriceCell.detailTextLabel?.textColor = UIColor(named: "Text")
             return totalPriceCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)

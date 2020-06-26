@@ -23,7 +23,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     let SECTION_ADD_NOTES = 10
     let SECTION_TAGS_LIST = 11
     let SECTION_ADD_TAGS = 12
-    let SECTION_DELETE_RECIPE = 15
+    let SECTION_DELETE_RECIPE = 13
     
     var recipe: Recipe?
     
@@ -155,7 +155,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             cell.label.text = recipe?.name ?? "Enter recipe name"
             return cell
         case SECTION_IMAGE:
-            cell.label.text = "Upload an image"
+            if recipe?.imageReference != nil {
+                cell.label.text = "Change image"
+            } else {
+                cell.label.text = "Add an image"
+            }
             return cell
         case SECTION_SOURCE:
             cell.label.text = recipe?.source ?? "Enter source"
@@ -225,6 +229,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         switch indexPath.section {
         case SECTION_NAME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
+        case SECTION_IMAGE:
+            performSegue(withIdentifier: "editImageSegue", sender: self)
             break
         case SECTION_SOURCE:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
@@ -355,6 +362,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                     break
                 }
             }
+        } else if segue.identifier == "editImageSegue" {
+            let destination = segue.destination as! EditImageViewController
+            destination.recipe = recipe
         }
     }
     
@@ -371,13 +381,13 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         if recipe?.name != nil {
             if recipe?.id != nil {
                 let _ = databaseController?.updateRecipe(recipe: recipe!)
-                if recipe?.menuList != nil {
-                    for menu in recipe!.menuList! {
-                        let _ = databaseController?.addRecipeToMenu(recipe: recipe!, menu: menu)
-                    }
-                }
             } else {
                 let _ = databaseController?.addRecipe(recipe: recipe!)
+                if let tags = recipe?.tagsList {
+                    for i in tags {
+                        let _ = databaseController?.addTag(name: i)
+                    }
+                }
             }
             navigationController?.popViewController(animated: true)
             return

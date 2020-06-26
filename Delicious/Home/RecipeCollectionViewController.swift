@@ -21,7 +21,6 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     var recipeDataList: [Recipe]?
     var menuDataList: [Menu]?
-    var imageList: [UIImage] = []
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .recipe
     
@@ -29,6 +28,9 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     weak var showRecipeDelegate: ShowRecipeDelegate?
     weak var showMenuDelegate: ShowMenuDelegate?
+    
+    var imageList = [UIImage]()
+    var imagePathList = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,22 +51,6 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
         }
         
         databaseController?.addListener(listener: self)
-        
-//        var imageReference = dataList[0].imageReference
-//        let ref = self.storageReference.reference(forURL: imageReference!)
-//        let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-//            do {
-//                if let error = error {
-//                    print(error)
-//                } else {
-//                    let image = UIImage(data: data!)
-//                    self.imageList.append(image!)
-//                    self.collectionView.reloadSections([0])
-//                }
-//            } catch let err {
-//                print(err)
-//            }
-//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,20 +97,75 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCollectionViewCell
-        if selectedControl == "Recipe" {
-            let recipe = recipeDataList![indexPath.row]
-            cell.recipeNameLabel.text = recipe.name
-        } else {
-            let menu = menuDataList![indexPath.row]
-            cell.recipeNameLabel.text = menu.name
+        
+        if let collectionRecipe = recipeDataList {
+            if selectedControl == "Recipe" {
+                let recipe = collectionRecipe[indexPath.row]
+                cell.recipeNameLabel.text = recipe.name
+                
+//                let imageRef = recipe.imageReference ?? ""
+                
+//                if self.imagePathList.contains(imageRef) == false {
+//                    if let image = self.loadImageData(filename: imageRef) {
+//                        self.imageList.append(image)
+//                        self.imagePathList.append(imageRef)
+//                    } else {
+                        if let imageRef = recipe.imageReference {
+                            let image = UIImage(named: "noImage")
+                            cell.recipeImage.image = image
+                            
+                            if imageRef.hasPrefix("gs://") {
+                                let ref = self.storageReference.reference(forURL: imageRef)
+                                let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                                    do {
+                                        if let error = error {
+                                            print(error)
+                                        } else {
+                                            let image = UIImage(data: data!)
+//                                            self.imageList.append(image!)
+//                                            self.imagePathList.removeLast()
+//                                            self.imagePathList.append(imageRef)
+                                            cell.recipeImage.image = image
+                                            //self.saveImageData(filename: imageRef, imageData: data!)
+                                        }
+                                    }
+                                }
+                            } else if imageRef.hasPrefix("https://") {
+                                let url = URL(string: imageRef)
+                                let data = try? Data(contentsOf: url!)
+                                let image = UIImage(data: data!)
+//                                self.imageList.append(image!)
+//                                self.imagePathList.append(imageRef)
+                                cell.recipeImage.image = image
+                                //self.saveImageData(filename: imageRef, imageData: data!)
+                            } else {
+                                let image = UIImage(named: "noImage")
+                                cell.recipeImage.image = image
+                            }
+                        } else {
+                            let image = UIImage(named: "noImage")
+                            cell.recipeImage.image = image
+                        }
+                    //}
+                //}
+                
+                cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+                cell.recipeImage.contentMode = .scaleAspectFill
+                cell.recipeImage.layer.cornerRadius = 12
+                cell.recipeImage.clipsToBounds = true
+            }
         }
+        if let collectionMenu = menuDataList {
+            if selectedControl == "Menu" {
+                let menu = collectionMenu[indexPath.row]
+                cell.recipeNameLabel.text = menu.name
+                let image = UIImage(named: "noImage")
+                cell.recipeImage.image = image
+            }
+        }
+        
         cell.layer.cornerRadius = 12
         
-        if imageList.count > 0 {
-            let image = imageList[indexPath.row]
-            cell.recipeImage.image = image
-            cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
-        }
         return cell
     }
     
@@ -154,5 +195,27 @@ class RecipeCollectionViewController: UICollectionViewController, UICollectionVi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+    }
+    
+    func loadImageData(filename: String) -> UIImage? {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+
+        let imageURL = documentsDirectory.appendingPathComponent(filename)
+        let image = UIImage(contentsOfFile: imageURL.path)
+        
+        return image
+    }
+    
+    func saveImageData(filename: String, imageData: Data) {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        let fileURL = documentsDirectory.appendingPathComponent(filename)
+        print(fileURL)
+        do {
+            try imageData.write(to: fileURL)
+        } catch {
+            print("Error writing file: \(error.localizedDescription)")
+        }
     }
 }

@@ -20,7 +20,6 @@ class Recipe: NSObject, Codable {
     var instructionsList: [String]?
     var notesList: [String]?
     var tagsList: [String]?
-    var menuList: [Menu]?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -34,7 +33,6 @@ class Recipe: NSObject, Codable {
         case instructionsList
         case notesList
         case tagsList
-        case menuList
     }
 }
 

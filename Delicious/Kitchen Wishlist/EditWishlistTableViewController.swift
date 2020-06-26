@@ -41,7 +41,9 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     }
     
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        print(wishlist)
         self.wishlist = wishlist
+        print(self.wishlist)
         tableView.reloadData()
     }
 

@@ -160,6 +160,7 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
             let recipe = Recipe()
             let selectedRecipe = allSearchRecipes[indexPath.row]
             recipe.name = selectedRecipe.name
+            recipe.imageReference = selectedRecipe.image
             if let source = selectedRecipe.source {
                 recipe.source = source
             }

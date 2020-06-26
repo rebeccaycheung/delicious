@@ -20,12 +20,20 @@ class RecipeViewController: UIViewController {
     
     var storageReference = Storage.storage()
     
+    // Initialise the indicator for the loading
+    var indicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = recipe?.name
+        
+        // Create a loading animation
+        indicator.style = UIActivityIndicatorView.Style.medium
+        indicator.center = self.recipeImage.center
+        self.view.addSubview(indicator)
         
         cookTimeLabel.text = "Cook time: \(recipe!.cookTime)"
         servingSizeLabel.text = "Serving size: \(recipe!.servingSize)"
@@ -35,20 +43,40 @@ class RecipeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        let ref = self.storageReference.reference(forURL: recipe!.imageReference!)
-//        let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-//            do {
-//                if let error = error {
-//                    print(error)
-//                } else {
-//                    let image = UIImage(data: data!)
-//                    self.recipeImage.image = image
-//                    self.recipeImage.frame = CGRect(x: 0, y: 150, width: 374, height: 164)
-//                }
-//            } catch let err {
-//                print(err)
-//            }
-//        }
+        if let image = recipe?.imageReference {
+            indicator.startAnimating()
+            indicator.backgroundColor = UIColor.clear
+            
+            self.recipeImage.contentMode = .scaleAspectFill
+            self.recipeImage.layer.cornerRadius = 12
+            self.recipeImage.clipsToBounds = true
+            
+            if image.hasPrefix("gs://") {
+                let ref = self.storageReference.reference(forURL: image)
+                let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                    do {
+                        if let error = error {
+                            print(error)
+                        } else {
+                            let image = UIImage(data: data!)
+                            self.recipeImage.image = image
+                            self.indicator.stopAnimating()
+                            self.indicator.hidesWhenStopped = true
+                        }
+                    }
+                }
+            } else if image.hasPrefix("https://") {
+                let url = URL(string: image)
+                let data = try? Data(contentsOf: url!)
+                self.recipeImage.image = UIImage(data: data!)
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+            }
+        } else {
+            self.recipeImage.contentMode = .center
+            let image = UIImage(named: "noImage")
+            self.recipeImage.image = image
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -25,7 +25,7 @@ class HomeViewController: UIViewController, ShowRecipeDelegate, ShowMenuDelegate
         
         searchRecipeButton.layer.cornerRadius = 23
         searchRecipeButton.layer.borderWidth = 1
-        searchRecipeButton.layer.borderColor = UIColor.systemYellow.cgColor
+        searchRecipeButton.layer.borderColor = UIColor.white.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
