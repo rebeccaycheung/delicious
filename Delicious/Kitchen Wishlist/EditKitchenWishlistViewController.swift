@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditKitchenWishlistViewController: UIViewController {
+class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var brand: UITextField!
@@ -21,6 +21,10 @@ class EditKitchenWishlistViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        name.delegate = self
+        brand.delegate = self
+        price.delegate = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
@@ -75,5 +79,10 @@ class EditKitchenWishlistViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

@@ -63,8 +63,6 @@
 		B3E0568F247A32CE0046CBEE /* IngredientsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E0568E247A32CE0046CBEE /* IngredientsTableViewController.swift */; };
 		B3E394BE24550D6E00C95A66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394BD24550D6E00C95A66 /* AppDelegate.swift */; };
 		B3E394C024550D6E00C95A66 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */; };
-		B3E394C224550D6E00C95A66 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394C124550D6E00C95A66 /* FirstViewController.swift */; };
-		B3E394C424550D6E00C95A66 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E394C324550D6E00C95A66 /* SecondViewController.swift */; };
 		B3E394C724550D6E00C95A66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3E394C524550D6E00C95A66 /* Main.storyboard */; };
 		B3E394C924550D6F00C95A66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E394C824550D6F00C95A66 /* Assets.xcassets */; };
 		B3E394CC24550D6F00C95A66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3E394CA24550D6F00C95A66 /* LaunchScreen.storyboard */; };
@@ -134,8 +132,6 @@
 		B3E394BA24550D6E00C95A66 /* Delicious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delicious.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E394BD24550D6E00C95A66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B3E394C124550D6E00C95A66 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		B3E394C324550D6E00C95A66 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		B3E394C624550D6E00C95A66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B3E394C824550D6F00C95A66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3E394CB24550D6F00C95A66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -325,8 +321,6 @@
 				B37BBB89246FDD5B001554EC /* Kitchen Wishlist */,
 				B38BC00B24838493006CCD3E /* About */,
 				B3E394BF24550D6E00C95A66 /* SceneDelegate.swift */,
-				B3E394C124550D6E00C95A66 /* FirstViewController.swift */,
-				B3E394C324550D6E00C95A66 /* SecondViewController.swift */,
 				B3E394C824550D6F00C95A66 /* Assets.xcassets */,
 				B3E394CA24550D6F00C95A66 /* LaunchScreen.storyboard */,
 				B3E394CD24550D6F00C95A66 /* Info.plist */,
@@ -464,7 +458,6 @@
 				B350A4E52485252C00E6FA07 /* StartViewController.swift in Sources */,
 				B37BBB8D246FDDA2001554EC /* KitchenWishlistTableViewController.swift in Sources */,
 				B350A4E924852E4300E6FA07 /* SignUpViewController.swift in Sources */,
-				B3E394C424550D6E00C95A66 /* SecondViewController.swift in Sources */,
 				922A60602496566A0066660F /* SearchRecipesCollectionViewController.swift in Sources */,
 				922A60622496568E0066660F /* SearchRecipesCollectionViewCell.swift in Sources */,
 				B3874B0F2473FCF70015B373 /* RecipeCollectionViewController.swift in Sources */,
@@ -485,7 +478,6 @@
 				B355DE572476AD4000FD113D /* EditRecipeTableViewController.swift in Sources */,
 				929601D7249F1E3C0097E1E1 /* AddBookmarkTableViewController.swift in Sources */,
 				92B6D17A24A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift in Sources */,
-				B3E394C224550D6E00C95A66 /* FirstViewController.swift in Sources */,
 				B3D40B8C248BAB6300D91970 /* SegmentControlDelegate.swift in Sources */,
 				B3CDC6B424829A7F00BD2041 /* AddToRecipeDelegate.swift in Sources */,
 				92B6D17424A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift in Sources */,

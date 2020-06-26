@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditTextFieldViewController: UIViewController {
+class EditTextFieldViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textField: UITextField!
@@ -20,6 +20,8 @@ class EditTextFieldViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        textField.delegate = self
         
         navigationItem.title = "Add \(labelTitle!)"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -49,5 +51,10 @@ class EditTextFieldViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

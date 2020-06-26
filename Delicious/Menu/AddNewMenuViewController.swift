@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddNewMenuViewController: UIViewController {
+class AddNewMenuViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var menuNameTextField: UITextField!
     
@@ -16,6 +16,8 @@ class AddNewMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        menuNameTextField.delegate = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
@@ -44,5 +46,10 @@ class AddNewMenuViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditIngredientViewController: UIViewController {
+class EditIngredientViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var ingredient: UITextField!
     @IBOutlet weak var measurement: UITextField!
@@ -20,6 +20,9 @@ class EditIngredientViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ingredient.delegate = self
+        measurement.delegate = self
         
         navigationItem.title = "Add Ingredient"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -54,5 +57,10 @@ class EditIngredientViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

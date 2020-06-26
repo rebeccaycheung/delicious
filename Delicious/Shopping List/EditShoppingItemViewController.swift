@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditShoppingItemViewController: UIViewController {
+class EditShoppingItemViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var item: UITextField!
     @IBOutlet weak var brand: UITextField!
@@ -21,6 +21,10 @@ class EditShoppingItemViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        item.delegate = self
+        brand.delegate = self
+        price.delegate = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
@@ -75,5 +79,10 @@ class EditShoppingItemViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
