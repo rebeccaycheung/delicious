@@ -27,8 +27,8 @@ class RecipeViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = recipe?.name
         
-        cookTimeLabel.text = String(recipe!.cookTime)
-        servingSizeLabel.text = String(recipe!.servingSize)
+        cookTimeLabel.text = "Cook time: \(recipe!.cookTime)"
+        servingSizeLabel.text = "Serving size: \(recipe!.servingSize)"
         sourceLabel.text = recipe?.source
     }
     

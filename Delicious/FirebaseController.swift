@@ -20,8 +20,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     var menuRef: CollectionReference?
     var menuList: [Menu]
-//    let DEFAULT_MENU_NAME = "Default Menu"
-//    var defaultMenu: Menu
     
     var recipeRef: CollectionReference?
     var recipeList: [Recipe]
@@ -42,8 +40,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
-        
-//        defaultMenu = Menu()
         
         recipeList = [Recipe]()
         menuList = [Menu]()
@@ -137,14 +133,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             self.parseMenuSnapshot(snapshot: querySnapshot)
         }
-//        menuRef?.whereField("name", isEqualTo: DEFAULT_MENU_NAME).addSnapshotListener {
-//            (querySnapshot, error) in
-//            guard let querySnapshot = querySnapshot, let menuSnapshot = querySnapshot.documents.first else {
-//                print("Error fetching teams: \(error!)")
-//                return
-//            }
-//            self.parseMenuSnapshot(snapshot: menuSnapshot)
-//        }
     }
     
     func parseMenuSnapshot(snapshot: QuerySnapshot) {
@@ -155,7 +143,18 @@ class FirebaseController: NSObject, DatabaseProtocol {
             var parsedMenu: Menu?
             
             do {
-                parsedMenu = try change.document.data(as: Menu.self)
+                parsedMenu = Menu()
+                parsedMenu!.name = change.document.data()["name"] as! String
+                parsedMenu!.cookTime = change.document.data()["cookTime"] as? Int
+                parsedMenu!.servingSize = change.document.data()["servingSize"] as? Int
+                parsedMenu!.recipes = [Recipe]()
+                if let recipeReferences = change.document.data()["recipes"] as? [DocumentReference] {
+                    for reference in recipeReferences {
+                        if let recipe = getRecipeByID(reference.documentID) {
+                            parsedMenu!.recipes!.append(recipe)
+                        }
+                    }
+                }
             } catch {
                 print("Unable to decode menu. Is the menu malformed?")
                 return
@@ -184,22 +183,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 listener.onMenuChange(change: .update, menu: menuList)
             }
         }
-//        defaultMenu = Menu()
-//        defaultMenu.name = snapshot.data()["name"] as! String
-//        defaultMenu.id = snapshot.documentID
-//        if let recipeReferences = snapshot.data()["menu"] as? [DocumentReference] {
-//            for reference in recipeReferences {
-//                if let recipe = getRecipeByID(reference.documentID) {
-//                    defaultMenu.recipes.append(recipe)
-//                }
-//            }
-//        }
-//
-//        listeners.invoke{ (listener) in
-//            if listener.listenerType == ListenerType.menu || listener.listenerType == ListenerType.all {
-//                listener.onMenuChange(change: .update, menuRecipes: defaultMenu.recipes)
-//            }
-//        }
     }
     
     func getMenuIndexByID(_ id: String) -> Int? {

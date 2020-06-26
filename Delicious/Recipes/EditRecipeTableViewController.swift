@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate, AddMenuDelegate {
+class EditRecipeTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
     
     let SECTION_NAME = 0
     let SECTION_IMAGE = 1
@@ -23,8 +23,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     let SECTION_ADD_NOTES = 10
     let SECTION_TAGS_LIST = 11
     let SECTION_ADD_TAGS = 12
-    let SECTION_MENU_LIST = 13
-    let SECTION_ADD_MENU = 14
     let SECTION_DELETE_RECIPE = 15
     
     var recipe: Recipe?
@@ -83,7 +81,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 16
+        return 14
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -113,10 +111,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_TAGS_LIST:
             return recipe?.tagsList?.count ?? 0
         case SECTION_ADD_TAGS:
-            return 1
-        case SECTION_MENU_LIST:
-            return recipe?.menuList?.count ?? 0
-        case SECTION_ADD_MENU:
             return 1
         case SECTION_DELETE_RECIPE:
             if recipe != nil {
@@ -148,8 +142,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             return "Notes"
         case SECTION_TAGS_LIST:
             return "Tags"
-        case SECTION_MENU_LIST:
-            return "Menu"
         default:
             return ""
         }
@@ -221,15 +213,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_ADD_TAGS:
             cell.label.text = "Add new tag"
             return cell
-        case SECTION_MENU_LIST:
-            if let menuList = recipe?.menuList {
-                let menu = menuList[indexPath.row]
-                cell.label.text = menu.name
-            }
-            return cell
-        case SECTION_ADD_MENU:
-            cell.label.text = "Add to menu"
-            return cell
         case SECTION_DELETE_RECIPE:
             cell.label.text = "Delete recipe"
             return cell
@@ -271,9 +254,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
             break
         case SECTION_ADD_TAGS:
-            performSegue(withIdentifier: "addFromPickerSegue", sender: self)
-            break
-        case SECTION_ADD_MENU:
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
             break
         case SECTION_DELETE_RECIPE:
@@ -371,10 +351,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                     destination.selectedLabel = "Tag"
                     destination.recipeDelegate = self
                     break
-                case SECTION_ADD_MENU:
-                    destination.selectedLabel = "Menu"
-                    destination.menuDelegate = self
-                    break
                 default:
                     break
                 }
@@ -425,7 +401,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             recipe?.instructionsList = [String]()
             recipe?.tagsList = [String]()
             recipe?.notesList = [String]()
-            recipe?.menuList = [Menu]()
         }
         if type == "Recipe Name" {
             recipe?.name = value
@@ -446,14 +421,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Tag" {
             recipe?.tagsList?.append(value)
         }
-        tableView.reloadData()
-    }
-    
-    func addMenu(menu: Menu) {
-        if recipe?.menuList == nil {
-            recipe?.menuList = [Menu]()
-        }
-        recipe?.menuList?.append(menu)
         tableView.reloadData()
     }
 }

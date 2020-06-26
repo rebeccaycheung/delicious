@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditMenuTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate {
+class EditMenuTableViewController: UITableViewController, DatabaseListener, AddToRecipeDelegate, AddRecipeToMenuDelegate {
     
     let SECTION_NAME = 0
     let SECTION_INCLUDED_RECIPES = 1
@@ -120,7 +120,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         case SECTION_INCLUDED_RECIPES:
             if let recipeList = menu?.recipes {
                 let recipe = recipeList[indexPath.row]
-                cell.label.text = recipe
+                cell.label.text = recipe.name
             }
             return cell
         case SECTION_ADD_RECIPE:
@@ -213,7 +213,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             if let indexPath = tableView.indexPathForSelectedRow {
                 let selectedRow = indexPath.section
                 let destination = segue.destination as! EditUIPickerViewController
-                destination.recipeDelegate = self
+                destination.menuDelegate = self
                 switch selectedRow {
                 case SECTION_ADD_RECIPE:
                     destination.selectedLabel = "Recipe"
@@ -228,6 +228,11 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     @IBAction func save(_ sender: Any) {
         if menu?.name != nil, menu?.cookTime != nil, menu?.servingSize != nil {
             let _ = databaseController?.updateMenu(menu: menu!)
+            if let recipes = menu?.recipes {
+                for recipe in recipes {
+                    let _ = databaseController?.addRecipeToMenu(recipe: recipe, menu: menu!)
+                }
+            }
             navigationController?.popViewController(animated: true)
             return
         } else {
@@ -250,6 +255,11 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         } else if type == "Serving Size" {
             menu?.servingSize = Int(value)
         }
+        tableView.reloadData()
+    }
+    
+    func addRecipeToMenu(recipe: Recipe) {
+        menu?.recipes?.append(recipe)
         tableView.reloadData()
     }
 }

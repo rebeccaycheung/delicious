@@ -16,11 +16,10 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     var selectedLabel: String?
     var pickerData: [String] = []
-    var menuList: [Menu] = []
     var recipeList: [Recipe] = []
     
     weak var recipeDelegate: AddToRecipeDelegate?
-    weak var menuDelegate: AddMenuDelegate?
+    weak var menuDelegate: AddRecipeToMenuDelegate?
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .tag
@@ -52,9 +51,6 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         switch selectedLabel {
         case "Tag":
             listenerType = .tag
-            break
-        case "Menu":
-            listenerType = .menu
             break
         case "Recipe":
             listenerType = .recipe
@@ -93,13 +89,7 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        for i in menu {
-            if !pickerData.contains(i.name) {
-                pickerData.append(i.name)
-                menuList.append(i)
-            }
-        }
-        self.pickerView.reloadAllComponents()
+        //
     }
     
     func onTagListChange(change: DatabaseChange, tag: [Tag]) {
@@ -136,9 +126,6 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         case "Tag":
             performSegue(withIdentifier: "addNewItemSegue", sender: self)
             break
-        case "Menu":
-            performSegue(withIdentifier: "addNewItemSegue", sender: self)
-            break
         default:
             break
         }
@@ -150,9 +137,8 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         case "Tag":
             recipeDelegate?.addToRecipe(type: selectedLabel!, value: item)
             break
-        case "Menu":
-            menuDelegate?.addMenu(menu: menuList[pickerView.selectedRow(inComponent: 0)])
-            break
+        case "Recipe":
+            menuDelegate?.addRecipeToMenu(recipe: recipeList[pickerView.selectedRow(inComponent: 0)])
         default:
             break
         }
@@ -164,9 +150,6 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         switch type {
         case "New Tag":
             databaseController?.addTag(name: value)
-            break
-        case "New Menu":
-            databaseController?.addMenu(name: value)
             break
         default:
             break

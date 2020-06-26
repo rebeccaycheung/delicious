@@ -11,7 +11,7 @@ import UIKit
 class Menu: NSObject, Codable {
     var id: String?
     var name: String = ""
-    var recipes: [String]?
+    var recipes: [Recipe]?
     var cookTime: Int?
     var servingSize: Int?
     

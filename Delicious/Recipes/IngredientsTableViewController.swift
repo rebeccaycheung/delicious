@@ -12,6 +12,7 @@ class IngredientsTableViewController: UITableViewController {
     
     var titleDataList: [String] = []
     var detailDataList: [String] = []
+    var numberOfRecipes: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,3 +42,4 @@ class IngredientsTableViewController: UITableViewController {
         return cell
     }
 }
+

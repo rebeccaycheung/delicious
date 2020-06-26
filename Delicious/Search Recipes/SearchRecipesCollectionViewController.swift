@@ -11,11 +11,10 @@ import UIKit
 class SearchRecipesCollectionViewController: UICollectionViewController, UISearchBarDelegate {
     
     private let reuseIdentifier = "searchRecipeCell"
-    private let sectionInsets = UIEdgeInsets(top: 100.0, left: 50.0, bottom: 50.0, right: 50.0)
-    private let itemsPerRow: CGFloat = 2
+    private let sectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    private let itemsPerRow: CGFloat = 1
     
     var allSearchRecipes: [RecipeData] = []
-    var imageList = [UIImage]()
     
     weak var editSearchRecipeDelegate: EditSearchRecipeDelegate?
     
@@ -124,7 +123,6 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SearchRecipesCollectionViewCell
-        //cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
         cell.layer.cornerRadius = 12
         if !searched {
             cell.recipeLabel.text = "Search for a recipe"
@@ -133,7 +131,6 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
         if allSearchRecipes.count > 0 {
             let recipe = allSearchRecipes[indexPath.row]
             cell.recipeLabel.text = recipe.name
-            //cell.recipeImage.image = imageList[indexPath.row]
         }
         
         if searched && allSearchRecipes.count == 0 {
@@ -159,41 +156,43 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipe = Recipe()
-        let selectedRecipe = allSearchRecipes[indexPath.row]
-        recipe.name = selectedRecipe.name
-        if let source = selectedRecipe.source {
-            recipe.source = source
-        }
-        if let area = selectedRecipe.area, let category = selectedRecipe.category {
-            recipe.tagsList = [String]()
-            recipe.tagsList?.append(area)
-            recipe.tagsList?.append(category)
-        }
-        recipe.instructionsList = [String]()
-        recipe.ingredientNamesList = [String]()
-        recipe.ingredientMeasurementsList = [String]()
-        let instructionsArray = selectedRecipe.instructions.components(separatedBy: ".")
-        for instruction in instructionsArray {
-            if instruction != "" {
-                var processInstruction = instruction.replacingOccurrences(of: "\r", with: "", options: NSString.CompareOptions.literal, range:nil)
-                processInstruction = processInstruction.replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range:nil)
-                recipe.instructionsList!.append(processInstruction)
+        if allSearchRecipes.count > 0 {
+            let recipe = Recipe()
+            let selectedRecipe = allSearchRecipes[indexPath.row]
+            recipe.name = selectedRecipe.name
+            if let source = selectedRecipe.source {
+                recipe.source = source
             }
-        }
-        for ingredient in selectedRecipe.ingredients {
-            if ingredient != "" {
-                recipe.ingredientNamesList?.append(ingredient)
+            if let area = selectedRecipe.area, let category = selectedRecipe.category {
+                recipe.tagsList = [String]()
+                recipe.tagsList?.append(area)
+                recipe.tagsList?.append(category)
             }
-        }
-        for measurement in selectedRecipe.measurements {
-            if measurement != "" {
-                recipe.ingredientMeasurementsList?.append(measurement)
+            recipe.instructionsList = [String]()
+            recipe.ingredientNamesList = [String]()
+            recipe.ingredientMeasurementsList = [String]()
+            let instructionsArray = selectedRecipe.instructions.components(separatedBy: ".")
+            for instruction in instructionsArray {
+                if instruction != "" {
+                    var processInstruction = instruction.replacingOccurrences(of: "\r", with: "", options: NSString.CompareOptions.literal, range:nil)
+                    processInstruction = processInstruction.replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range:nil)
+                    recipe.instructionsList!.append(processInstruction)
+                }
             }
+            for ingredient in selectedRecipe.ingredients {
+                if ingredient != "" {
+                    recipe.ingredientNamesList?.append(ingredient)
+                }
+            }
+            for measurement in selectedRecipe.measurements {
+                if measurement != "" {
+                    recipe.ingredientMeasurementsList?.append(measurement)
+                }
+            }
+            
+            let destination = self.storyboard?.instantiateViewController(withIdentifier: "EditRecipeTableViewController") as? EditRecipeTableViewController
+            destination?.recipe = recipe
+            self.navigationController?.pushViewController(destination!, animated: true)
         }
-        
-        let destination = self.storyboard?.instantiateViewController(withIdentifier: "EditRecipeTableViewController") as? EditRecipeTableViewController
-        destination?.recipe = recipe
-        self.navigationController?.pushViewController(destination!, animated: true)
     }
 }
