@@ -40,9 +40,14 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         databaseController = appDelegate.databaseController
         
         if (recipe != nil) {
-            navigationItem.title = "Edit Recipe"
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+            if recipe!.id != nil {
+                navigationItem.title = "Edit Recipe"
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+            } else {
+                navigationItem.title = "Searched Recipe"
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
         } else {
             navigationItem.title = "Create New Recipe"
             self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -468,7 +473,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func addToRecipe(type: String, value: String) {
+    func addToRecipe(type: String, value: String, oldText: String?) {
         if recipe == nil {
             recipe = Recipe()
             recipe?.name = "Default name"
@@ -488,13 +493,33 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Serving Size" {
             recipe?.servingSize = Int(value)!
         } else if type == "Instructions" {
-            recipe?.instructionsList?.append(value)
+            if oldText != nil {
+                let index = recipe!.instructionsList!.firstIndex(of: oldText!)
+                recipe!.instructionsList![index!] = value
+            } else {
+                recipe?.instructionsList?.append(value)
+            }
         } else if type == "Note" {
-            recipe?.notesList?.append(value)
+            if oldText != nil {
+                let index = recipe!.notesList!.firstIndex(of: oldText!)
+                recipe!.notesList![index!] = value
+            } else {
+                recipe?.notesList?.append(value)
+            }
         } else if type == "Ingredient" {
-            recipe?.ingredientNamesList?.append(value)
+            if oldText != nil {
+                let index = recipe!.ingredientNamesList!.firstIndex(of: oldText!)
+                recipe!.ingredientNamesList![index!] = value
+            } else {
+                recipe?.ingredientNamesList?.append(value)
+            }
         } else if type == "Measurement" {
-            recipe?.ingredientMeasurementsList?.append(value)
+            if oldText != nil {
+                let index = recipe!.ingredientMeasurementsList!.firstIndex(of: oldText!)
+                recipe!.ingredientMeasurementsList![index!] = value
+            } else {
+                recipe?.ingredientMeasurementsList?.append(value)
+            }
         } else if type == "Tag" {
             recipe?.tagsList?.append(value)
         }

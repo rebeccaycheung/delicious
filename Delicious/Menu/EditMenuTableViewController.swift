@@ -47,7 +47,6 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     }
     
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        print("got here")
         tableView.reloadData()
     }
     
@@ -245,7 +244,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    func addToRecipe(type: String, value: String) {
+    func addToRecipe(type: String, value: String, oldText: String?) {
         if type == "Menu Name" {
             menu?.name = value
         } else if type == "Cook Time" {

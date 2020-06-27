@@ -139,7 +139,7 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         let item = pickerData[pickerView.selectedRow(inComponent: 0)]
         switch selectedLabel {
         case "Tag":
-            recipeDelegate?.addToRecipe(type: selectedLabel!, value: item)
+            recipeDelegate?.addToRecipe(type: selectedLabel!, value: item, oldText: nil)
             break
         case "Recipe":
             menuDelegate?.addRecipeToMenu(recipe: recipeList[pickerView.selectedRow(inComponent: 0)])
@@ -150,7 +150,7 @@ class EditUIPickerViewController: UIViewController, UIPickerViewDelegate, UIPick
         return
     }
     
-    func addToRecipe(type: String, value: String) {
+    func addToRecipe(type: String, value: String, oldText: String?) {
         switch type {
         case "New Tag":
             databaseController?.addTag(name: value)

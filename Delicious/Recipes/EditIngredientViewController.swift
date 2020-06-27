@@ -34,8 +34,8 @@ class EditIngredientViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func save(_ sender: Any) {
         if ingredient.text != "", measurement.text != "" {
-            recipeDelegate?.addToRecipe(type: "Ingredient", value: ingredient.text!)
-            recipeDelegate?.addToRecipe(type: "Measurement", value: measurement.text!)
+            recipeDelegate?.addToRecipe(type: "Ingredient", value: ingredient.text!, oldText: selectedIngredient)
+            recipeDelegate?.addToRecipe(type: "Measurement", value: measurement.text!, oldText: selectedMeasurement)
             navigationController?.popViewController(animated: true)
             return
         } else {

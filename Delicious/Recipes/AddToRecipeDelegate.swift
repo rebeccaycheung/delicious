@@ -10,6 +10,6 @@ import Foundation
 
 // Protocol to add items to the recipe
 protocol AddToRecipeDelegate: AnyObject {
-    func addToRecipe(type: String, value: String)
+    func addToRecipe(type: String, value: String, oldText: String?)
 }
 

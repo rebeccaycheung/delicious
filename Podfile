@@ -11,5 +11,6 @@ target 'Delicious' do
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Storage'
+  pod 'TagListView', '~> 1.0'
 
 end

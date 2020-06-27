@@ -33,7 +33,7 @@ class EditTextFieldViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func save(_ sender: Any) {
         if textField.text != "" {
-            recipeDelegate?.addToRecipe(type: label.text!, value: textField.text!)
+            recipeDelegate?.addToRecipe(type: label.text!, value: textField.text!, oldText: enteredText)
             navigationController?.popViewController(animated: true)
             return
         } else {

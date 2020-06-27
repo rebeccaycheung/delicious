@@ -345,6 +345,7 @@ PODS:
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
   - PromisesObjC (1.2.8)
+  - TagListView (1.4.0)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -352,6 +353,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FirebaseFirestoreSwift
+  - TagListView (~> 1.0)
 
 SPEC REPOS:
   trunk:
@@ -378,6 +380,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - TagListView
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -403,7 +406,8 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
 
-PODFILE CHECKSUM: 10a811745f69053b004701273503b1f856c99ced
+PODFILE CHECKSUM: 7f93491e816b386f696e100a7fab8a709f4cabf9
 
 COCOAPODS: 1.9.1

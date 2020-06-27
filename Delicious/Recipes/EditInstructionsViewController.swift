@@ -27,7 +27,7 @@ class EditInstructionsViewController: UIViewController {
     
     @IBAction func save(_ sender: Any) {
         if instructionText.text != "" {
-            recipeDelegate?.addToRecipe(type: "Instructions", value: instructionText.text!)
+            recipeDelegate?.addToRecipe(type: "Instructions", value: instructionText.text!, oldText: selectedInstruction)
             navigationController?.popViewController(animated: true)
             return
         } else {
