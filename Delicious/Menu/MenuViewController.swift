@@ -36,6 +36,8 @@ class MenuViewController: UIViewController, DatabaseListener {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        
+        tagsListView.textFont = UIFont.systemFont(ofSize: 17)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +58,8 @@ class MenuViewController: UIViewController, DatabaseListener {
             self.servingSize.text = "Serving size: 0"
         }
         
+        tagsListView.removeAllTags()
+        
         self.recipeList = []
         self.ingredientsName = []
         self.ingredientsMeasurement = []
@@ -65,6 +69,11 @@ class MenuViewController: UIViewController, DatabaseListener {
             if recipes.count > 0 {
                 for recipe in recipes {
                     recipeList.append(recipe.name)
+                    if let tags = recipe.tagsList {
+                        for i in tags {
+                            tagsListView.addTags(i)
+                        }
+                    }
                     if let ingredientsName = recipe.ingredientNamesList {
                         if ingredientsName.count > 0 {
                             for i in ingredientsName {
@@ -94,6 +103,27 @@ class MenuViewController: UIViewController, DatabaseListener {
                         }
                     }
                 }
+            }
+        }
+        
+        if let extraIngredients = menu?.extraIngredientsName {
+            for i in extraIngredients {
+                self.ingredientsName.append(i)
+            }
+        }
+        if let extraIngredientsMeasurement = menu?.extraIngredientsMeasurement {
+            for i in extraIngredientsMeasurement {
+                self.ingredientsMeasurement.append(i)
+            }
+        }
+        if let extraInstructions = menu?.extraInstructions {
+            for i in extraIngredients {
+                self.instructions.append(i)
+            }
+        }
+        if let notesList = menu?.notesList {
+            for i in notesList {
+                self.notes.append(i)
             }
         }
     }
