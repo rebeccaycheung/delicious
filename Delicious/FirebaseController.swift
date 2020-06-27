@@ -491,10 +491,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     func updateMenu(menu: Menu) {
-        let cookTime = menu.cookTime
-        let servingSize = menu.servingSize
         if let menuRef = menuRef?.document(menu.id!) {
-            menuRef.updateData(["name": menu.name, "cookTime": cookTime, "servingSize": servingSize])
+            let name = menu.name
+            let cookTime = menu.cookTime
+            let servingSize = menu.servingSize
+            let extraIngredientsName = menu.extraIngredientsName ?? []
+            let extraIngredientsMeasurement = menu.extraIngredientsMeasurement ?? []
+            let extraInstructions = menu.extraInstructions ?? []
+            let notesList = menu.notesList ?? []
+            menuRef.updateData(["name": name, "cookTime": cookTime, "servingSize": servingSize, "extraIngredientsName": extraIngredientsName, "extraIngredientsMeasurement": extraIngredientsMeasurement, "extraInstructions": extraInstructions, "notesList": notesList])
         }
     }
     

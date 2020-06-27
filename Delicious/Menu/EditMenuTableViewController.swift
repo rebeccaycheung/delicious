@@ -16,7 +16,13 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     let SECTION_IMAGE = 3
     let SECTION_COOK_TIME = 4
     let SECTION_SERVING_SIZE = 5
-    let SECTION_DELETE_MENU = 6
+    let SECTION_EXTRA_INGREDIENTS = 6
+    let SECTION_ADD_EXTRA_INGREDIENTS = 7
+    let SECTION_EXTRA_INSTRUCTIONS = 8
+    let SECTION_ADD_EXTRA_INSTRUCTIONS = 9
+    let SECTION_NOTES_LIST = 10
+    let SECTION_ADD_NOTES = 11
+    let SECTION_DELETE_MENU = 12
     
     var menu: Menu?
     
@@ -51,7 +57,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        return 13
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,6 +73,18 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         case SECTION_COOK_TIME:
             return 1
         case SECTION_SERVING_SIZE:
+            return 1
+        case SECTION_EXTRA_INGREDIENTS:
+            return menu?.extraIngredientsName?.count ?? 0
+        case SECTION_ADD_EXTRA_INGREDIENTS:
+            return 1
+        case SECTION_EXTRA_INSTRUCTIONS:
+            return menu?.extraInstructions?.count ?? 0
+        case SECTION_ADD_EXTRA_INSTRUCTIONS:
+            return 1
+        case SECTION_NOTES_LIST:
+            return menu?.notesList?.count ?? 0
+        case SECTION_ADD_NOTES:
             return 1
         case SECTION_DELETE_MENU:
             return 1
@@ -87,6 +105,12 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             return "Cook time"
         case SECTION_SERVING_SIZE:
             return "Serving size"
+        case SECTION_EXTRA_INGREDIENTS:
+            return "Additional Ingredients"
+        case SECTION_EXTRA_INSTRUCTIONS:
+           return "Additional Instructions"
+        case SECTION_NOTES_LIST:
+           return "Additional Notes"
         default:
             return ""
         }
@@ -94,6 +118,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditMenuTableViewCell
+        cell.detailLabel.isHidden = true
         switch indexPath.section {
         case SECTION_NAME:
             cell.label.text = menu?.name ?? "Enter menu name"
@@ -124,6 +149,36 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
                 cell.label.text = "Enter serving size"
             }
             return cell
+        case SECTION_EXTRA_INGREDIENTS:
+            if let ingredientNameList = menu?.extraIngredientsName, let ingredientMeasurementList = menu?.extraIngredientsMeasurement {
+                let ingredient = ingredientNameList[indexPath.row]
+                let measurement = ingredientMeasurementList[indexPath.row]
+                cell.label.text = ingredient
+                cell.detailLabel.isHidden = false
+                cell.detailLabel.text = measurement
+            }
+            return cell
+        case SECTION_ADD_EXTRA_INGREDIENTS:
+            cell.label.text = "Add new ingredient"
+            return cell
+        case SECTION_EXTRA_INSTRUCTIONS:
+            if let instructionList = menu?.extraInstructions {
+                let instruction = instructionList[indexPath.row]
+                cell.label.text = instruction
+            }
+            return cell
+        case SECTION_ADD_EXTRA_INSTRUCTIONS:
+            cell.label.text = "Add new instruction"
+            return cell
+        case SECTION_NOTES_LIST:
+            if let notesList = menu?.notesList {
+                let note = notesList[indexPath.row]
+                cell.label.text = note
+            }
+            return cell
+        case SECTION_ADD_NOTES:
+            cell.label.text = "Add new note"
+            return cell
         case SECTION_DELETE_MENU:
             cell.label.text = "Delete menu"
             return cell
@@ -145,6 +200,26 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             break
         case SECTION_ADD_RECIPE:
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
+            break
+        case SECTION_EXTRA_INGREDIENTS:
+            performSegue(withIdentifier: "editIngredientSegue", sender: self)
+            break
+        case SECTION_ADD_EXTRA_INGREDIENTS:
+            performSegue(withIdentifier: "editIngredientSegue", sender: self)
+            break
+        case SECTION_EXTRA_INSTRUCTIONS:
+            performSegue(withIdentifier: "editInstructionSegue", sender: self)
+            break
+        case SECTION_ADD_EXTRA_INSTRUCTIONS:
+            performSegue(withIdentifier: "editInstructionSegue", sender: self)
+            break
+        case SECTION_NOTES_LIST:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
+        case SECTION_ADD_NOTES:
+            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
+        case SECTION_DELETE_MENU:
             break
         case SECTION_DELETE_MENU:
             deleteAction(item: "menu", index: 0)
@@ -180,6 +255,13 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
                         destination.enteredText = String(servingSize)
                     }
                     break
+                case SECTION_NOTES_LIST:
+                    destination.labelTitle = "Note"
+                    destination.enteredText = menu?.notesList![indexPath.row]
+                    break
+                case SECTION_ADD_NOTES:
+                    destination.labelTitle = "Note"
+                    break
                 default:
                     destination.labelTitle = ""
                 }
@@ -197,18 +279,53 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
                     break
                 }
             }
+        } else if segue.identifier == "editIngredientSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditIngredientViewController
+                destination.recipeDelegate = self
+                switch selectedRow {
+                case SECTION_EXTRA_INGREDIENTS:
+                    destination.selectedIngredient = menu?.extraIngredientsName![indexPath.row]
+                    destination.selectedMeasurement = menu?.extraIngredientsMeasurement![indexPath.row]
+                    break
+                case SECTION_ADD_EXTRA_INGREDIENTS:
+                    destination.selectedIngredient = ""
+                    destination.selectedMeasurement = ""
+                    break
+                default:
+                    break
+                }
+            }
+        } else if segue.identifier == "editInstructionSegue" {
+           if let indexPath = tableView.indexPathForSelectedRow {
+               let selectedRow = indexPath.section
+               let destination = segue.destination as! EditInstructionsViewController
+               destination.recipeDelegate = self
+               switch selectedRow {
+               case SECTION_EXTRA_INSTRUCTIONS:
+                   destination.selectedInstruction = menu?.extraInstructions![indexPath.row]
+                   break
+               case SECTION_ADD_EXTRA_INSTRUCTIONS:
+                   break
+               default:
+                   break
+               }
+           }
         }
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete && indexPath.section == SECTION_INCLUDED_RECIPES {
-            tableView.performBatchUpdates({
-                if (menu?.recipes) != nil {
-                    deleteAction(item: "recipe", index: indexPath.row)
-                    self.tableView.deleteRows(at: [indexPath], with: .fade)
-                    tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
-                }
-            }, completion: nil)
+        if editingStyle == .delete {
+            if indexPath.section == SECTION_INCLUDED_RECIPES {
+                tableView.performBatchUpdates({
+                    if (menu?.recipes) != nil {
+                        deleteAction(item: "recipe", index: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
+                    }
+                }, completion: nil)
+            }
         }
     }
     
@@ -251,7 +368,36 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             menu?.cookTime = Int(value)
         } else if type == "Serving Size" {
             menu?.servingSize = Int(value)
+        } else if type == "Instructions" {
+            if oldText != nil {
+                let index = menu!.extraInstructions!.firstIndex(of: oldText!)
+                menu!.extraInstructions![index!] = value
+            } else {
+                menu?.extraInstructions?.append(value)
+            }
+        } else if type == "Note" {
+            if oldText != nil {
+                let index = menu!.notesList!.firstIndex(of: oldText!)
+                menu!.notesList![index!] = value
+            } else {
+                menu?.notesList?.append(value)
+            }
+        } else if type == "Ingredient" {
+            if oldText != nil {
+                let index = menu!.extraIngredientsName!.firstIndex(of: oldText!)
+                menu!.extraIngredientsName![index!] = value
+            } else {
+                menu?.extraIngredientsName?.append(value)
+            }
+        } else if type == "Measurement" {
+            if oldText != nil {
+                let index = menu!.extraIngredientsMeasurement!.firstIndex(of: oldText!)
+                menu!.extraIngredientsMeasurement![index!] = value
+            } else {
+                menu?.extraIngredientsMeasurement?.append(value)
+            }
         }
+        
         saveMenu()
         tableView.reloadData()
     }

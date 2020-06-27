@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TagListView
 
 // Menu screen
 class MenuViewController: UIViewController, DatabaseListener {
@@ -14,6 +15,8 @@ class MenuViewController: UIViewController, DatabaseListener {
     @IBOutlet var menuImage: UIImageView!
     @IBOutlet var cookTime: UILabel!
     @IBOutlet var servingSize: UILabel!
+    
+    @IBOutlet weak var tagsListView: TagListView!
     
     var menu: Menu?
     var recipeList: [String] = []

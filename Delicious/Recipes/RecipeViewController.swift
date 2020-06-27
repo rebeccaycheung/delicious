@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseStorage
+import TagListView
 
 class RecipeViewController: UIViewController, DatabaseListener {
 
@@ -29,6 +30,8 @@ class RecipeViewController: UIViewController, DatabaseListener {
     var ingredients = [String]()
     var ingredientMeasurements = [String]()
     
+    @IBOutlet weak var tagsListView: TagListView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +45,8 @@ class RecipeViewController: UIViewController, DatabaseListener {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        
+        tagsListView.textFont = UIFont.systemFont(ofSize: 17)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +58,11 @@ class RecipeViewController: UIViewController, DatabaseListener {
         cookTimeLabel.text = "Cook time: \(recipe!.cookTime)"
         servingSizeLabel.text = "Serving size: \(recipe!.servingSize)"
         sourceLabel.text = recipe?.source
+        
+        tagsListView.removeAllTags()
+        if let tags = recipe?.tagsList {
+            tagsListView.addTags(tags)
+        }
         
         if let ingredientNamesList = recipe!.ingredientNamesList {
             if ingredientNamesList.count > 0 {

@@ -15,6 +15,10 @@ class Menu: NSObject, Codable {
     var recipes: [Recipe]?
     var cookTime: Int?
     var servingSize: Int?
+    var extraIngredientsName: [String]?
+    var extraIngredientsMeasurement: [String]?
+    var extraInstructions: [String]?
+    var notesList: [String]?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -22,5 +26,9 @@ class Menu: NSObject, Codable {
         case recipes
         case cookTime
         case servingSize
+        case extraIngredientsName
+        case extraIngredientsMeasurement
+        case extraInstructions
+        case notesList
     }
 }
