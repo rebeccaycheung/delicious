@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Protocol for adding a recipe to a menu
 protocol AddRecipeToMenuDelegate: AnyObject {
     func addRecipeToMenu(recipe: Recipe)
 }

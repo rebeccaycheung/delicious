@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Decodable for a recipe from the API
 class RecipeData: NSObject, Decodable {
     var name: String
     var instructions: String
@@ -20,6 +21,7 @@ class RecipeData: NSObject, Decodable {
     var measurements: [String] = []
     
     private enum RecipeKeys: String, CodingKey {
+        // Map the keys from the ApI to own keys
         case name = "strMeal"
         case instructions = "strInstructions"
         case category = "strCategory"

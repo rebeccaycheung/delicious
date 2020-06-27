@@ -47,30 +47,6 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
        databaseController?.removeListener(listener: self)
     }
     
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
-        //
-    }
-    
-    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
-        //
-    }
-    
-    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
-        //
-    }
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 7
     }
@@ -292,5 +268,29 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     func addRecipeToMenu(recipe: Recipe) {
         menu?.recipes?.append(recipe)
         tableView.reloadData()
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
     }
 }

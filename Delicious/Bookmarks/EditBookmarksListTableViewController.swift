@@ -40,11 +40,13 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload the table when bookmarks change
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
         bookmarksList = bookmarks
         tableView.reloadData()
     }
-
+    
+    // 2 table sections, one for the bookmarks and one to add a new bookmark
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -86,14 +88,19 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_BOOKMARKS {
             tableView.performBatchUpdates({
+                // Append the deleted bookmark to a list
                 deleteBookmarks.append(bookmarksList[indexPath.row])
+                // Remove it from the bookmarks list
                 self.bookmarksList.remove(at: indexPath.row)
+                // Animate the deletion
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
+                // Reload the table
                 self.tableView.reloadSections([SECTION_BOOKMARKS], with: .automatic)
             }, completion: nil)
         }
     }
     
+    // When the user presses done, it will delete the bookmarks from the database
     @IBAction func doneEditing(_ sender: Any) {
         if deleteBookmarks.count > 0 {
             for bookmark in deleteBookmarks {
@@ -105,6 +112,7 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Check which cell was pressed and send the bookmark details to the editing screen
         if segue.identifier == "editBookmarkSegue", let cell = sender as? BookmarksTableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
                 if indexPath.section == SECTION_BOOKMARKS {

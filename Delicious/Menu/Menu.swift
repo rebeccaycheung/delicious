@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Menu Object
 class Menu: NSObject, Codable {
     var id: String?
     var name: String = ""

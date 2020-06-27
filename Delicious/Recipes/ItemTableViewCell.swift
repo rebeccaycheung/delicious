@@ -1,5 +1,5 @@
 //
-//  IngredientsTableViewCell.swift
+//  ItemTableViewCell.swift
 //  Delicious
 //
 //  Created by Rebecca Cheung on 24/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IngredientsTableViewCell: UITableViewCell {
+class ItemTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!

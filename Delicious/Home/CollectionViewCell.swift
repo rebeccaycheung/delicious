@@ -1,5 +1,5 @@
 //
-//  RecipeCollectionViewCell.swift
+//  CollectionViewCell.swift
 //  Delicious
 //
 //  Created by Rebecca Cheung on 19/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeCollectionViewCell: UICollectionViewCell {
+class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
 }

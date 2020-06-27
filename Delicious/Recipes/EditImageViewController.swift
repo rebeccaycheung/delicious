@@ -116,26 +116,31 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         do {
             try data.write(to: fileURL)
             
-//            let imageRef = storageReference.child("recipes")
-//            let metadata = StorageMetadata()
-//            metadata.contentType = "image/jpg"
-//            imageRef.putData(data, metadata: metadata) { (meta, error) in
-//                if error != nil {
-//                    self.displayMessage("Could not upload image to firebase", "Error")
-//                } else {
-//                    imageRef.downloadURL { (url, error) in
-//                        guard let downloadURL = url else {
-//                            print("Download URL not found")
-//                            return
-//                        }
-//                        let userImageRef = self.usersReference.document("\(userID)")
-//                        userImageRef.collection("images").document("\(date)").setData(["url": "\(downloadURL)"])
-//                        self.displayMessage("Image uploaded to Firebase", "Success")
-//                    }
-//                }
-//            }
+            let storageRef = storageReference.reference()
+            let imageRef = storageRef.child("test.jpg")
             
-            self.navigationController?.popViewController(animated: true)
+            
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpg"
+            imageRef.putData(data, metadata: metadata) { (meta, error) in
+                if error != nil {
+                    self.displayMessage("Could not upload image to firebase", "Error")
+                } else {
+                    imageRef.downloadURL { (url, error) in
+                        guard let downloadURL = url else {
+                            print("Download URL not found")
+                            return
+                        }
+                        //self.recipe!.imageReference = "\(downloadURL)"
+                        //print(self.recipe!.imageReference)
+                        //let userImageRef = self.usersReference.document("\(userID)")
+                        //userImageRef.collection("images").document("\(date)").setData(["url": "\(downloadURL)"])
+                        //self.displayMessage("Image uploaded to Firebase", "Success")
+                    }
+                }
+            }
+            
+            //self.navigationController?.popViewController(animated: true)
         } catch {
             displayMessage(error.localizedDescription, "Error")
         }

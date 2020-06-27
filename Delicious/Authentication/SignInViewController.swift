@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 
+// Sign in screen
 class SignInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -26,13 +27,19 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Add the authentication listener
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
             if user != nil {
+                // Check if user has logged in previously
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
         })
+        
+        // Hide the navigation bar
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        // Button style
         loginButton.layer.cornerRadius = 30
         loginButton.layer.borderWidth = 1
         loginButton.layer.borderColor = UIColor.white.cgColor
@@ -40,10 +47,15 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        // Remove the authentication listener
         Auth.auth().removeStateDidChangeListener(handle!)
+        
+        // Hide the navigation bar
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    // When user presses the login button, make sure an email and password is provided. Sign in the user
     @IBAction func login(_ sender: Any) {
         guard let password = passwordTextField.text else {
             displayErrorMessage("Please enter a password")
@@ -60,17 +72,20 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // If the user presses the sign up button, go to the sign in screen
     @IBAction func signUp(_ sender: Any) {
         let destination = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController
         self.navigationController?.pushViewController(destination!, animated: true)
     }
     
+    // Display error message method
     func displayErrorMessage(_ message: String) {
         let alertController = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // When user presses return on the soft keyboard, the keyboard will disappear
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

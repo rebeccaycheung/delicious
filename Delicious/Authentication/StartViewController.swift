@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Launch screen
 class StartViewController: UIViewController {
 
     @IBOutlet weak var loginButton: UIButton!
@@ -17,6 +18,7 @@ class StartViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    // Check which button the user presses
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "signInSegue" {
             let _ = segue.destination as? SignInViewController
@@ -29,6 +31,7 @@ class StartViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        // Button style
         loginButton.layer.cornerRadius = 30
         loginButton.layer.borderWidth = 1
         loginButton.layer.borderColor = UIColor.white.cgColor
@@ -39,6 +42,7 @@ class StartViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        // Hide the navigation bar
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }

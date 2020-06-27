@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Wishlist Object
 class Wishlist: NSObject, Decodable {
     var id: String?
     var name: String = ""

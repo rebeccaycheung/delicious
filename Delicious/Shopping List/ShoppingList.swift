@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Shopping List Object
 class ShoppingList: NSObject, Decodable {
     var id: String?
     var brand: String = ""

@@ -37,10 +37,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var wishlistList: [Wishlist]
     
     override init() {
+        // Set up Firebase connection
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
         
+        // Set up all items that need to be loaded when starting the app
         recipeList = [Recipe]()
         menuList = [Menu]()
         tagList = [Tag]()
@@ -50,6 +52,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         super.init()
         
+        // Set up all items that need to be loaded when starting the app
         self.setUpRecipeListener()
         self.setUpMenuListener()
         self.setUpTagListener()
@@ -58,6 +61,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
         self.setUpWishlistListener()
     }
     
+    // All set up methods are similar - set up the listener for the item, parse a snapshot of the items in firebase and retrieve each item from the database
+    
+    // MARK: Set up Recipes
     func setUpRecipeListener() {
         recipeRef = database.collection("recipe")
         recipeRef?.addSnapshotListener { (querySnapshot, error) in
@@ -124,6 +130,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+    // MARK: Set up Menus
     func setUpMenuListener() {
         menuRef = database.collection("menu")
         menuRef?.addSnapshotListener { (querySnapshot, error) in
@@ -142,6 +149,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
             var parsedMenu: Menu?
             
+            // For each element in a menu, individually retrieve it to build a Menu type. Get the references of the recipes and retrieve the Recipe and append to the menu's recipe list
             do {
                 parsedMenu = Menu()
                 parsedMenu!.name = change.document.data()["name"] as! String
@@ -201,6 +209,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+    // MARK: Set up Tags
     func setUpTagListener() {
         tagRef = database.collection("tag")
         tagRef?.addSnapshotListener { (querySnapshot, error) in
@@ -267,6 +276,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+    // MARK: Set up Bookmarks
     func setUpBookmarksListener() {
         bookmarksRef = database.collection("bookmarks")
         bookmarksRef?.addSnapshotListener { (querySnapshot, error) in
@@ -333,6 +343,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+    // MARK: Set up Shopping List
     func setUpShoppingListListener() {
         shoppingListRef = database.collection("shoppingList")
         shoppingListRef?.addSnapshotListener { (querySnapshot, error) in
@@ -399,6 +410,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         return nil
     }
     
+    // MARK: Set up Wishlist
     func setUpWishlistListener() {
         wishlistRef = database.collection("wishlist")
         wishlistRef?.addSnapshotListener { (querySnapshot, error) in
@@ -468,6 +480,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func cleanup() {
     }
     
+    // MARK: Menu protocols
     func addMenu(name: String) -> Menu {
         let menu = Menu()
         menu.name = name
@@ -507,6 +520,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // MARK: Recipe protocols
     func addRecipe(recipe: Recipe) {
         do {
             if let recipeRef = try recipeRef?.addDocument(from: recipe) {
@@ -533,6 +547,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // MARK: Tag protocols
     func addTag(name: String) {
         let tag = Tag()
         tag.name = name
@@ -558,6 +573,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // MARK: Bookmark protocols
     func addBookmark(name: String, url: String) -> Bookmarks {
         let bookmarks = Bookmarks()
         bookmarks.name = name
@@ -584,6 +600,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // MARK: Shopping List protocols
     func addShoppingItem(item: String, brand: String, price: Float) -> ShoppingList {
         let shoppingItem = ShoppingList()
         shoppingItem.item = item
@@ -618,6 +635,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // MARK: Wishlist protocols
     func addWishlistItem(name: String, brand: String, price: Float) {
         let wishlist = Wishlist()
         wishlist.name = name
@@ -650,6 +668,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // MARK: Listener protocols
     func addListener(listener: DatabaseListener) {
         listeners.addDelegate(listener)
         if listener.listenerType == ListenerType.bookmarks || listener.listenerType == ListenerType.all {

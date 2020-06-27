@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Protocol for which recipe the user selects in the collection
 protocol ShowRecipeDelegate: AnyObject {
     func showRecipe(recipe: Recipe)
 }

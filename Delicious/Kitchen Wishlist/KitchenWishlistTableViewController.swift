@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Kitchen Wishlist screen
 class KitchenWishlistTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_WISHLIST = 0
@@ -38,29 +39,10 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload table when wishlist changes
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
         self.wishlist = wishlist
         tableView.reloadData()
-    }
-    
-    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
-        //
-    }
-    
-    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
-        //
-    }
-    
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -111,6 +93,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         }
     }
     
+    // Method to calculat the total price of all wishlist items
     func calculateTotalPrice() -> Float {
         var price = Float(0)
         for item in wishlist {
@@ -119,6 +102,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         return price
     }
     
+    // If item has been selected, check if the wishlist item is checked or not and update the database
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if wishlist.count > 0 {
             if indexPath.section == SECTION_WISHLIST {
@@ -131,11 +115,13 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
                     cell?.accessoryType = .checkmark
                     databaseController?.checkWishlistItem(item: wishlistItem, checked: true)
                 }
+                // Deselect the row after selecing it
                 tableView.deselectRow(at: indexPath, animated: true)
             }
         }
     }
     
+    // When the item is deselected, remove the accessory of the checkmark
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if wishlist.count > 0 {
             if indexPath.section == SECTION_WISHLIST {
@@ -145,10 +131,31 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         }
     }
     
+    // Prepare the segue for the wishlist list, passing the wishlist list to the editing screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editWishlistSegue" {
             let destination = segue.destination as! EditWishlistTableViewController
             destination.wishlist = wishlist
         }
+    }
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
     }
 }

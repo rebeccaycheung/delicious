@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 
+// About screen
 class AboutViewController: UIViewController {
 
     override func viewDidLoad() {

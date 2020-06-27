@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MenuViewController: UIViewController {
+// Menu screen
+class MenuViewController: UIViewController, DatabaseListener {
     
     @IBOutlet var menuImage: UIImageView!
     @IBOutlet var cookTime: UILabel!
@@ -21,12 +22,23 @@ class MenuViewController: UIViewController {
     var instructions: [String] = []
     var notes: [String] = []
     
+    weak var databaseController: DatabaseProtocol?
+    var listenerType: ListenerType = .menu
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = menu?.name
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
         
         if let cookTime = menu?.cookTime {
             self.cookTime.text = "Cook time: \(cookTime)"
@@ -77,12 +89,26 @@ class MenuViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+       super.viewWillDisappear(animated)
+       databaseController?.removeListener(listener: self)
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        for m in menu {
+            if m.name == self.menu!.name {
+                self.menu = m
+            }
+        }
+        self.view.setNeedsDisplay()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editMenuSegue" {
             let destination = segue.destination as? EditMenuTableViewController
             destination?.menu = menu
         } else if segue.identifier == "viewIngredientsSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
+            let destination = segue.destination as? ItemTableViewController
             if ingredientsName.count > 0 {
                 destination?.titleDataList = ingredientsName
                 if ingredientsMeasurement.count > 0 {
@@ -92,26 +118,46 @@ class MenuViewController: UIViewController {
                 destination?.titleDataList = ["No ingredients"]
             }
         } else if segue.identifier == "viewInstructionsSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
+            let destination = segue.destination as? ItemTableViewController
             if instructions.count > 0 {
                 destination?.titleDataList = instructions
             } else {
                 destination?.titleDataList = ["No instructions"]
             }
         } else if segue.identifier == "viewNotesSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
+            let destination = segue.destination as? ItemTableViewController
             if notes.count > 0 {
                 destination?.titleDataList = notes
             } else {
                 destination?.titleDataList = ["No notes"]
             }
         } else if segue.identifier == "viewRecipeSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
+            let destination = segue.destination as? ItemTableViewController
             if recipeList.count > 0 {
                 destination?.titleDataList = recipeList
             } else {
                 destination?.titleDataList = ["No recipes"]
             }
         }
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
     }
 }

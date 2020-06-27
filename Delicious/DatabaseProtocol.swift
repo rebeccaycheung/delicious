@@ -8,12 +8,14 @@
 
 import Foundation
 
+// Inform of what kind of change has occurred to the database
 enum DatabaseChange {
     case add
     case remove
     case update
 }
 
+// Determine what changes the listener cares about
 enum ListenerType {
     case recipe
     case menu
@@ -24,6 +26,7 @@ enum ListenerType {
     case all
 }
 
+// Delegates to be used for receiving and updating from the database
 protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
     
@@ -35,6 +38,7 @@ protocol DatabaseListener: AnyObject {
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist])
 }
 
+// Protocols that the database must implement
 protocol DatabaseProtocol: AnyObject {
     func cleanup()
     
@@ -69,4 +73,3 @@ protocol DatabaseProtocol: AnyObject {
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)
 }
-

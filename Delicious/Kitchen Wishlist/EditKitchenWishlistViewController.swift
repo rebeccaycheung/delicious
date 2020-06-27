@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Editing wishlist item screen
 class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var name: UITextField!
@@ -22,6 +23,7 @@ class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Text field delegate
         name.delegate = self
         brand.delegate = self
         price.delegate = self
@@ -32,6 +34,7 @@ class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
+        // Check if the user is creating a new wishlist item or editing an existing one
         if wishlistItem != nil {
             name.text = wishlistItem?.name
             brand.text = wishlistItem?.brand
@@ -44,9 +47,11 @@ class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // When the user saves the item, check if the text fields have been filled
     @IBAction func saveWishlistItem(_ sender: Any) {
         if name.text != "", brand.text != "", price.text != "" {
             if (isAdd) {
+                // If the item is new, then use the add database protocol
                 let priceProcessed: Float? = Float(price.text!)
                 if priceProcessed != nil {
                     let _ = databaseController?.addWishlistItem(name: name.text!, brand: brand.text!, price: priceProcessed!)
@@ -55,6 +60,7 @@ class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
                     displayMessage(title: "", message: errorMsg)
                 }
             } else {
+                // If the item exists, then use the update database protocol
                 wishlistItem?.name = name.text!
                 wishlistItem?.brand = brand.text!
                 let priceProcessed: Float? = Float(price.text!)
@@ -86,13 +92,15 @@ class EditKitchenWishlistViewController: UIViewController, UITextFieldDelegate {
             displayMessage(title: "Not all fields filled", message: errorMsg)
         }
     }
-
+    
+    // Display the error message method
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // Soft keyboard to disappear when the user hits return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Decodable for the recipes data from the API
 class SearchRecipeData: NSObject, Decodable {
     var recipes: [RecipeData]?
 

@@ -26,9 +26,16 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     let SECTION_DELETE_RECIPE = 13
     
     var recipe: Recipe?
+    var currentRecipe: Recipe?
     
     weak var databaseController: DatabaseProtocol?
-    var listenerType: ListenerType = .all
+    var listenerType: ListenerType = .recipe
+    
+    var deleteIngredients = [String]()
+    var deleteIngredientMeasurements = [String]()
+    var deleteInstructions = [String]()
+    var deleteNotes = [String]()
+    var deleteTags = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,17 +54,27 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       super.viewWillAppear(animated)
-       databaseController?.addListener(listener: self)
+        super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-       super.viewWillDisappear(animated)
-       databaseController?.removeListener(listener: self)
+        super.viewWillDisappear(animated)
+        databaseController?.removeListener(listener: self)
+    }
+    
+    // Reference - https://stackoverflow.com/questions/8228411/detecting-when-the-back-button-is-pressed-on-a-navbar/14155394
+    // Check if the back button was pressed
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        // Check if the view is popping off the stack
+        if parent == nil {
+            //
+        }
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
+        //tableView.reloadData()
     }
     
     func onTagListChange(change: DatabaseChange, tag: [Tag]) {
@@ -249,10 +266,10 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             performSegue(withIdentifier: "editIngredientSegue", sender: self)
             break
         case SECTION_INSTRUCTION_LIST:
-            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            performSegue(withIdentifier: "editInstructionSegue", sender: self)
             break
         case SECTION_ADD_INSTRUCTION:
-            performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            performSegue(withIdentifier: "editInstructionSegue", sender: self)
             break
         case SECTION_NOTES_LIST:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
@@ -313,13 +330,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                         destination.enteredText = String(servingSize)
                     }
                     break
-                case SECTION_INSTRUCTION_LIST:
-                    destination.labelTitle = "Instructions"
-                    destination.enteredText = recipe?.instructionsList![indexPath.row]
-                    break
-                case SECTION_ADD_INSTRUCTION:
-                    destination.labelTitle = "Instructions"
-                    break
                 case SECTION_NOTES_LIST:
                     destination.labelTitle = "Note"
                     destination.enteredText = recipe?.notesList![indexPath.row]
@@ -365,6 +375,21 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if segue.identifier == "editImageSegue" {
             let destination = segue.destination as! EditImageViewController
             destination.recipe = recipe
+        } else if segue.identifier == "editInstructionSegue" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedRow = indexPath.section
+                let destination = segue.destination as! EditInstructionsViewController
+                destination.recipeDelegate = self
+                switch selectedRow {
+                case SECTION_INSTRUCTION_LIST:
+                    destination.selectedInstruction = recipe?.instructionsList![indexPath.row]
+                    break
+                case SECTION_ADD_INSTRUCTION:
+                    break
+                default:
+                    break
+                }
+            }
         }
     }
     
@@ -372,6 +397,12 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         if editingStyle == .delete {
             if indexPath.section == SECTION_INGREDIENT_LIST {
                 tableView.performBatchUpdates({
+                    if recipe?.ingredientNamesList != nil {
+                        deleteIngredients.append(recipe!.ingredientNamesList![indexPath.row])
+                    }
+                    if recipe?.ingredientMeasurementsList != nil {
+                        deleteIngredientMeasurements.append(recipe!.ingredientMeasurementsList![indexPath.row])
+                    }
                     recipe?.ingredientNamesList?.remove(at: indexPath.row)
                     recipe?.ingredientMeasurementsList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
@@ -380,6 +411,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
             if indexPath.section == SECTION_INSTRUCTION_LIST {
                 tableView.performBatchUpdates({
+                    if recipe?.instructionsList != nil {
+                        deleteInstructions.append(recipe!.instructionsList![indexPath.row])
+                    }
                     recipe?.instructionsList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_INSTRUCTION_LIST], with: .automatic)
@@ -387,6 +421,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
             if indexPath.section == SECTION_NOTES_LIST {
                 tableView.performBatchUpdates({
+                    if recipe?.notesList != nil {
+                        deleteNotes.append(recipe!.notesList![indexPath.row])
+                    }
                     recipe?.notesList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_NOTES_LIST], with: .automatic)
@@ -394,6 +431,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
             if indexPath.section == SECTION_TAGS_LIST {
                 tableView.performBatchUpdates({
+                    if recipe?.tagsList != nil {
+                        deleteTags.append(recipe!.tagsList![indexPath.row])
+                    }
                     recipe?.tagsList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_TAGS_LIST], with: .automatic)
@@ -404,15 +444,15 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     
     @IBAction func save(_ sender: Any) {
         if recipe?.name != nil {
-            if recipe?.id != nil {
-                let _ = databaseController?.updateRecipe(recipe: recipe!)
-            } else {
+            if recipe?.id == nil {
                 let _ = databaseController?.addRecipe(recipe: recipe!)
                 if let tags = recipe?.tagsList {
                     for i in tags {
                         let _ = databaseController?.addTag(name: i)
                     }
                 }
+            } else {
+                let _ = databaseController?.updateRecipe(recipe: recipe!)
             }
             navigationController?.popViewController(animated: true)
             return
@@ -456,6 +496,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Tag" {
             recipe?.tagsList?.append(value)
         }
+        
         tableView.reloadData()
     }
 }

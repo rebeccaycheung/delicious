@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Add a new menu screen
 class AddNewMenuViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var menuNameTextField: UITextField!
@@ -17,6 +18,7 @@ class AddNewMenuViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Text field delegate
         menuNameTextField.delegate = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -26,8 +28,10 @@ class AddNewMenuViewController: UIViewController, UITextFieldDelegate {
         databaseController = appDelegate.databaseController
     }
     
+    // When the user saves the menu, check if the text field has been filled
     @IBAction func save(_ sender: Any) {
         if menuNameTextField.text != "" {
+            // Add the menu to the database
             let _ = databaseController?.addMenu(name: menuNameTextField.text!)
             navigationController?.popViewController(animated: true)
             return
@@ -42,12 +46,14 @@ class AddNewMenuViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Display the error message method
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // Soft keyboard to disappear when the user hits return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

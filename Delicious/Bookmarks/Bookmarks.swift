@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Bookmarks Object
 class Bookmarks: NSObject, Decodable {
     var id: String?
     var name: String = ""

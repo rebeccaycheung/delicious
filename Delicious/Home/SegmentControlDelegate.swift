@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Protocol for which segement control was selected
 protocol SegmentControlDelegate: AnyObject {
     func segmentControl(recipe: Bool)
 }

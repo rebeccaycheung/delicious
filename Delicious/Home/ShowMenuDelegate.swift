@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Protocol for which menu the user selects in the collection
 protocol ShowMenuDelegate: AnyObject {
     func showMenu(menu: Menu)
 }

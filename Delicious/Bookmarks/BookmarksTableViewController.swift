@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Bookmarks screen
 class BookmarksTableViewController: UITableViewController, DatabaseListener {
 
     let SECTION_BOOKMARKS = 0
@@ -37,6 +38,7 @@ class BookmarksTableViewController: UITableViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload the table when bookmarks change in the database
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
         bookmarksList = bookmarks
         tableView.reloadData()
@@ -69,8 +71,10 @@ class BookmarksTableViewController: UITableViewController, DatabaseListener {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if bookmarksList.count > 0 {
             let url = bookmarksList[indexPath.row].url
+            // When a bookmark has been pressed, open web browser with the url
             UIApplication.shared.open(URL(string: "\(url)")!)
         } else {
+            // If there are no bookmarks, can't select the cell
             tableView.allowsSelection = false
         }
     }

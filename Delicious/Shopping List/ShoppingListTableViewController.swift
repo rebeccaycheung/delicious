@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Shopping list screen
 class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_SHOPPING_LIST = 0
@@ -37,9 +38,9 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload when shopping items change
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
         self.shoppingList = shoppingList
-        print(self.shoppingList)
         tableView.reloadData()
     }
     
@@ -59,8 +60,10 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             let shoppingItemCell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
             let shoppingItem = shoppingList[indexPath.row]
             shoppingItemCell.item.text = shoppingItem.item
+            // Format the price to convert a float to a string
             shoppingItemCell.price.text = "$\(NSString(format: "%.2f", shoppingItem.price) as String)"
             shoppingItemCell.brand.text = shoppingItem.brand
+            // Add check mark accessory if the shopping item has been checked
             if (shoppingItem.checked) {
                 shoppingItemCell.accessoryType = .checkmark
             }
@@ -72,6 +75,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         return cell
     }
     
+    // If item has been selected, check if the shopping item is checked or not and update the database
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if shoppingList.count > 0 {
             let cell = tableView.cellForRow(at: indexPath)
@@ -83,10 +87,12 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
                 cell?.accessoryType = .checkmark
                 databaseController?.checkShoppingItem(item: shoppingItem, checked: true)
             }
+            // Deselect the row after selecing it
             tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     
+    // When the item is deselected, remove the accessory of the checkmark
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if shoppingList.count > 0 {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -94,6 +100,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
+    // Prepare the segue for the shopping list, passing the shopping list to the editing screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editShoppingListSegue" {
             let destination = segue.destination as! EditShoppingListTableViewController

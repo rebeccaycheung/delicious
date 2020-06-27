@@ -1,5 +1,5 @@
 //
-//  IngredientsTableViewController.swift
+//  ItemTableViewController.swift
 //  Delicious
 //
 //  Created by Rebecca Cheung on 24/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IngredientsTableViewController: UITableViewController {
+class ItemTableViewController: UITableViewController {
     
     var titleDataList: [String] = []
     var detailDataList: [String] = []
@@ -30,7 +30,7 @@ class IngredientsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! IngredientsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ItemTableViewCell
         let title = titleDataList[indexPath.row]
         cell.titleLabel.text = title
         if detailDataList.count > 0 {

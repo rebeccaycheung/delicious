@@ -8,8 +8,10 @@
 
 import UIKit
 
+// Search Recipe Collection screen
 class SearchRecipesCollectionViewController: UICollectionViewController, UISearchBarDelegate {
     
+    // Constants for the collection
     private let reuseIdentifier = "searchRecipeCell"
     private let sectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     private let itemsPerRow: CGFloat = 1
@@ -55,6 +57,8 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
         guard let searchText = searchBar.text, searchText.count > 0 else {
             return;
         }
+        
+        // Start animating the indicator
         indicator.startAnimating()
         indicator.backgroundColor = UIColor.clear
         
@@ -66,14 +70,18 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
         // Cancels all outstanding tasks and invalidates the session
         URLSession.shared.invalidateAndCancel()
         
+        // Call the API
         loadRecipes(recipe: searchText)
     }
     
     // MARK: - Call API
     func loadRecipes(recipe: String) {
+        // API
         let url = URL(string: "https://www.themealdb.com/api/json/v1/1/search.php?s=\(recipe)")
-
+        
+        // Start the API call
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            
             // Regardless of response end the loading icon from the main thread
             DispatchQueue.main.async {
                 self.indicator.stopAnimating()
@@ -87,10 +95,13 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
             
             do {
                 let decoder = JSONDecoder()
+                // Attempt to decode the data returned from the API call
                 if let searchRecipeData = try? decoder.decode(SearchRecipeData.self, from: data!) {
                     if let recipes = searchRecipeData.recipes {
+                        // Append the decoded recipes to the searched recipe list
                         self.allSearchRecipes.append(contentsOf: recipes)
                         DispatchQueue.main.sync {
+                            // Reload the collection
                             self.collectionView.reloadData()
                         }
                     }
@@ -101,9 +112,8 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
             
             // Wait for the response from the API
             DispatchQueue.main.sync {
+                // Check if the user has searched an item
                 self.searched = true
-                print(self.allSearchRecipes.count)
-                print(self.searched)
                 self.collectionView.reloadData()
             }
         }
@@ -124,15 +134,19 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SearchRecipesCollectionViewCell
         cell.layer.cornerRadius = 12
+        
+        // If the user has not searched for an item yet
         if !searched {
             cell.recipeLabel.text = "Search for a recipe"
         }
         
+        // If the user has searched for an item and there are results that have been returned
         if allSearchRecipes.count > 0 {
             let recipe = allSearchRecipes[indexPath.row]
             cell.recipeLabel.text = recipe.name
         }
         
+        // If the user has searched for an item and no results are found
         if searched && allSearchRecipes.count == 0 {
             cell.recipeLabel.text = "No recipes found"
         }
@@ -157,29 +171,42 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if allSearchRecipes.count > 0 {
+            // Create a Recipe for the item that was selected in the searched collection
             let recipe = Recipe()
+            
             let selectedRecipe = allSearchRecipes[indexPath.row]
+            
             recipe.name = selectedRecipe.name
+            
             recipe.imageReference = selectedRecipe.image
+            
             if let source = selectedRecipe.source {
                 recipe.source = source
             }
+            
             if let area = selectedRecipe.area, let category = selectedRecipe.category {
                 recipe.tagsList = [String]()
                 recipe.tagsList?.append(area)
                 recipe.tagsList?.append(category)
             }
+            
             recipe.instructionsList = [String]()
+            
             recipe.ingredientNamesList = [String]()
             recipe.ingredientMeasurementsList = [String]()
+            
+            // Separate each sentence into an array - assuming that each sentence is an instruction
             let instructionsArray = selectedRecipe.instructions.components(separatedBy: ".")
             for instruction in instructionsArray {
                 if instruction != "" {
+                    // Process the instructions that are in the data returned of the recipe
+                    // Remove the new lines and carriage returns from the string
                     var processInstruction = instruction.replacingOccurrences(of: "\r", with: "", options: NSString.CompareOptions.literal, range:nil)
                     processInstruction = processInstruction.replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range:nil)
                     recipe.instructionsList!.append(processInstruction)
                 }
             }
+            
             for ingredient in selectedRecipe.ingredients {
                 if ingredient != "" {
                     recipe.ingredientNamesList?.append(ingredient)
@@ -191,6 +218,7 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
                 }
             }
             
+            // Go to the Edit Recipe screen, passing the newly created Recipe to it
             let destination = self.storyboard?.instantiateViewController(withIdentifier: "EditRecipeTableViewController") as? EditRecipeTableViewController
             destination?.recipe = recipe
             self.navigationController?.pushViewController(destination!, animated: true)

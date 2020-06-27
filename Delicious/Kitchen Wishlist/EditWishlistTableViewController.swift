@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Edit wishlist list screen
 class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_WISHLIST = 0
@@ -40,6 +41,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload the table when the wishlist list changes
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
         self.wishlist = wishlist
         tableView.reloadData()
@@ -60,6 +62,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
+    // Same as the Kitchen Wishlist Table View Controller
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_WISHLIST {
             let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
@@ -82,14 +85,18 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_WISHLIST {
             tableView.performBatchUpdates({
+                // When a wishlist item is deleted, add it to the list and remove it from the wishlist list
                 deleteWishlistItem.append(wishlist[indexPath.row])
                 self.wishlist.remove(at: indexPath.row)
+                // Animate the deletion
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
+                // Reload the table
                 tableView.reloadSections([SECTION_WISHLIST], with: .automatic)
             }, completion: nil)
         }
     }
     
+    // When the user is done, delete the wishlist items from the database
     @IBAction func doneEditing(_ sender: Any) {
         if deleteWishlistItem.count > 0 {
             for item in deleteWishlistItem {
@@ -101,6 +108,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Prepare segue for the selected wishlist item, pass the wishlist item to the editing screen
         if segue.identifier == "editWishlistItemSegue", let cell = sender as? KitchenWishlistTableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
                 let destination = segue.destination as! EditKitchenWishlistViewController
@@ -109,6 +117,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
                 }
             }
         } else if segue.identifier == "addNewItemSegue" {
+            // Prepare segue for adding a new wishlist item
             let _ = segue.destination as! EditKitchenWishlistViewController
         }
     }

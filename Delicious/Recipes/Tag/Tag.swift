@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Tag Object
 class Tag: NSObject, Decodable {
     var id: String?
     var name: String = ""

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Protocol for editting the searched recipe
 protocol EditSearchRecipeDelegate: AnyObject {
     func editSearchRecipe(recipe: Recipe)
 }

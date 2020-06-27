@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Recipe Object
 class Recipe: NSObject, Codable {
     var id: String?
     var name: String = ""

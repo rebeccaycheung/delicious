@@ -9,8 +9,8 @@
 import UIKit
 import FirebaseStorage
 
-class RecipeViewController: UIViewController {
-    
+class RecipeViewController: UIViewController, DatabaseListener {
+
     @IBOutlet weak var cookTimeLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
@@ -23,25 +23,50 @@ class RecipeViewController: UIViewController {
     // Initialise the indicator for the loading
     var indicator = UIActivityIndicatorView()
     
+    weak var databaseController: DatabaseProtocol?
+    var listenerType: ListenerType = .recipe
+    
+    var ingredients = [String]()
+    var ingredientMeasurements = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.title = recipe?.name
         
         // Create a loading animation
         indicator.style = UIActivityIndicatorView.Style.medium
         indicator.center = self.recipeImage.center
         self.view.addSubview(indicator)
         
-        cookTimeLabel.text = "Cook time: \(recipe!.cookTime)"
-        servingSizeLabel.text = "Serving size: \(recipe!.servingSize)"
-        sourceLabel.text = recipe?.source
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
+        
+        navigationItem.title = recipe?.name
+        
+        cookTimeLabel.text = "Cook time: \(recipe!.cookTime)"
+        servingSizeLabel.text = "Serving size: \(recipe!.servingSize)"
+        sourceLabel.text = recipe?.source
+        
+        if let ingredientNamesList = recipe!.ingredientNamesList {
+            if ingredientNamesList.count > 0 {
+                self.ingredients = ingredientNamesList
+                
+                if let ingredientMeasurementsList = recipe!.ingredientMeasurementsList {
+                    if ingredientMeasurementsList.count > 0 {
+                        ingredientMeasurements = ingredientMeasurementsList
+                    }
+                }
+            } else {
+                self.ingredients = ["No ingredients"]
+            }
+        }
         
         if let image = recipe?.imageReference {
             indicator.startAnimating()
@@ -79,25 +104,22 @@ class RecipeViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+       super.viewWillDisappear(animated)
+       databaseController?.removeListener(listener: self)
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        self.view.setNeedsDisplay()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ingredientsSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
-            if let ingredientNamesList = recipe!.ingredientNamesList {
-                if ingredientNamesList.count > 0 {
-                    destination?.titleDataList = ingredientNamesList
-                } else {
-                    destination?.titleDataList = ["No ingredients"]
-                    }
-                if let ingredientMeasurementsList = recipe!.ingredientMeasurementsList {
-                    if ingredientMeasurementsList.count > 0 {
-                        destination?.detailDataList = ingredientMeasurementsList
-                    }
-                }
-            } else {
-                destination?.titleDataList = ["No instructions"]
-            }
+            let destination = segue.destination as? ItemTableViewController
+            destination?.titleDataList = ingredients
+            destination?.detailDataList = ingredientMeasurements
         } else if segue.identifier == "instructionsSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
+            let destination = segue.destination as? ItemTableViewController
             if let instructionsList = recipe!.instructionsList {
                 if instructionsList.count > 0 {
                     destination?.titleDataList = instructionsList
@@ -108,7 +130,7 @@ class RecipeViewController: UIViewController {
                 destination?.titleDataList = ["No instructions"]
             }
         } else if segue.identifier == "notesSegue" {
-            let destination = segue.destination as? IngredientsTableViewController
+            let destination = segue.destination as? ItemTableViewController
             if let notesList = recipe!.notesList {
                 if notesList.count > 0 {
                     destination?.titleDataList = notesList
@@ -121,6 +143,27 @@ class RecipeViewController: UIViewController {
         } else if segue.identifier == "editRecipeSegue" {
             let destination = segue.destination as? EditRecipeTableViewController
             destination?.recipe = recipe
+            destination?.currentRecipe = recipe
         }
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
     }
 }

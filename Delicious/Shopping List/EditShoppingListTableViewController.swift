@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Edit shopping list screen
 class EditShoppingListTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_SHOPPING_LIST = 0
@@ -39,7 +40,8 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
     }
-
+    
+    // Reload the table when the shopping list changes
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
         self.shoppingList = shoppingList
         tableView.reloadData()
@@ -59,7 +61,8 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
             return 0
         }
     }
-
+    
+    // Same as the Shopping List Table View Controller
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_SHOPPING_LIST {
             let shoppingItemCell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
@@ -82,14 +85,18 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_SHOPPING_LIST {
             tableView.performBatchUpdates({
+                // When a shopping item is deleted, add it to the list and remove it from the shopping list
                 deleteShoppingItem.append(shoppingList[indexPath.row])
                 self.shoppingList.remove(at: indexPath.row)
+                // Animate the deletion
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
+                // Reload the table
                 tableView.reloadSections([SECTION_SHOPPING_LIST], with: .automatic)
             }, completion: nil)
         }
     }
     
+    // When the user is done, delete the shopping items from the database
     @IBAction func doneEditing(_ sender: Any) {
         if deleteShoppingItem.count > 0 {
             for item in deleteShoppingItem {
@@ -102,6 +109,7 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editShoppingItemSegue" {
+            // Prepare segue for the selected shopping item, pass the shopping item to the editing screen
             if let cell = sender as? ShoppingListTableViewCell {
                 if let indexPath = tableView.indexPath(for: cell) {
                     if indexPath.section == SECTION_SHOPPING_LIST {
@@ -111,6 +119,7 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
                 }
             }
         } else if segue.identifier == "addNewItemSegue" {
+            // Prepare segue for adding a new shopping list item
             let _ = segue.destination as! EditShoppingItemViewController
         }
     }

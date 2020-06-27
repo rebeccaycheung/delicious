@@ -66,7 +66,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Kitchen Wishlist" id="6s1-BW-QHM">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="8Ti-ZC-etM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="8Ti-ZC-etM">
                             <connections>
                                 <segue destination="8BO-QK-Uan" kind="show" identifier="editWishlistSegue" id="c9c-gN-sJY"/>
                             </connections>
@@ -113,7 +113,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Bookmarks" id="aqb-cx-yKv">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="WBm-sz-wC8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="WBm-sz-wC8">
                             <connections>
                                 <segue destination="3EG-cM-tP0" kind="show" identifier="editBookmarksSegue" id="8Y9-gQ-p3O"/>
                             </connections>
@@ -161,7 +161,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit Bookmarks" id="Gjb-eB-Mfb">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="tie-oX-dMs">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="tie-oX-dMs">
                             <connections>
                                 <action selector="doneEditing:" destination="3EG-cM-tP0" id="2RM-lj-X0i"/>
                             </connections>
@@ -221,7 +221,7 @@
                         <viewLayoutGuide key="safeArea" id="eK8-IG-jXG"/>
                     </view>
                     <navigationItem key="navigationItem" id="K5k-Ue-ZnS">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="uBd-SH-901">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="uBd-SH-901">
                             <connections>
                                 <action selector="saveBookmark:" destination="pOF-Ho-hSe" id="JAX-dY-gyJ"/>
                             </connections>
@@ -293,7 +293,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Shopping List" id="4Ep-q7-GBL">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="p2D-d1-2E1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="p2D-d1-2E1">
                             <connections>
                                 <segue destination="M8x-YZ-Rp0" kind="show" identifier="editShoppingListSegue" id="f2l-tx-O2J"/>
                             </connections>
@@ -371,7 +371,7 @@
                         <viewLayoutGuide key="safeArea" id="0e6-XF-vfL"/>
                     </view>
                     <navigationItem key="navigationItem" id="NBa-jE-AAV">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="4f6-se-Wzw">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4f6-se-Wzw">
                             <connections>
                                 <action selector="saveShoppingItem:" destination="A2d-iM-eo6" id="Hjt-fL-3XW"/>
                             </connections>
@@ -609,7 +609,7 @@
                         <viewLayoutGuide key="safeArea" id="004-2h-epV"/>
                     </view>
                     <navigationItem key="navigationItem" title="Collection" largeTitleDisplayMode="always" id="mGd-lS-uOb">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="4ub-Il-O0k">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="4ub-Il-O0k">
                             <connections>
                                 <action selector="addItemButton:" destination="FGv-D9-7FU" id="WvA-D5-6Fd"/>
                             </connections>
@@ -682,10 +682,10 @@
             </objects>
             <point key="canvasLocation" x="2202.898550724638" y="-1510.0446428571429"/>
         </scene>
-        <!--Recipe Collection View Controller-->
+        <!--Collection View Controller-->
         <scene sceneID="Qd3-Cj-7Vq">
             <objects>
-                <collectionViewController id="ka6-AD-ihx" customClass="RecipeCollectionViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="ka6-AD-ihx" customClass="CollectionViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ypB-e9-sEd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="543"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -697,7 +697,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeCell" id="qMO-0K-SvI" customClass="RecipeCollectionViewCell" customModule="Delicious" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeCell" id="qMO-0K-SvI" customClass="CollectionViewCell" customModule="Delicious" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ymV-Ok-EPI">
@@ -845,7 +845,7 @@
                         <viewLayoutGuide key="safeArea" id="qRq-ej-RdD"/>
                     </view>
                     <navigationItem key="navigationItem" id="bdd-Uu-uQM">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="pwe-69-Pq3">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="pwe-69-Pq3">
                             <connections>
                                 <action selector="editAction:" destination="Aq6-vi-GLR" id="SkB-Sk-VZf"/>
                                 <segue destination="S2k-Ed-cS3" kind="show" identifier="editRecipeSegue" id="tuc-mx-Xh6"/>
@@ -866,12 +866,12 @@
         <!--View Ingredients-->
         <scene sceneID="klk-UY-uf6">
             <objects>
-                <tableViewController title="View Ingredients" id="qz6-lB-F7O" customClass="IngredientsTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="View Ingredients" id="qz6-lB-F7O" customClass="ItemTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wfc-Gt-J2V">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="VRT-VJ-nS6" detailTextLabel="xs2-xd-WkB" style="IBUITableViewCellStyleValue1" id="ki4-0t-hg7" customClass="IngredientsTableViewCell" customModule="Delicious" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="VRT-VJ-nS6" detailTextLabel="xs2-xd-WkB" style="IBUITableViewCellStyleValue1" id="ki4-0t-hg7" customClass="ItemTableViewCell" customModule="Delicious" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ki4-0t-hg7" id="O8J-Wq-rnv">
@@ -953,7 +953,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Create New Recipe" id="EmD-vm-HM7">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="4vd-gr-lR8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="4vd-gr-lR8">
                             <connections>
                                 <action selector="save:" destination="S2k-Ed-cS3" id="yAh-hi-h5A"/>
                             </connections>
@@ -964,6 +964,7 @@
                         <segue destination="rGH-ZV-iMh" kind="show" identifier="editIngredientSegue" id="7Qm-yU-So8"/>
                         <segue destination="tim-Fx-201" kind="show" identifier="editTextFieldSegue" id="enS-jz-boL"/>
                         <segue destination="2bg-SC-4xa" kind="show" identifier="editImageSegue" id="DKm-sb-nqb"/>
+                        <segue destination="IEb-pN-Q8o" kind="show" identifier="editInstructionSegue" id="soq-kB-AEG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaL-AZ-Jdx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1012,7 +1013,7 @@
                         <viewLayoutGuide key="safeArea" id="r5e-a7-e0h"/>
                     </view>
                     <navigationItem key="navigationItem" id="pNp-eL-eUV">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="1oK-3x-bpX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1oK-3x-bpX">
                             <connections>
                                 <action selector="save:" destination="2bg-SC-4xa" id="XmK-7d-h4g"/>
                             </connections>
@@ -1074,7 +1075,7 @@
                         <viewLayoutGuide key="safeArea" id="VUq-fC-pRk"/>
                     </view>
                     <navigationItem key="navigationItem" id="mcB-CR-n7O">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="DYh-oo-qSa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="DYh-oo-qSa">
                             <connections>
                                 <action selector="save:" destination="xjS-7X-aJi" id="gEm-zS-iCJ"/>
                             </connections>
@@ -1160,7 +1161,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Shopping List" id="aLd-b9-iE5">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="kQG-JF-kET">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="kQG-JF-kET">
                             <connections>
                                 <action selector="doneEditing:" destination="M8x-YZ-Rp0" id="reG-5b-nMi"/>
                             </connections>
@@ -1221,7 +1222,7 @@
                         <viewLayoutGuide key="safeArea" id="Hcj-SO-e31"/>
                     </view>
                     <navigationItem key="navigationItem" id="bPA-bw-G1Y">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="61h-RV-nCb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="61h-RV-nCb">
                             <connections>
                                 <action selector="save:" destination="rGH-ZV-iMh" id="VIs-cH-PaC"/>
                             </connections>
@@ -1234,7 +1235,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bOf-Fe-EbY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4625" y="216"/>
+            <point key="canvasLocation" x="4223" y="277"/>
         </scene>
         <!--Edit Text Field View Controller-->
         <scene sceneID="ini-Jm-ouG">
@@ -1268,7 +1269,7 @@
                         <viewLayoutGuide key="safeArea" id="nTM-hm-aVW"/>
                     </view>
                     <navigationItem key="navigationItem" id="jt8-7k-OuY">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="afI-jo-mL8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="afI-jo-mL8">
                             <connections>
                                 <action selector="save:" destination="tim-Fx-201" id="glX-3G-PzV"/>
                             </connections>
@@ -1282,6 +1283,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IcL-QO-fBv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5743" y="-155"/>
+        </scene>
+        <!--Edit Instructions-->
+        <scene sceneID="tYi-ri-bMx">
+            <objects>
+                <viewController id="IEb-pN-Q8o" customClass="EditInstructionsViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JRI-TZ-jWX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDW-hT-ehS">
+                                <rect key="frame" x="20" y="148" width="91" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Rf9-xs-hCY">
+                                <rect key="frame" x="20" y="177" width="374" height="203"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="203" id="u2Q-sb-BIm"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wDW-hT-ehS" firstAttribute="top" secondItem="8al-fr-BGo" secondAttribute="top" constant="60" id="7Rf-7F-LrX"/>
+                            <constraint firstItem="8al-fr-BGo" firstAttribute="trailing" secondItem="Rf9-xs-hCY" secondAttribute="trailing" constant="20" id="cOv-o3-AVK"/>
+                            <constraint firstItem="Rf9-xs-hCY" firstAttribute="top" secondItem="wDW-hT-ehS" secondAttribute="bottom" constant="8" id="cUV-nK-R1i"/>
+                            <constraint firstItem="Rf9-xs-hCY" firstAttribute="leading" secondItem="8al-fr-BGo" secondAttribute="leading" constant="20" id="vjz-eH-D8g"/>
+                            <constraint firstItem="wDW-hT-ehS" firstAttribute="leading" secondItem="8al-fr-BGo" secondAttribute="leading" constant="20" id="ylv-x3-kjw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8al-fr-BGo"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Instructions" id="rnN-eG-8nL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Zas-sm-FLn">
+                            <connections>
+                                <action selector="save:" destination="IEb-pN-Q8o" id="1Mx-ke-e9N"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="instructionText" destination="Rf9-xs-hCY" id="GH3-rn-8Wm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IYl-Ba-JaN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4974" y="277"/>
         </scene>
         <!--Delicious-->
         <scene sceneID="OYh-AX-uGb">
@@ -1678,7 +1730,7 @@
                         <viewLayoutGuide key="safeArea" id="Fy9-LW-hFe"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add New Menu" id="3fV-0R-9zE">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="FId-YJ-v2s">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="FId-YJ-v2s">
                             <connections>
                                 <action selector="save:" destination="k4J-m7-qWU" id="iCS-8G-wZi"/>
                             </connections>
@@ -1797,7 +1849,7 @@
                         <viewLayoutGuide key="safeArea" id="ljk-3G-Eqj"/>
                     </view>
                     <navigationItem key="navigationItem" id="9c0-sC-gHD">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="0Jo-VJ-mEu">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="0Jo-VJ-mEu">
                             <connections>
                                 <segue destination="VyG-n5-vSg" kind="show" identifier="editMenuSegue" id="vvh-Y0-x5G"/>
                             </connections>
@@ -1848,7 +1900,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="67I-3m-RHb">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="mgz-p3-vap">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mgz-p3-vap">
                             <connections>
                                 <action selector="save:" destination="VyG-n5-vSg" id="apv-k3-f65"/>
                             </connections>
@@ -1932,7 +1984,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Kitchen Wishlist" id="hdf-L4-04A">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="cXp-4A-CZO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="cXp-4A-CZO">
                             <connections>
                                 <action selector="doneEditing:" destination="8BO-QK-Uan" id="H8O-h3-6dO"/>
                             </connections>
@@ -2010,7 +2062,7 @@
                         <viewLayoutGuide key="safeArea" id="rCS-Z6-VcD"/>
                     </view>
                     <navigationItem key="navigationItem" id="Fp5-o3-HgN">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="jda-Q2-ULm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="jda-Q2-ULm">
                             <connections>
                                 <action selector="saveWishlistItem:" destination="FK2-C1-qCy" id="Bgr-U4-hT4"/>
                             </connections>
@@ -2029,7 +2081,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="4Vy-Hh-8xZ"/>
-        <segue reference="EDa-OQ-W4w"/>
+        <segue reference="enS-jz-boL"/>
         <segue reference="GSd-py-2L9"/>
         <segue reference="nbg-fl-4jd"/>
         <segue reference="VXE-Lk-ODQ"/>
