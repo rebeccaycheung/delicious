@@ -106,8 +106,6 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
                         }
                     }
                 }
-            } catch let err {
-                print(err)
             }
             
             // Wait for the response from the API

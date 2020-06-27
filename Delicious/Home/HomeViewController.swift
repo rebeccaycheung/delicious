@@ -36,7 +36,7 @@ class HomeViewController: UIViewController, ShowRecipeDelegate, ShowMenuDelegate
         super .viewWillAppear(animated)
         
         // Make sure the user has logged in
-        guard let userID = Auth.auth().currentUser?.uid else {
+        guard (Auth.auth().currentUser?.uid) != nil else {
             return
         }
     }
@@ -44,7 +44,7 @@ class HomeViewController: UIViewController, ShowRecipeDelegate, ShowMenuDelegate
     // Check which segment control has been pressed and load the correct collection view. Hide the Search Recipe button if the Menu segment has been pressed
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
         //Reference - https://stackoverflow.com/questions/30484268/refresh-container-view-holding-uitableview-swift/30485630
-        var collection: CollectionViewController = self.children[0] as! CollectionViewController
+        let collection: CollectionViewController = self.children[0] as! CollectionViewController
         switch segment.selectedSegmentIndex {
         case 0:
             selectedView = "Recipe"

@@ -37,7 +37,7 @@ class EditTextFieldViewController: UIViewController, UITextFieldDelegate {
             navigationController?.popViewController(animated: true)
             return
         } else {
-            var errorMsg = "Please ensure \(labelTitle!) field if filled\n"
+            let errorMsg = "Please ensure \(labelTitle!) field if filled\n"
             displayMessage(title: "", message: errorMsg)
         }
     }

@@ -492,7 +492,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func updateMenu(menu: Menu) {
         if let menuRef = menuRef?.document(menu.id!) {
-            menuRef.updateData(["name": menu.name, "cookTime": menu.cookTime, "servingSize": menu.servingSize])
+            menuRef.updateData(["name": menu.name, "cookTime": menu.cookTime!, "servingSize": menu.servingSize!])
         }
     }
     
@@ -533,7 +533,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func updateRecipe(recipe: Recipe) {
         if let recipeRef = recipeRef?.document(recipe.id!) {
-            recipeRef.updateData(["name": recipe.name, "source": recipe.source, "cookTime": recipe.cookTime, "servingSize": recipe.servingSize, "ingredientNamesList": recipe.ingredientNamesList, "ingredientMeasurementsList": recipe.ingredientMeasurementsList, "instructionsList": recipe.instructionsList, "notesList": recipe.notesList, "tagsList": recipe.tagsList])
+            recipeRef.updateData(["name": recipe.name, "source": recipe.source, "cookTime": recipe.cookTime, "servingSize": recipe.servingSize, "ingredientNamesList": recipe.ingredientNamesList ?? [], "ingredientMeasurementsList": recipe.ingredientMeasurementsList ?? [], "instructionsList": recipe.instructionsList ?? [], "notesList": recipe.notesList ?? [], "tagsList": recipe.tagsList ?? []])
         }
     }
     

@@ -457,7 +457,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             navigationController?.popViewController(animated: true)
             return
         } else {
-            var errorMsg = "Please ensure the name is filled\n"
+            let errorMsg = "Please ensure the name is filled\n"
             displayMessage(title: "", message: errorMsg)
         }
     }
