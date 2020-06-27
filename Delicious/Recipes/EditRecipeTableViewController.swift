@@ -26,16 +26,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     let SECTION_DELETE_RECIPE = 13
     
     var recipe: Recipe?
-    var currentRecipe: Recipe?
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .recipe
-    
-    var deleteIngredients = [String]()
-    var deleteIngredientMeasurements = [String]()
-    var deleteInstructions = [String]()
-    var deleteNotes = [String]()
-    var deleteTags = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,8 +41,11 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         
         if (recipe != nil) {
             navigationItem.title = "Edit Recipe"
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         } else {
             navigationItem.title = "Create New Recipe"
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
     
@@ -63,38 +59,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         databaseController?.removeListener(listener: self)
     }
     
-    // Reference - https://stackoverflow.com/questions/8228411/detecting-when-the-back-button-is-pressed-on-a-navbar/14155394
-    // Check if the back button was pressed
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        // Check if the view is popping off the stack
-        if parent == nil {
-            //
-        }
-    }
-    
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //tableView.reloadData()
-    }
-    
-    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
-        //
-    }
-    
-    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
-        //
-    }
-    
-    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
-        //
-    }
-    
-    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
-        //
-    }
-    
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        //
+        tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -281,18 +247,20 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
             break
         case SECTION_DELETE_RECIPE:
-            let alertController = UIAlertController(title: "Delete Recipe", message: "Are you sure you want to delete this recipe permantently?", preferredStyle: UIAlertController.Style.alert)
-            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
-            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { action in self.databaseController?.deleteRecipe(recipe: self.recipe!)
-                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
-                for controller in self.navigationController!.viewControllers as Array {
-                    if controller.isKind(of: HomeViewController.self) {
-                        self.navigationController!.popToViewController(controller, animated: true)
-                        break
-                    }
-                }
-            }))
-            self.present(alertController, animated: true, completion: nil)
+            deleteAction(item: "recipe", index: 0)
+            break
+//            let alertController = UIAlertController(title: "Delete Recipe", message: "Are you sure you want to delete this recipe permantently?", preferredStyle: UIAlertController.Style.alert)
+//            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
+//            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { action in self.databaseController?.deleteRecipe(recipe: self.recipe!)
+//                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
+//                for controller in self.navigationController!.viewControllers as Array {
+//                    if controller.isKind(of: HomeViewController.self) {
+//                        self.navigationController!.popToViewController(controller, animated: true)
+//                        break
+//                    }
+//                }
+//            }))
+//            self.present(alertController, animated: true, completion: nil)
         default:
             tableView.deselectRow(at: indexPath, animated: false)
             return
@@ -397,49 +365,95 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         if editingStyle == .delete {
             if indexPath.section == SECTION_INGREDIENT_LIST {
                 tableView.performBatchUpdates({
-                    if recipe?.ingredientNamesList != nil {
-                        deleteIngredients.append(recipe!.ingredientNamesList![indexPath.row])
+                    if recipe?.id == nil {
+                        self.recipe?.ingredientNamesList?.remove(at: indexPath.row)
+                        self.recipe?.ingredientMeasurementsList?.remove(at: indexPath.row)
+                    } else {
+                        deleteAction(item: "ingredient", index: indexPath.row)
                     }
-                    if recipe?.ingredientMeasurementsList != nil {
-                        deleteIngredientMeasurements.append(recipe!.ingredientMeasurementsList![indexPath.row])
-                    }
-                    recipe?.ingredientNamesList?.remove(at: indexPath.row)
-                    recipe?.ingredientMeasurementsList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_INGREDIENT_LIST], with: .automatic)
                 }, completion: nil)
             }
             if indexPath.section == SECTION_INSTRUCTION_LIST {
                 tableView.performBatchUpdates({
-                    if recipe?.instructionsList != nil {
-                        deleteInstructions.append(recipe!.instructionsList![indexPath.row])
+                    if recipe?.id == nil {
+                        self.recipe?.instructionsList?.remove(at: indexPath.row)
+                    } else {
+                        deleteAction(item: "instruction", index: indexPath.row)
                     }
-                    recipe?.instructionsList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_INSTRUCTION_LIST], with: .automatic)
                 }, completion: nil)
             }
             if indexPath.section == SECTION_NOTES_LIST {
                 tableView.performBatchUpdates({
-                    if recipe?.notesList != nil {
-                        deleteNotes.append(recipe!.notesList![indexPath.row])
+                    if recipe?.id == nil {
+                        self.recipe?.notesList?.remove(at: indexPath.row)
+                    } else {
+                        deleteAction(item: "note", index: indexPath.row)
                     }
-                    recipe?.notesList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_NOTES_LIST], with: .automatic)
                 }, completion: nil)
             }
             if indexPath.section == SECTION_TAGS_LIST {
                 tableView.performBatchUpdates({
-                    if recipe?.tagsList != nil {
-                        deleteTags.append(recipe!.tagsList![indexPath.row])
+                    if recipe?.id == nil {
+                        self.recipe?.tagsList?.remove(at: indexPath.row)
+                    } else {
+                        deleteAction(item: "tag", index: indexPath.row)
                     }
-                    recipe?.tagsList?.remove(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     self.tableView.reloadSections([SECTION_TAGS_LIST], with: .automatic)
                 }, completion: nil)
             }
         }
+    }
+    
+    func deleteAction(item: String, index: Int) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete \(item)", style: .destructive) { action in
+            switch item {
+            case "ingredient":
+                self.recipe?.ingredientNamesList?.remove(at: index)
+                self.recipe?.ingredientMeasurementsList?.remove(at: index)
+                self.saveRecipe()
+                break
+            case "instruction":
+                self.recipe?.instructionsList?.remove(at: index)
+                self.saveRecipe()
+                break
+            case "note":
+                self.recipe?.notesList?.remove(at: index)
+                self.saveRecipe()
+                break
+            case "tag":
+                self.recipe?.tagsList?.remove(at: index)
+                self.saveRecipe()
+                break
+            case "recipe":
+                self.databaseController?.deleteRecipe(recipe: self.recipe!)
+                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
+                for controller in self.navigationController!.viewControllers as Array {
+                    if controller.isKind(of: HomeViewController.self) {
+                        self.navigationController!.popToViewController(controller, animated: true)
+                        break
+                    }
+                }
+                break
+            default:
+                break
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -451,14 +465,12 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
                         let _ = databaseController?.addTag(name: i)
                     }
                 }
-            } else {
-                let _ = databaseController?.updateRecipe(recipe: recipe!)
             }
             navigationController?.popViewController(animated: true)
             return
         } else {
             let errorMsg = "Please ensure the name is filled\n"
-            displayMessage(title: "", message: errorMsg)
+            displayMessage(title: "Error", message: errorMsg)
         }
     }
     
@@ -471,6 +483,8 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     func addToRecipe(type: String, value: String) {
         if recipe == nil {
             recipe = Recipe()
+            recipe?.name = "Default name"
+            recipe?.source = "Default source"
             recipe?.ingredientNamesList = [String]()
             recipe?.ingredientMeasurementsList = [String]()
             recipe?.instructionsList = [String]()
@@ -497,7 +511,35 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             recipe?.tagsList?.append(value)
         }
         
+        saveRecipe()
         tableView.reloadData()
     }
+    
+    func saveRecipe() {
+        if recipe != nil {
+            if recipe!.id != nil {
+                let _ = databaseController?.updateRecipe(recipe: recipe!)
+            }
+        }
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
 }
-

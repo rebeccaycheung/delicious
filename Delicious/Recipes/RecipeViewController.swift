@@ -143,7 +143,6 @@ class RecipeViewController: UIViewController, DatabaseListener {
         } else if segue.identifier == "editRecipeSegue" {
             let destination = segue.destination as? EditRecipeTableViewController
             destination?.recipe = recipe
-            destination?.currentRecipe = recipe
         }
     }
     
