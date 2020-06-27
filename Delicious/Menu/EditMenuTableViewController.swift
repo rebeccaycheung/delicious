@@ -47,6 +47,10 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
        databaseController?.removeListener(listener: self)
     }
     
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        tableView.reloadData()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 7
     }
@@ -133,25 +137,19 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         switch indexPath.section {
         case SECTION_NAME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_COOK_TIME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_SERVING_SIZE:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
         case SECTION_ADD_RECIPE:
             performSegue(withIdentifier: "addFromPickerSegue", sender: self)
+            break
         case SECTION_DELETE_MENU:
-            let alertController = UIAlertController(title: "Delete Menu", message: "Are you sure you want to delete this menu permantently?", preferredStyle: UIAlertController.Style.alert)
-            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
-            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { action in self.databaseController?.deleteMenu(menu: self.menu!)
-                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
-                for controller in self.navigationController!.viewControllers as Array {
-                    if controller.isKind(of: HomeViewController.self) {
-                        self.navigationController!.popToViewController(controller, animated: true)
-                        break
-                    }
-                }
-            }))
-            self.present(alertController, animated: true, completion: nil)
+            deleteAction(item: "menu", index: 0)
+            break
         default:
             tableView.deselectRow(at: indexPath, animated: false)
             return
@@ -207,8 +205,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         if editingStyle == .delete && indexPath.section == SECTION_INCLUDED_RECIPES {
             tableView.performBatchUpdates({
                 if let recipes = menu?.recipes {
-                    removeRecipes.append(recipes[indexPath.row])
-                        menu!.recipes!.remove(at: indexPath.row)
+                    deleteAction(item: "recipe", index: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
                 }
@@ -216,42 +213,35 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
-    @IBAction func save(_ sender: Any) {
-        if menu?.name != nil, menu?.cookTime != nil, menu?.servingSize != nil {
-            let _ = databaseController?.updateMenu(menu: menu!)
-            if let recipes = menu?.recipes {
-                for recipe in recipes {
-                    let _ = databaseController?.addRecipeToMenu(recipe: recipe, menu: menu!)
-                }
-                if removeRecipes.count > 0 {
-                    for recipe in removeRecipes {
-                        let _ = databaseController?.removeRecipeFromMenu(recipe: recipe, menu: menu!)
+    func deleteAction(item: String, index: Int) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete \(item)", style: .destructive) { action in
+            switch item {
+            case "recipe":
+                let _ = self.databaseController?.removeRecipeFromMenu(recipe: self.menu!.recipes![index], menu: self.menu!)
+                break
+            case "menu":
+                self.databaseController?.deleteMenu(menu: self.menu!)
+                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
+                for controller in self.navigationController!.viewControllers as Array {
+                    if controller.isKind(of: HomeViewController.self) {
+                        self.navigationController!.popToViewController(controller, animated: true)
+                        break
                     }
                 }
+                break
+            default:
+                break
             }
-            navigationController?.popViewController(animated: true)
-            return
-        } else {
-            var errorMsg = "Please ensure all fields are filled:\n"
-            
-            if menu?.name == nil {
-                errorMsg += "Name\n"
-            }
-            if menu?.cookTime == nil {
-                errorMsg += "Cook time\n"
-            }
-            if menu?.servingSize == nil {
-                errorMsg += "Serving size\n"
-            }
-            
-            displayMessage(title: "Not all fields filled", message: errorMsg)
         }
-    }
-    
-    func displayMessage(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     func addToRecipe(type: String, value: String) {
@@ -262,19 +252,19 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         } else if type == "Serving Size" {
             menu?.servingSize = Int(value)
         }
-        tableView.reloadData()
+        saveMenu()
     }
     
     func addRecipeToMenu(recipe: Recipe) {
         menu?.recipes?.append(recipe)
-        tableView.reloadData()
+        let _ = databaseController?.addRecipeToMenu(recipe: recipe, menu: menu!)
+    }
+    
+    func saveMenu() {
+        let _ = databaseController?.updateMenu(menu: menu!)
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
-        //
-    }
-    
-    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         //
     }
     
@@ -294,3 +284,4 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         //
     }
 }
+

@@ -1972,13 +1972,7 @@
                             <outlet property="delegate" destination="VyG-n5-vSg" id="V9Q-Mf-I8G"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="67I-3m-RHb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mgz-p3-vap">
-                            <connections>
-                                <action selector="save:" destination="VyG-n5-vSg" id="apv-k3-f65"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="67I-3m-RHb"/>
                     <connections>
                         <segue destination="tim-Fx-201" kind="show" identifier="editTextFieldSegue" id="tOZ-wB-E5g"/>
                         <segue destination="xjS-7X-aJi" kind="show" identifier="addFromPickerSegue" id="UMu-BZ-0XA"/>
@@ -2165,8 +2159,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="4Vy-Hh-8xZ"/>
-        <segue reference="enS-jz-boL"/>
-        <segue reference="GSd-py-2L9"/>
+        <segue reference="tOZ-wB-E5g"/>
+        <segue reference="UMu-BZ-0XA"/>
         <segue reference="tuc-mx-Xh6"/>
         <segue reference="VXE-Lk-ODQ"/>
         <segue reference="GUm-Vi-KX5"/>
