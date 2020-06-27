@@ -104,6 +104,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                     // Load the No Image from Assests initally, while the images load
                     let image = UIImage(named: "noImage")
                     cell.recipeImage.image = image
+                    cell.recipeImage.contentMode = .center
                     
                     // Check what the image reference's prefix is
                     if imageRef.hasPrefix("gs://") {
@@ -116,6 +117,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                                 } else {
                                     let image = UIImage(data: data!)
                                     cell.recipeImage.image = image
+                                    cell.recipeImage.contentMode = .scaleAspectFill
                                 }
                             }
                         }
@@ -125,15 +127,16 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                         let data = try? Data(contentsOf: url!)
                         let image = UIImage(data: data!)
                         cell.recipeImage.image = image
+                        cell.recipeImage.contentMode = .scaleAspectFill
                     }
                 } else {
                     let image = UIImage(named: "noImage")
                     cell.recipeImage.image = image
+                    cell.recipeImage.contentMode = .center
                 }
                 
                 // Image style
                 cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
-                cell.recipeImage.contentMode = .scaleAspectFill
                 cell.recipeImage.layer.cornerRadius = 12
                 cell.recipeImage.clipsToBounds = true
             }
@@ -147,6 +150,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                 cell.recipeNameLabel.text = menu.name
                 let image = UIImage(named: "noImage")
                 cell.recipeImage.image = image
+                cell.recipeImage.contentMode = .center
             }
         }
         

@@ -59,7 +59,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         case SECTION_WISHLIST_TOTAL_PRICE:
             return 1
         default:
-            return 0
+            return 1
         }
     }
     
@@ -71,14 +71,20 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
                 wishlistCell.name.text = wishlistItem.name
                 wishlistCell.brand.text = wishlistItem.brand
                 wishlistCell.price.text = "$\(NSString(format: "%.2f", wishlistItem.price) as String)"
+                wishlistCell.name.isHidden = false
+                wishlistCell.brand.isHidden = false
+                wishlistCell.price.isHidden = false
                 if (wishlistItem.checked) {
                     wishlistCell.accessoryType = .checkmark
                 }
                 return wishlistCell
             }
             
-            let wishlistCell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: CELL_WISHLIST_ITEM)
+            let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
             wishlistCell.textLabel?.text = "No wishlist items"
+            wishlistCell.name.isHidden = true
+            wishlistCell.brand.isHidden = true
+            wishlistCell.price.isHidden = true
             return wishlistCell
         } else if indexPath.section == SECTION_WISHLIST_TOTAL_PRICE {
             let totalPriceCell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: CELL_WISHLIST_ITEM)
@@ -88,7 +94,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
             totalPriceCell.detailTextLabel?.textColor = UIColor(named: "Text")
             return totalPriceCell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
             return cell
         }
     }
@@ -135,7 +141,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editWishlistSegue" {
             let destination = segue.destination as! EditWishlistTableViewController
-            destination.wishlist = wishlist
+            destination.wishlistList = wishlist
         }
     }
     

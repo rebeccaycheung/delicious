@@ -30,7 +30,6 @@ class MenuViewController: UIViewController, DatabaseListener {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.title = menu?.name
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
@@ -39,6 +38,8 @@ class MenuViewController: UIViewController, DatabaseListener {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        
+        navigationItem.title = menu?.name
         
         if let cookTime = menu?.cookTime {
             self.cookTime.text = "Cook time: \(cookTime)"
@@ -52,6 +53,11 @@ class MenuViewController: UIViewController, DatabaseListener {
             self.servingSize.text = "Serving size: 0"
         }
         
+        self.recipeList = []
+        self.ingredientsName = []
+        self.ingredientsMeasurement = []
+        self.instructions = []
+        self.notes = []
         if let recipes = menu?.recipes {
             if recipes.count > 0 {
                 for recipe in recipes {
@@ -95,11 +101,6 @@ class MenuViewController: UIViewController, DatabaseListener {
     }
     
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
-        for m in menu {
-            if m.name == self.menu!.name {
-                self.menu = m
-            }
-        }
         self.view.setNeedsDisplay()
     }
     

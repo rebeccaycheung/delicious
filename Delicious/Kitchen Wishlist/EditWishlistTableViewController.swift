@@ -14,9 +14,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     let SECTION_WISHLIST = 0
     let SECTION_ADD_WISHLIST = 1
     let CELL_WISHLIST_ITEM = "kitchenWishlistItemCell"
-    var wishlist: [Wishlist] = []
-    
-    var deleteWishlistItem: [Wishlist] = []
+    var wishlistList: [Wishlist] = []
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .wishlist
@@ -43,7 +41,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     
     // Reload the table when the wishlist list changes
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
-        self.wishlist = wishlist
+        wishlistList = wishlist
         tableView.reloadData()
     }
 
@@ -54,7 +52,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_WISHLIST:
-            return wishlist.count
+            return wishlistList.count
         case SECTION_ADD_WISHLIST:
             return 1
         default:
@@ -66,28 +64,39 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_WISHLIST {
             let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            let wishlistItem = wishlist[indexPath.row]
+            let wishlistItem = wishlistList[indexPath.row]
             wishlistCell.name.text = wishlistItem.name
             wishlistCell.brand.text = wishlistItem.brand
             wishlistCell.price.text = NSString(format: "%.2f", wishlistItem.price) as String
+            wishlistCell.name.isHidden = false
+            wishlistCell.brand.isHidden = false
+            wishlistCell.price.isHidden = false
             return wishlistCell
         } else if indexPath.section == SECTION_ADD_WISHLIST {
-            let totalPriceCell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath) as! KitchenWishlistTableViewCell
-            totalPriceCell.textLabel?.text = "Add new wishlist item"
-            totalPriceCell.accessoryType = .disclosureIndicator
-            return totalPriceCell
+            let addCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
+            addCell.textLabel?.text = "Add new wishlist item"
+            addCell.name.isHidden = true
+            addCell.brand.isHidden = true
+            addCell.price.isHidden = true
+            return addCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)
             return cell
         }
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == SECTION_WISHLIST {
+            return true
+        }
+        return false
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_WISHLIST {
             tableView.performBatchUpdates({
-                // When a wishlist item is deleted, add it to the list and remove it from the wishlist list
-                deleteWishlistItem.append(wishlist[indexPath.row])
-                self.wishlist.remove(at: indexPath.row)
+                // Show action sheet before deleting
+                deleteAction(index: indexPath.row)
                 // Animate the deletion
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 // Reload the table
@@ -96,32 +105,34 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
-    // When the user is done, delete the wishlist items from the database
-    @IBAction func doneEditing(_ sender: Any) {
-        if deleteWishlistItem.count > 0 {
-            for item in deleteWishlistItem {
-                databaseController?.deleteWishlistItem(wishlistItem: item)
-            }
-        }
-        navigationController?.popViewController(animated: true)
-        return
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare segue for the selected wishlist item, pass the wishlist item to the editing screen
         if segue.identifier == "editWishlistItemSegue", let cell = sender as? KitchenWishlistTableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
                 let destination = segue.destination as! EditKitchenWishlistViewController
                 if indexPath.section == SECTION_WISHLIST {
-                    destination.wishlistItem = wishlist[indexPath.row]
+                    destination.wishlistItem = wishlistList[indexPath.row]
                 }
             }
-        } else if segue.identifier == "addNewItemSegue" {
-            // Prepare segue for adding a new wishlist item
-            let _ = segue.destination as! EditKitchenWishlistViewController
         }
     }
-
+    
+    func deleteAction(index: Int) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete wishlist item", style: .destructive) { action in
+            let _ = self.databaseController?.deleteWishlistItem(wishlistItem: self.wishlistList[index])
+            self.tableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
         //
     }

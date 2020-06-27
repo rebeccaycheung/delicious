@@ -8,14 +8,13 @@
 
 import UIKit
 
+// Edit bookmarks list screen
 class EditBookmarksListTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_BOOKMARKS = 0
     let SECTION_ADD_BOOKMARKS = 1
     let CELL_BOOKMARKS = "bookmarksCell"
     var bookmarksList: [Bookmarks] = []
-    
-    var deleteBookmarks: [Bookmarks] = []
     
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .bookmarks
@@ -88,27 +87,14 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_BOOKMARKS {
             tableView.performBatchUpdates({
-                // Append the deleted bookmark to a list
-                deleteBookmarks.append(bookmarksList[indexPath.row])
-                // Remove it from the bookmarks list
-                self.bookmarksList.remove(at: indexPath.row)
+                // Show action sheet before deleting
+                deleteAction(index: indexPath.row)
                 // Animate the deletion
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 // Reload the table
                 self.tableView.reloadSections([SECTION_BOOKMARKS], with: .automatic)
             }, completion: nil)
         }
-    }
-    
-    // When the user presses done, it will delete the bookmarks from the database
-    @IBAction func doneEditing(_ sender: Any) {
-        if deleteBookmarks.count > 0 {
-            for bookmark in deleteBookmarks {
-                databaseController?.deleteBookmark(bookmark: bookmark)
-            }
-        }
-        navigationController?.popViewController(animated: true)
-        return
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,6 +107,22 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
                 }
             }
         }
+    }
+    
+    func deleteAction(index: Int) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete bookmark", style: .destructive) { action in
+            
+            let _ = self.databaseController?.deleteBookmark(bookmark: self.bookmarksList[index])
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {

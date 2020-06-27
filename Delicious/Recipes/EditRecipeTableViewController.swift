@@ -249,18 +249,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_DELETE_RECIPE:
             deleteAction(item: "recipe", index: 0)
             break
-//            let alertController = UIAlertController(title: "Delete Recipe", message: "Are you sure you want to delete this recipe permantently?", preferredStyle: UIAlertController.Style.alert)
-//            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
-//            alertController.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { action in self.databaseController?.deleteRecipe(recipe: self.recipe!)
-//                //Reference - https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift
-//                for controller in self.navigationController!.viewControllers as Array {
-//                    if controller.isKind(of: HomeViewController.self) {
-//                        self.navigationController!.popToViewController(controller, animated: true)
-//                        break
-//                    }
-//                }
-//            }))
-//            self.present(alertController, animated: true, completion: nil)
         default:
             tableView.deselectRow(at: indexPath, animated: false)
             return

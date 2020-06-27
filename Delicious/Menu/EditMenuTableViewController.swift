@@ -18,10 +18,10 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     let SECTION_SERVING_SIZE = 5
     let SECTION_DELETE_MENU = 6
     
+    var menu: Menu?
+    
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .menu
-    
-    var menu: Menu?
     
     var removeRecipes = [Recipe]()
     
@@ -34,7 +34,6 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +47,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     }
     
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        print("got here")
         tableView.reloadData()
     }
     
@@ -204,7 +204,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_INCLUDED_RECIPES {
             tableView.performBatchUpdates({
-                if let recipes = menu?.recipes {
+                if (menu?.recipes) != nil {
                     deleteAction(item: "recipe", index: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
@@ -219,6 +219,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         let deleteAction = UIAlertAction(title: "Delete \(item)", style: .destructive) { action in
             switch item {
             case "recipe":
+                self.menu?.recipes?.remove(at: index)
                 let _ = self.databaseController?.removeRecipeFromMenu(recipe: self.menu!.recipes![index], menu: self.menu!)
                 break
             case "menu":
@@ -253,15 +254,18 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             menu?.servingSize = Int(value)
         }
         saveMenu()
+        tableView.reloadData()
     }
     
     func addRecipeToMenu(recipe: Recipe) {
         menu?.recipes?.append(recipe)
         let _ = databaseController?.addRecipeToMenu(recipe: recipe, menu: menu!)
+        tableView.reloadData()
     }
     
     func saveMenu() {
         let _ = databaseController?.updateMenu(menu: menu!)
+        tableView.reloadData()
     }
     
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {

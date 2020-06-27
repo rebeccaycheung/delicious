@@ -79,11 +79,10 @@
                     <navigationItem key="navigationItem" title="Kitchen Wishlist" id="6s1-BW-QHM">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="8Ti-ZC-etM">
                             <connections>
-                                <segue destination="8BO-QK-Uan" kind="show" identifier="editWishlistSegue" id="c9c-gN-sJY"/>
+                                <segue destination="8BO-QK-Uan" kind="show" identifier="editWishlistSegue" id="liS-be-W4m"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ONp-HN-iJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,7 +129,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5C-Ts-xTQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -171,13 +169,7 @@
                             <outlet property="delegate" destination="3EG-cM-tP0" id="5TU-xT-4Ea"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit Bookmarks" id="Gjb-eB-Mfb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="tie-oX-dMs">
-                            <connections>
-                                <action selector="doneEditing:" destination="3EG-cM-tP0" id="2RM-lj-X0i"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Edit Bookmarks" id="Gjb-eB-Mfb"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wwM-dx-ii9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -274,7 +266,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2g-V0-5E2">
                                             <rect key="frame" x="20" y="21" width="150" height="20.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="ReK-CW-q8G"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ReK-CW-q8G"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -317,11 +309,10 @@
                     <navigationItem key="navigationItem" title="Shopping List" id="4Ep-q7-GBL">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="p2D-d1-2E1">
                             <connections>
-                                <segue destination="M8x-YZ-Rp0" kind="show" identifier="editShoppingListSegue" id="f2l-tx-O2J"/>
+                                <segue destination="M8x-YZ-Rp0" kind="show" identifier="editShoppingListSegue" id="4ZC-vY-dOQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQa-ud-gNf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -457,7 +448,7 @@
         <scene sceneID="TPN-jO-Qy6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lBD-1K-W8h" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Shopping" image="star.fill" catalog="system" id="g6g-jJ-Bix"/>
+                    <tabBarItem key="tabBarItem" title="Shopping" image="bag.fill" catalog="system" id="g6g-jJ-Bix"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RJT-kv-mcI">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -476,7 +467,7 @@
         <scene sceneID="FDP-eZ-RWB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bba-VS-pdM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Wishlist" image="star.fill" catalog="system" id="ath-ef-PRg"/>
+                    <tabBarItem key="tabBarItem" title="Wishlist" image="heart.fill" catalog="system" id="ath-ef-PRg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="S0U-5b-DhR">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -904,7 +895,7 @@
             <objects>
                 <tableViewController title="View Ingredients" id="qz6-lB-F7O" customClass="ItemTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wfc-Gt-J2V">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="VRT-VJ-nS6" detailTextLabel="xs2-xd-WkB" style="IBUITableViewCellStyleValue1" id="ki4-0t-hg7" customClass="ItemTableViewCell" customModule="Delicious" customModuleProvider="target">
@@ -1128,10 +1119,10 @@
             </objects>
             <point key="canvasLocation" x="4625" y="-703"/>
         </scene>
-        <!--Shopping List-->
+        <!--Edit Shopping List-->
         <scene sceneID="fv3-DN-x9U">
             <objects>
-                <tableViewController title="Shopping List" id="M8x-YZ-Rp0" customClass="EditShoppingListTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Edit Shopping List" id="M8x-YZ-Rp0" customClass="EditShoppingListTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="89D-NY-FqG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1187,18 +1178,7 @@
                                     <outlet property="brand" destination="0O8-6F-NvP" id="4Gx-af-wrC"/>
                                     <outlet property="item" destination="jU5-TU-a0W" id="fd3-tk-Rzl"/>
                                     <outlet property="price" destination="56a-uD-uMt" id="5QD-Uk-Vgr"/>
-                                    <segue destination="A2d-iM-eo6" kind="show" identifier="editShoppingItemSegue" id="ImC-DO-WBy"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="infoCell" rowHeight="90" id="fyC-k9-41F" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="145.5" width="374" height="90"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fyC-k9-41F" id="bNf-LI-lji">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="90"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="A2d-iM-eo6" kind="show" identifier="addNewItemSegue" id="EJm-hk-Z2L"/>
+                                    <segue destination="A2d-iM-eo6" kind="show" identifier="editShoppingItemSegue" id="9d6-Hz-jZs"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1207,14 +1187,7 @@
                             <outlet property="delegate" destination="M8x-YZ-Rp0" id="MK2-Mp-ebH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Shopping List" id="aLd-b9-iE5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="kQG-JF-kET">
-                            <connections>
-                                <action selector="doneEditing:" destination="M8x-YZ-Rp0" id="reG-5b-nMi"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Edit Shopping List" id="aLd-b9-iE5"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v34-py-KbT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1982,10 +1955,10 @@
             </objects>
             <point key="canvasLocation" x="5742" y="-1371"/>
         </scene>
-        <!--Kitchen Wishlist-->
+        <!--Edit Kitchen Wishlist-->
         <scene sceneID="Xcv-dc-O4d">
             <objects>
-                <tableViewController title="Kitchen Wishlist" id="8BO-QK-Uan" customClass="EditWishlistTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Edit Kitchen Wishlist" id="8BO-QK-Uan" customClass="EditWishlistTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Lop-ds-W3E">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2044,35 +2017,17 @@
                                     <segue destination="FK2-C1-qCy" kind="show" identifier="editWishlistItemSegue" id="4Vy-Hh-8xZ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="infoCell" rowHeight="90" id="4Ke-VC-ngg" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="145.5" width="374" height="90"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Ke-VC-ngg" id="Pai-yW-0JR">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="90"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="FK2-C1-qCy" kind="show" identifier="addNewItemSegue" id="lfZ-II-KoQ"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="8BO-QK-Uan" id="Qb5-r9-pP5"/>
                             <outlet property="delegate" destination="8BO-QK-Uan" id="YNF-D9-Qht"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Kitchen Wishlist" id="hdf-L4-04A">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="cXp-4A-CZO">
-                            <connections>
-                                <action selector="doneEditing:" destination="8BO-QK-Uan" id="H8O-h3-6dO"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Edit Kitchen Wishlist" id="hdf-L4-04A"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9SN-JS-QIR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112" y="2979"/>
+            <point key="canvasLocation" x="912" y="2244"/>
         </scene>
         <!--Edit Kitchen Wishlist View Controller-->
         <scene sceneID="eap-KI-h7C">
@@ -2154,24 +2109,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="noi-7F-gou" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1022" y="2979"/>
+            <point key="canvasLocation" x="1762" y="2244"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4Vy-Hh-8xZ"/>
         <segue reference="tOZ-wB-E5g"/>
         <segue reference="UMu-BZ-0XA"/>
         <segue reference="tuc-mx-Xh6"/>
         <segue reference="VXE-Lk-ODQ"/>
         <segue reference="GUm-Vi-KX5"/>
-        <segue reference="EJm-hk-Z2L"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Main"/>
     <resources>
+        <image name="bag.fill" catalog="system" width="128" height="128"/>
         <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="Main">
             <color red="0.97299998998641968" green="0.61599999666213989" blue="0.14499999582767487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

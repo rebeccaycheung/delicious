@@ -16,10 +16,10 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     let CELL_SHOPPING_ITEM = "shoppingItemCell"
     var shoppingList: [ShoppingList] = []
     
-    var deleteShoppingItem: [ShoppingList] = []
-
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .shoppingList
+    
+    var selectedItem: ShoppingList?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +70,17 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
             shoppingItemCell.item.text = shoppingItem.item
             shoppingItemCell.price.text = "$\(NSString(format: "%.2f", shoppingItem.price) as String)"
             shoppingItemCell.brand.text = shoppingItem.brand
+            shoppingItemCell.item.isHidden = false
+            shoppingItemCell.price.isHidden = false
+            shoppingItemCell.brand.isHidden = false
             return shoppingItemCell
         } else if indexPath.section == SECTION_ADD_SHOPPING_ITEM {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "infoCell", for: indexPath) as! ShoppingListTableViewCell
-            cell.textLabel?.text = "Add new shopping item"
-            cell.accessoryType = .disclosureIndicator
-            return cell
+            let addCell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
+            addCell.textLabel?.text = "Add new shopping item"
+            addCell.item.isHidden = true
+            addCell.price.isHidden = true
+            addCell.brand.isHidden = true
+            return addCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath)
             return cell
@@ -85,9 +90,8 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_SHOPPING_LIST {
             tableView.performBatchUpdates({
-                // When a shopping item is deleted, add it to the list and remove it from the shopping list
-                deleteShoppingItem.append(shoppingList[indexPath.row])
-                self.shoppingList.remove(at: indexPath.row)
+                // Show action sheet before deleting
+                deleteAction(index: indexPath.row)
                 // Animate the deletion
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 // Reload the table
@@ -96,34 +100,34 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
         }
     }
     
-    // When the user is done, delete the shopping items from the database
-    @IBAction func doneEditing(_ sender: Any) {
-        if deleteShoppingItem.count > 0 {
-            for item in deleteShoppingItem {
-                databaseController?.deleteShoppingItem(shoppingItem: item)
-            }
-        }
-        navigationController?.popViewController(animated: true)
-        return
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editShoppingItemSegue" {
-            // Prepare segue for the selected shopping item, pass the shopping item to the editing screen
-            if let cell = sender as? ShoppingListTableViewCell {
-                if let indexPath = tableView.indexPath(for: cell) {
-                    if indexPath.section == SECTION_SHOPPING_LIST {
-                        let destination = segue.destination as! EditShoppingItemViewController
-                        destination.shoppingItem = shoppingList[indexPath.row]
-                    }
+        // Prepare segue for the selected shopping item, pass the shopping item to the editing screen
+        if segue.identifier == "editShoppingItemSegue", let cell = sender as? ShoppingListTableViewCell {
+            if let indexPath = tableView.indexPath(for: cell) {
+                if indexPath.section == SECTION_SHOPPING_LIST {
+                    let destination = segue.destination as! EditShoppingItemViewController
+                    destination.shoppingItem = shoppingList[indexPath.row]
                 }
             }
-        } else if segue.identifier == "addNewItemSegue" {
-            // Prepare segue for adding a new shopping list item
-            let _ = segue.destination as! EditShoppingItemViewController
         }
     }
-
+    
+    func deleteAction(index: Int) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete shopping list item", style: .destructive) { action in
+            
+            let _ = self.databaseController?.deleteShoppingItem(shoppingItem: self.shoppingList[index])
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
     func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
         //
     }
