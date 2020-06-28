@@ -15,8 +15,8 @@ class RecipeViewController: UIViewController, DatabaseListener {
 
     @IBOutlet weak var cookTimeLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
-    @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var recipeImage: UIImageView!
+    @IBOutlet weak var sourceButton: UIButton!
     
     var recipe: Recipe?
     
@@ -64,7 +64,7 @@ class RecipeViewController: UIViewController, DatabaseListener {
         // When the screen appears, set the labels
         cookTimeLabel.text = "Cook time: \(recipe!.cookTime)"
         servingSizeLabel.text = "Serving size: \(recipe!.servingSize)"
-        sourceLabel.text = recipe?.source
+        sourceButton.setTitle(recipe?.source, for: .normal)
         
         // Remove all the existing tags
         tagsListView.removeAllTags()
@@ -181,6 +181,41 @@ class RecipeViewController: UIViewController, DatabaseListener {
             let destination = segue.destination as? EditRecipeTableViewController
             destination?.recipe = recipe
         }
+    }
+    
+    @IBAction func sourceButton(_ sender: Any) {
+        if let source = sourceButton.titleLabel?.text {
+            // Make sure the source is an actual link
+            if source.hasPrefix("http") {
+                showActionSheet(item: source)
+            } else {
+                displayMessage("Source is not in the proper url format. Make sure it starts with 'http'", "Can't open in browser")
+            }
+        }
+    }
+    
+    // Show action sheet function
+    func showActionSheet(item: String) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let leaveApplicationAction = UIAlertAction(title: "Open recipe source in browser", style: .default) { action in
+            // When the source has been pressed, open web browser with the url
+            UIApplication.shared.open(URL(string: "\(item)")!)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(leaveApplicationAction)
+        actionSheet.addAction(cancelAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    // Display alert message function
+    func displayMessage(_ message: String, _ title: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
