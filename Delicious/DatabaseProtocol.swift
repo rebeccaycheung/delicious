@@ -70,6 +70,7 @@ protocol DatabaseProtocol: AnyObject {
     func addRecipeToMenu(recipe: Recipe, menu: Menu) -> Bool
     func deleteMenu(menu: Menu)
     func removeRecipeFromMenu(recipe: Recipe, menu: Menu)
+    func addImageToMenu(menu: Menu, image: String)
     
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)

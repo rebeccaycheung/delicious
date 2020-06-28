@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseStorage
 import TagListView
 
 // Menu screen
@@ -15,6 +16,7 @@ class MenuViewController: UIViewController, DatabaseListener {
     @IBOutlet var menuImage: UIImageView!
     @IBOutlet var cookTime: UILabel!
     @IBOutlet var servingSize: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
     // TagListView is an imported library that shows the tags of a recipe in a tag formation
     @IBOutlet weak var tagsListView: TagListView!
@@ -30,11 +32,22 @@ class MenuViewController: UIViewController, DatabaseListener {
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .menu
     
+    // Storage reference
+    var storageReference = Storage.storage()
+    
+    // Initialise the indicator for the loading
+    var indicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
+        
+        // Create a loading animation
+        indicator.style = UIActivityIndicatorView.Style.medium
+        indicator.center = self.imageView.center
+        self.view.addSubview(indicator)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
@@ -63,9 +76,16 @@ class MenuViewController: UIViewController, DatabaseListener {
             self.servingSize.text = "Serving size: 0"
         }
         
+        loadImage()
+        
         // Remove all the existing tags
         tagsListView.removeAllTags()
         
+        loadMenuItems()
+    }
+    
+    // Load menu items
+    func loadMenuItems() {
         // Empty all the lists
         self.recipeList = []
         self.ingredientsName = []
@@ -133,6 +153,58 @@ class MenuViewController: UIViewController, DatabaseListener {
             for i in notesList {
                 self.notes.append(i)
             }
+        }
+    }
+    
+    // Load menu's image
+    func loadImage() {
+        let blankImage = UIImage()
+        self.imageView.image = blankImage
+        // Load the image of the recipe
+        if let image = menu?.imageReference {
+            // Start the indicator
+            indicator.startAnimating()
+            indicator.backgroundColor = UIColor.clear
+            
+            // Set the image layout
+            self.imageView.contentMode = .scaleAspectFill
+            self.imageView.layer.cornerRadius = 12
+            self.imageView.clipsToBounds = true
+            
+            // Check what prefix the image reference is
+            // If it is from cloud storage
+            if image.hasPrefix("gs://") || image.hasPrefix("https://firebasestorage") {
+                // Load the image from cloud storage
+                let ref = self.storageReference.reference(forURL: image)
+                let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                    do {
+                        if let error = error {
+                            print(error)
+                        } else {
+                            let image = UIImage(data: data!)
+                            // Set the recipe image
+                            self.imageView.image = image
+                            // Stop the indicator once it loads the image
+                            self.indicator.stopAnimating()
+                            self.indicator.hidesWhenStopped = true
+                        }
+                    }
+                }
+            } else if image.hasPrefix("https://") {
+                // If it is a URL
+                let url = URL(string: image)
+                // Load the URL and retrieve the data
+                let data = try? Data(contentsOf: url!)
+                // Set the recipe image
+                self.imageView.image = UIImage(data: data!)
+                // Stop the indicator once it loads the image
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+            }
+        } else {
+            self.imageView.contentMode = .center
+            let image = UIImage(named: "noImage")
+            self.imageView.image = image
         }
     }
     

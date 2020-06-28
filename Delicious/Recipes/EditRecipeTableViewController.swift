@@ -348,6 +348,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if segue.identifier == "editImageSegue" {
             let destination = segue.destination as! EditImageViewController
             destination.recipe = recipe
+            destination.type = "recipe"
         } else if segue.identifier == "editInstructionSegue" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let selectedRow = indexPath.section

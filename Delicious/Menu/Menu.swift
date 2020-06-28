@@ -12,6 +12,7 @@ import UIKit
 class Menu: NSObject, Codable {
     var id: String?
     var name: String = ""
+    var imageReference: String?
     var recipes: [Recipe]?
     var cookTime: Int?
     var servingSize: Int?
@@ -23,6 +24,7 @@ class Menu: NSObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case imageReference
         case recipes
         case cookTime
         case servingSize

@@ -153,6 +153,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             do {
                 parsedMenu = Menu()
                 parsedMenu!.name = change.document.data()["name"] as! String
+                parsedMenu!.imageReference = change.document.data()["imageReference"] as? String
                 parsedMenu!.cookTime = change.document.data()["cookTime"] as? Int
                 parsedMenu!.servingSize = change.document.data()["servingSize"] as? Int
                 parsedMenu!.extraIngredientsName = change.document.data()["extraIngredientsName"] as? [String]
@@ -492,6 +493,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
             menu.id = menuRef.documentID
         }
         return menu
+    }
+    
+    func addImageToMenu(menu: Menu, image: String) {
+        if let menuRef = menuRef?.document(menu.id!) {
+            menuRef.updateData(["imageReference": image])
+        }
     }
     
     func updateMenu(menu: Menu) {

@@ -90,6 +90,15 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         // Use the Recipe Collection view cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! CollectionViewCell
         
+        // Image style
+        cell.recipeImage.contentMode = .center
+        cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+        cell.recipeImage.layer.cornerRadius = 12
+        cell.recipeImage.clipsToBounds = true
+        // Load the No Image from Assests initally, while the images load
+        let image = UIImage(named: "noImage")
+        cell.recipeImage.image = image
+        
         // Check if the recipe list is not nil
         if let collectionRecipe = recipeDataList {
             // Check which segment control the user was on
@@ -101,44 +110,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                 
                 // Load the image for each recipe
                 if let imageRef = recipe.imageReference {
-                    // Load the No Image from Assests initally, while the images load
-                    let image = UIImage(named: "noImage")
-                    cell.recipeImage.image = image
-                    cell.recipeImage.contentMode = .center
-                    
-                    // Check what the image reference's prefix is
-                    if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
-                        // Load the image from Firestore
-                        let ref = self.storageReference.reference(forURL: imageRef)
-                        let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                            do {
-                                if let error = error {
-                                    print(error)
-                                } else {
-                                    let image = UIImage(data: data!)
-                                    cell.recipeImage.image = image
-                                    cell.recipeImage.contentMode = .scaleAspectFill
-                                }
-                            }
-                        }
-                    } else if imageRef.hasPrefix("https://") {
-                        // Load the image from the URL
-                        let url = URL(string: imageRef)
-                        let data = try? Data(contentsOf: url!)
-                        let image = UIImage(data: data!)
-                        cell.recipeImage.image = image
-                        cell.recipeImage.contentMode = .scaleAspectFill
-                    }
-                } else {
-                    let image = UIImage(named: "noImage")
-                    cell.recipeImage.image = image
-                    cell.recipeImage.contentMode = .center
+                    loadImage(imageRef: imageRef, cell: cell)
                 }
-                
-                // Image style
-                cell.recipeImage.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
-                cell.recipeImage.layer.cornerRadius = 12
-                cell.recipeImage.clipsToBounds = true
             }
         }
         // Check if menu list is not nil
@@ -148,9 +121,11 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                 // For each menu, assign the name label to the menu's name and let the image be the no image from Assets
                 let menu = collectionMenu[indexPath.row]
                 cell.recipeNameLabel.text = menu.name
-                let image = UIImage(named: "noImage")
-                cell.recipeImage.image = image
-                cell.recipeImage.contentMode = .center
+                
+                // Load the image for each menu
+                if let imageRef = menu.imageReference {
+                    loadImage(imageRef: imageRef, cell: cell)
+                }
             }
         }
         
@@ -158,6 +133,36 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         cell.layer.cornerRadius = 12
         
         return cell
+    }
+    
+    // Load image function
+    func loadImage(imageRef: String, cell: CollectionViewCell){
+        // Check what the image reference's prefix is
+        if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
+            // Load the image from Firestore
+            let ref = self.storageReference.reference(forURL: imageRef)
+            // Get data from storage
+            let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                do {
+                    if let error = error {
+                        print(error)
+                    } else {
+                        let image = UIImage(data: data!)!
+                        // Set cell image
+                        cell.recipeImage.image = image
+                        cell.recipeImage.contentMode = .scaleAspectFill
+                    }
+                }
+            }
+        } else if imageRef.hasPrefix("https://") {
+            // Load the image from the URL
+            let url = URL(string: imageRef)
+            let data = try? Data(contentsOf: url!)
+            let image = UIImage(data: data!)!
+            // Set cell image
+            cell.recipeImage.image = image
+            cell.recipeImage.contentMode = .scaleAspectFill
+        }
     }
     
     // Layout of the Collection
@@ -203,3 +208,4 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         //
     }
 }
+

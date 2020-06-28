@@ -10,10 +10,13 @@ import UIKit
 import FirebaseStorage
 
 class EditImageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DatabaseListener {
+    
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var uploadButton: UIButton!
     
     var recipe: Recipe?
+    var menu: Menu?
+    var type = String()
     
     var storageReference = Storage.storage()
     
@@ -39,30 +42,36 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         self.view.addSubview(indicator)
         
         if let imageRef = recipe?.imageReference {
-            indicator.startAnimating()
-            indicator.backgroundColor = UIColor.clear
-            
-            if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
-                let ref = self.storageReference.reference(forURL: imageRef)
-                let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                    do {
-                        if let error = error {
-                            print(error)
-                        } else {
-                            let image = UIImage(data: data!)
-                            self.image.image = image
-                            self.indicator.stopAnimating()
-                            self.indicator.hidesWhenStopped = true
-                        }
+            loadImage(imageRef)
+        } else if let imageRef = menu?.imageReference {
+            loadImage(imageRef)
+        }
+    }
+    
+    func loadImage(_ imageRef: String) {
+        indicator.startAnimating()
+        indicator.backgroundColor = UIColor.clear
+        
+        if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
+            let ref = self.storageReference.reference(forURL: imageRef)
+            let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                do {
+                    if let error = error {
+                        print(error)
+                    } else {
+                        let image = UIImage(data: data!)
+                        self.image.image = image
+                        self.indicator.stopAnimating()
+                        self.indicator.hidesWhenStopped = true
                     }
                 }
-            } else if imageRef.hasPrefix("https://") {
-                let url = URL(string: imageRef)
-                let data = try? Data(contentsOf: url!)
-                self.image.image = UIImage(data: data!)
-                self.indicator.stopAnimating()
-                self.indicator.hidesWhenStopped = true
             }
+        } else if imageRef.hasPrefix("https://") {
+            let url = URL(string: imageRef)
+            let data = try? Data(contentsOf: url!)
+            self.image.image = UIImage(data: data!)
+            self.indicator.stopAnimating()
+            self.indicator.hidesWhenStopped = true
         }
     }
     
@@ -125,28 +134,41 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
             try data.write(to: fileURL)
             
             let storageRef = storageReference.reference()
-            let imageRef = storageRef.child("\(self.recipe!.id!).jpg")
             
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpg"
-            imageRef.putData(data, metadata: metadata) { (meta, error) in
-                if error != nil {
-                    self.displayMessage("Could not upload image to firebase", "Error")
-                } else {
-                    imageRef.downloadURL { (url, error) in
-                        guard let downloadURL = url else {
-                            print("Download URL not found")
-                            return
-                        }
-                        let _ = self.databaseController?.addImageToRecipe(recipe: self.recipe!, image: "\(downloadURL)")
-                        self.indicator.stopAnimating()
-                        self.indicator.hidesWhenStopped = true
-                        self.displayMessage("Image uploaded", "Success")
-                    }
-                }
+            if type == "recipe" {
+                let imageRef = storageRef.child("\(self.recipe!.id!).jpg")
+                uploadImage(imageRef: imageRef, data: data)
+            } else {
+                let imageRef = storageRef.child("\(self.menu!.id!).jpg")
+                uploadImage(imageRef: imageRef, data: data)
             }
         } catch {
             displayMessage(error.localizedDescription, "Error")
+        }
+    }
+    
+    func uploadImage(imageRef: StorageReference, data: Data) {
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        imageRef.putData(data, metadata: metadata) { (meta, error) in
+            if error != nil {
+                self.displayMessage("Could not upload image to firebase", "Error")
+            } else {
+                imageRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else {
+                        print("Download URL not found")
+                        return
+                    }
+                    if self.type == "recipe" {
+                        let _ = self.databaseController?.addImageToRecipe(recipe: self.recipe!, image: "\(downloadURL)")
+                    } else {
+                        let _ = self.databaseController?.addImageToMenu(menu: self.menu!, image: "\(downloadURL)")
+                    }
+                    self.indicator.stopAnimating()
+                    self.indicator.hidesWhenStopped = true
+                    self.displayMessage("Image uploaded", "Success")
+                }
+            }
         }
     }
     

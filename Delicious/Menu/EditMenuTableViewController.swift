@@ -104,7 +104,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         case SECTION_INCLUDED_RECIPES:
             return "Included Recipes"
         case SECTION_IMAGE:
-            return "Image/Video"
+            return "Image"
         case SECTION_COOK_TIME:
             return "Cook time"
         case SECTION_SERVING_SIZE:
@@ -138,7 +138,11 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             cell.label.text = "Add recipe"
             return cell
         case SECTION_IMAGE:
-            cell.label.text = "Upload an image"
+            if menu?.imageReference != nil {
+                cell.label.text = "Change image"
+            } else {
+                cell.label.text = "Upload an image"
+            }
             return cell
         case SECTION_COOK_TIME:
             if let cookTime = menu?.cookTime {
@@ -197,6 +201,9 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         switch indexPath.section {
         case SECTION_NAME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
+            break
+        case SECTION_IMAGE:
+            performSegue(withIdentifier: "editImageSegue", sender: self)
             break
         case SECTION_COOK_TIME:
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
@@ -319,6 +326,10 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
                    break
                }
            }
+        } else if segue.identifier == "editImageSegue" {
+            let destination = segue.destination as! EditImageViewController
+            destination.menu = menu
+            destination.type = "menu"
         }
     }
     
