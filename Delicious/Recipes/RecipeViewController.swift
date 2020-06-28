@@ -128,8 +128,10 @@ class RecipeViewController: UIViewController, DatabaseListener {
             let destination = segue.destination as? ItemTableViewController
             destination?.titleDataList = ingredients
             destination?.detailDataList = ingredientMeasurements
+            destination?.type = "ingredients"
         } else if segue.identifier == "instructionsSegue" {
             let destination = segue.destination as? ItemTableViewController
+            destination?.type = "instructions"
             if let instructionsList = recipe!.instructionsList {
                 if instructionsList.count > 0 {
                     destination?.titleDataList = instructionsList
@@ -141,6 +143,7 @@ class RecipeViewController: UIViewController, DatabaseListener {
             }
         } else if segue.identifier == "notesSegue" {
             let destination = segue.destination as? ItemTableViewController
+            destination?.type = "notes"
             if let notesList = recipe!.notesList {
                 if notesList.count > 0 {
                     destination?.titleDataList = notesList

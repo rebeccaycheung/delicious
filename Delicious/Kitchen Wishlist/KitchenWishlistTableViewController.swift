@@ -74,6 +74,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
                 wishlistCell.name.isHidden = false
                 wishlistCell.brand.isHidden = false
                 wishlistCell.price.isHidden = false
+                wishlistCell.textLabel?.isHidden = true
                 if (wishlistItem.checked) {
                     wishlistCell.accessoryType = .checkmark
                 }
@@ -82,6 +83,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
             
             let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
             wishlistCell.textLabel?.text = "No wishlist items"
+            wishlistCell.textLabel?.isHidden = false
             wishlistCell.name.isHidden = true
             wishlistCell.brand.isHidden = true
             wishlistCell.price.isHidden = true

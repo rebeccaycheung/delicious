@@ -51,7 +51,7 @@ protocol DatabaseProtocol: AnyObject {
     func checkShoppingItem(item: ShoppingList, checked: Bool)
     func deleteShoppingItem(shoppingItem: ShoppingList)
     
-    func addWishlistItem(name: String, brand: String, price: Float)
+    func addWishlistItem(name: String, brand: String, price: Float) -> Wishlist
     func updateWishlistItem(item: Wishlist)
     func checkWishlistItem(item: Wishlist, checked: Bool)
     func deleteWishlistItem(wishlistItem: Wishlist)

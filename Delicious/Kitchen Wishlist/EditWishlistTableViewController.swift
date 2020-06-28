@@ -71,10 +71,12 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
             wishlistCell.name.isHidden = false
             wishlistCell.brand.isHidden = false
             wishlistCell.price.isHidden = false
+            wishlistCell.textLabel?.isHidden = true
             return wishlistCell
         } else if indexPath.section == SECTION_ADD_WISHLIST {
             let addCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
             addCell.textLabel?.text = "Add new wishlist item"
+            addCell.textLabel?.isHidden = false
             addCell.name.isHidden = true
             addCell.brand.isHidden = true
             addCell.price.isHidden = true

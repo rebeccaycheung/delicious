@@ -821,21 +821,21 @@
                                 <rect key="frame" x="280" y="410.5" width="114" height="30"/>
                                 <state key="normal" title="View ingredients"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="ingredientsSegue" id="VXE-Lk-ODQ"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="ingredientsSegue" id="VXE-Lk-ODQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nNa-Kw-Rob">
                                 <rect key="frame" x="276" y="449.5" width="118" height="30"/>
                                 <state key="normal" title="View instructions"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="instructionsSegue" id="MJa-PR-DLO"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="instructionsSegue" id="MJa-PR-DLO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZx-t3-K3i">
                                 <rect key="frame" x="318" y="487.5" width="76" height="30"/>
                                 <state key="normal" title="View notes"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="notesSegue" id="cdB-DV-DVx"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="notesSegue" id="cdB-DV-DVx"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTB-Y8-LCo" customClass="TagListView" customModule="TagListView">
@@ -927,10 +927,10 @@
             </objects>
             <point key="canvasLocation" x="3500.0000000000005" y="-1371.4285714285713"/>
         </scene>
-        <!--View Ingredients-->
+        <!--Item Table View Controller-->
         <scene sceneID="klk-UY-uf6">
             <objects>
-                <tableViewController title="View Ingredients" id="qz6-lB-F7O" customClass="ItemTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="qz6-lB-F7O" customClass="ItemTableViewController" customModule="Delicious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wfc-Gt-J2V">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -969,6 +969,7 @@
                             <outlet property="delegate" destination="qz6-lB-F7O" id="Xk3-fh-8Rp"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="HTh-EN-UHM"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNn-y3-VHs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1858,28 +1859,28 @@
                                 <rect key="frame" x="306" y="377" width="88" height="30"/>
                                 <state key="normal" title="View recipes"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="viewRecipeSegue" id="sAF-KW-q1A"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="viewRecipeSegue" id="sAF-KW-q1A"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNC-Vs-l9G">
                                 <rect key="frame" x="318" y="496" width="76" height="30"/>
                                 <state key="normal" title="View notes"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="viewNotesSegue" id="irE-lo-9yL"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="viewNotesSegue" id="irE-lo-9yL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecY-HX-zZo">
                                 <rect key="frame" x="261" y="420" width="133" height="30"/>
                                 <state key="normal" title="View all ingredients"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="viewIngredientsSegue" id="HB1-b7-nLK"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="viewIngredientsSegue" id="HB1-b7-nLK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FE8-dT-tpa">
                                 <rect key="frame" x="257" y="458" width="137" height="30"/>
                                 <state key="normal" title="View all instructions"/>
                                 <connections>
-                                    <segue destination="qz6-lB-F7O" kind="presentation" identifier="viewInstructionsSegue" id="8rg-CT-uKl"/>
+                                    <segue destination="qz6-lB-F7O" kind="show" identifier="viewInstructionsSegue" id="8rg-CT-uKl"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVg-p4-4QL">
@@ -2202,7 +2203,7 @@
         <segue reference="Pjw-5L-j28"/>
         <segue reference="UMu-BZ-0XA"/>
         <segue reference="tuc-mx-Xh6"/>
-        <segue reference="MJa-PR-DLO"/>
+        <segue reference="cdB-DV-DVx"/>
         <segue reference="GUm-Vi-KX5"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Main"/>

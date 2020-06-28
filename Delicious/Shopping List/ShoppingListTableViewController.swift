@@ -41,7 +41,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
     // Reload when shopping items change
     func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
         self.shoppingList = shoppingList
-        print(self.shoppingList)
         tableView.reloadData()
     }
     
@@ -67,6 +66,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             shoppingItemCell.item.isHidden = false
             shoppingItemCell.price.isHidden = false
             shoppingItemCell.brand.isHidden = false
+            shoppingItemCell.textLabel?.isHidden = true
             // Add check mark accessory if the shopping item has been checked
             if (shoppingItem.checked) {
                 shoppingItemCell.accessoryType = .checkmark
@@ -76,6 +76,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
         cell.textLabel?.text = "No shopping items"
+        cell.textLabel?.isHidden = false
         cell.item.isHidden = true
         cell.price.isHidden = true
         cell.brand.isHidden = true

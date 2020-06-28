@@ -141,6 +141,7 @@ class MenuViewController: UIViewController, DatabaseListener {
             destination?.menu = menu
         } else if segue.identifier == "viewIngredientsSegue" {
             let destination = segue.destination as? ItemTableViewController
+            destination?.type = "ingredients"
             if ingredientsName.count > 0 {
                 destination?.titleDataList = ingredientsName
                 if ingredientsMeasurement.count > 0 {
@@ -151,6 +152,7 @@ class MenuViewController: UIViewController, DatabaseListener {
             }
         } else if segue.identifier == "viewInstructionsSegue" {
             let destination = segue.destination as? ItemTableViewController
+            destination?.type = "instructions"
             if instructions.count > 0 {
                 destination?.titleDataList = instructions
             } else {
@@ -158,6 +160,7 @@ class MenuViewController: UIViewController, DatabaseListener {
             }
         } else if segue.identifier == "viewNotesSegue" {
             let destination = segue.destination as? ItemTableViewController
+            destination?.type = "notes"
             if notes.count > 0 {
                 destination?.titleDataList = notes
             } else {
@@ -165,6 +168,7 @@ class MenuViewController: UIViewController, DatabaseListener {
             }
         } else if segue.identifier == "viewRecipeSegue" {
             let destination = segue.destination as? ItemTableViewController
+            destination?.type = "recipe"
             if recipeList.count > 0 {
                 destination?.titleDataList = recipeList
             } else {

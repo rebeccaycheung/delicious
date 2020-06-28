@@ -656,7 +656,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     // MARK: Wishlist protocols
-    func addWishlistItem(name: String, brand: String, price: Float) {
+    func addWishlistItem(name: String, brand: String, price: Float) -> Wishlist {
         let wishlist = Wishlist()
         wishlist.name = name
         wishlist.brand = brand
@@ -664,6 +664,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         if let wishlistRef = wishlistRef?.addDocument(data: ["name": name, "brand": brand, "price": price, "checked": false]) {
             wishlist.id = wishlistRef.documentID
         }
+        return wishlist
     }
     
     func updateWishlistItem(item: Wishlist) {
