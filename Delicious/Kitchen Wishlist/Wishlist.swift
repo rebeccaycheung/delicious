@@ -24,3 +24,4 @@ class Wishlist: NSObject, Decodable {
         case checked
     }
 }
+
