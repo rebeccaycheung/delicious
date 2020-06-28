@@ -18,6 +18,7 @@
 		929601D9249F1E3C0097E1E1 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601D1249F1E3C0097E1E1 /* BookmarksTableViewController.swift */; };
 		929601DC249F1E3C0097E1E1 /* EditBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601D4249F1E3C0097E1E1 /* EditBookmarkViewController.swift */; };
 		929601E2249F1F5D0097E1E1 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929601E1249F1F5D0097E1E1 /* Bookmarks.swift */; };
+		92AFDE8724A8494D000BD572 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92AFDE8524A8493B000BD572 /* Pacifico-Regular.ttf */; };
 		92B6D17424A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17324A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift */; };
 		92B6D17824A5D9FD004F0CD6 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17724A5D9FD004F0CD6 /* EditImageViewController.swift */; };
 		92B6D17A24A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17924A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift */; };
@@ -85,6 +86,7 @@
 		929601D1249F1E3C0097E1E1 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		929601D4249F1E3C0097E1E1 /* EditBookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkViewController.swift; sourceTree = "<group>"; };
 		929601E1249F1F5D0097E1E1 /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
+		92AFDE8524A8493B000BD572 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
 		92B6D17324A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeToMenuDelegate.swift; sourceTree = "<group>"; };
 		92B6D17724A5D9FD004F0CD6 /* EditImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageViewController.swift; sourceTree = "<group>"; };
 		92B6D17924A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageToRecipeDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,14 @@
 				922A605F2496566A0066660F /* SearchRecipesCollectionViewController.swift */,
 			);
 			path = "Search Recipes";
+			sourceTree = "<group>";
+		};
+		92AFDE8424A84924000BD572 /* Custom font */ = {
+			isa = PBXGroup;
+			children = (
+				92AFDE8524A8493B000BD572 /* Pacifico-Regular.ttf */,
+			);
+			path = "Custom font";
 			sourceTree = "<group>";
 		};
 		98A695FB536694B8E55AC652 /* Pods */ = {
@@ -302,6 +312,7 @@
 		B3E394BC24550D6E00C95A66 /* Delicious */ = {
 			isa = PBXGroup;
 			children = (
+				92AFDE8424A84924000BD572 /* Custom font */,
 				B3E394C524550D6E00C95A66 /* Main.storyboard */,
 				B36C1DC1246683400057CDDF /* GoogleService-Info.plist */,
 				B36C1DC924668A1E0057CDDF /* DatabaseProtocol.swift */,
@@ -397,6 +408,7 @@
 				B36C1DC2246683400057CDDF /* GoogleService-Info.plist in Resources */,
 				B3E394C924550D6F00C95A66 /* Assets.xcassets in Resources */,
 				B3E394C724550D6E00C95A66 /* Main.storyboard in Resources */,
+				92AFDE8724A8494D000BD572 /* Pacifico-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,11 @@
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Pacifico-Regular.ttf">
+            <string>Pacifico-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Kitchen Wishlist-->
         <scene sceneID="poZ-LV-njh">
@@ -18,14 +23,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="kitchenWishlistItemCell" id="649-uY-fHb" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="90"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="90.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="649-uY-fHb" id="d2o-ly-Uyy">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="90.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-x9-Cg0">
-                                            <rect key="frame" x="219" y="34" width="135" height="21"/>
+                                            <rect key="frame" x="219" y="34" width="135" height="21.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="itb-bB-T7R"/>
                                             </constraints>
@@ -248,14 +253,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="cYM-wf-aiC" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="91"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="91.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cYM-wf-aiC" id="bFZ-nT-2qd">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="91"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="91.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-9c-mOL">
-                                            <rect key="frame" x="219" y="35" width="135" height="21"/>
+                                            <rect key="frame" x="219" y="35" width="135" height="21.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="K8a-nz-oYY"/>
                                             </constraints>
@@ -491,25 +496,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delicious!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="On5-Id-0e5">
-                                <rect key="frame" x="20" y="188" width="374" height="60"/>
+                                <rect key="frame" x="20" y="188" width="374" height="88"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="PBL-AL-t6T"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your personal recipe collection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ip2-b1-qDX">
-                                <rect key="frame" x="20" y="248" width="374" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="TmE-Is-7Wk"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="Pacifico-Regular" family="Pacifico" pointSize="50"/>
+                                <color key="textColor" name="Main"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made with Firebase, https://github.com/ElaWorkshop/TagListView" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHa-t2-8Bc">
-                                <rect key="frame" x="20" y="392" width="374" height="41"/>
+                                <rect key="frame" x="20" y="428" width="374" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="uys-qI-D50"/>
                                 </constraints>
@@ -518,12 +514,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zfO-Iw-Ep0">
-                                <rect key="frame" x="20" y="633" width="374" height="30"/>
+                                <rect key="frame" x="20" y="669" width="374" height="30"/>
                                 <state key="normal" title="Sign Out"/>
                                 <connections>
                                     <action selector="logOut:" destination="cVk-jf-nBs" eventType="touchUpInside" id="R2d-5S-2qv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your personal recipe collection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ip2-b1-qDX">
+                                <rect key="frame" x="20" y="284" width="374" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="TmE-Is-7Wk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -533,7 +538,7 @@
                             <constraint firstItem="OHa-t2-8Bc" firstAttribute="top" secondItem="Ip2-b1-qDX" secondAttribute="bottom" constant="120" id="Gfn-DO-DPW"/>
                             <constraint firstItem="zfO-Iw-Ep0" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="LtD-Gx-a7s"/>
                             <constraint firstItem="OHa-t2-8Bc" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="XiV-Au-6VA"/>
-                            <constraint firstItem="Ip2-b1-qDX" firstAttribute="top" secondItem="jUi-S1-EDf" secondAttribute="top" constant="160" id="dqZ-bs-70s"/>
+                            <constraint firstItem="Ip2-b1-qDX" firstAttribute="top" secondItem="On5-Id-0e5" secondAttribute="bottom" constant="8" id="bFB-XC-iQe"/>
                             <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="zfO-Iw-Ep0" secondAttribute="trailing" constant="20" id="jeO-dt-qUr"/>
                             <constraint firstItem="zfO-Iw-Ep0" firstAttribute="top" secondItem="OHa-t2-8Bc" secondAttribute="bottom" constant="200" id="qBM-Do-l2V"/>
                             <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="Ip2-b1-qDX" secondAttribute="trailing" constant="20" id="qJ9-RB-F6O"/>
@@ -1166,14 +1171,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="HnC-Yc-lYL" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="90"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="90.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HnC-Yc-lYL" id="xM7-LY-xy3">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="90.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56a-uD-uMt">
-                                            <rect key="frame" x="200" y="34" width="135" height="21"/>
+                                            <rect key="frame" x="200" y="34" width="135" height="21.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="YWg-xn-Okj"/>
                                             </constraints>
@@ -1406,16 +1411,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delicious!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzl-fT-M6t">
-                                <rect key="frame" x="20" y="288" width="374" height="60"/>
+                                <rect key="frame" x="20" y="288" width="374" height="88"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="TYO-s2-uCv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <fontDescription key="fontDescription" name="Pacifico-Regular" family="Pacifico" pointSize="50"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlb-nA-tjs">
-                                <rect key="frame" x="20" y="448" width="374" height="60"/>
+                                <rect key="frame" x="20" y="476" width="374" height="60"/>
                                 <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="eUz-Wf-mCR"/>
@@ -1428,7 +1433,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fer-yV-SiX">
-                                <rect key="frame" x="20" y="558" width="374" height="60"/>
+                                <rect key="frame" x="20" y="586" width="374" height="60"/>
                                 <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="cir-56-YMd"/>
@@ -1493,25 +1498,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXE-5z-jbI">
-                                <rect key="frame" x="20" y="272" width="118" height="60"/>
+                                <rect key="frame" x="20" y="278" width="124" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="118" id="dpD-JX-fNa"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="50"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delicious!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQK-El-t9l">
-                                <rect key="frame" x="20" y="188" width="86" height="24"/>
+                                <rect key="frame" x="20" y="188" width="86" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="86" id="2eC-1R-Hl3"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Pacifico-Regular" family="Pacifico" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMR-DN-Uae">
-                                <rect key="frame" x="20" y="367" width="86" height="21"/>
+                                <rect key="frame" x="20" y="373" width="86" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="86" id="PYu-ZQ-Zrw"/>
                                 </constraints>
@@ -1520,7 +1525,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5r-CL-4mZ">
-                                <rect key="frame" x="20" y="460" width="119" height="21"/>
+                                <rect key="frame" x="20" y="466" width="119" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="119" id="Yyg-If-oq7"/>
                                 </constraints>
@@ -1529,17 +1534,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vjc-Tp-mU5">
-                                <rect key="frame" x="20" y="396" width="374" height="34"/>
+                                <rect key="frame" x="20" y="402" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MaD-A2-Owb">
-                                <rect key="frame" x="20" y="489" width="374" height="34"/>
+                                <rect key="frame" x="20" y="495" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xey-Et-QhO">
-                                <rect key="frame" x="20" y="583" width="374" height="60"/>
+                                <rect key="frame" x="20" y="589" width="374" height="60"/>
                                 <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="6z4-ih-1OM"/>
@@ -1553,7 +1558,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-6g-UR2">
-                                <rect key="frame" x="20" y="683" width="247" height="21"/>
+                                <rect key="frame" x="20" y="689" width="247" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="247" id="hBd-oW-8ip"/>
                                 </constraints>
@@ -1562,7 +1567,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hUV-wt-7PF">
-                                <rect key="frame" x="275" y="678" width="52" height="30"/>
+                                <rect key="frame" x="275" y="684" width="52" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="52" id="BB1-xT-1bo"/>
                                 </constraints>
@@ -1593,10 +1598,10 @@
                             <constraint firstItem="AMR-DN-Uae" firstAttribute="leading" secondItem="8cA-aP-xUT" secondAttribute="leading" constant="20" id="XMZ-o7-V3k"/>
                             <constraint firstItem="8cA-aP-xUT" firstAttribute="trailing" secondItem="hUV-wt-7PF" secondAttribute="trailing" constant="87" id="XSg-ui-T5f"/>
                             <constraint firstItem="X5r-CL-4mZ" firstAttribute="leading" secondItem="8cA-aP-xUT" secondAttribute="leading" constant="20" id="Zi2-FP-asd"/>
+                            <constraint firstItem="8cA-aP-xUT" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kXE-5z-jbI" secondAttribute="trailing" constant="260" id="a8P-o4-cyR"/>
                             <constraint firstItem="kXE-5z-jbI" firstAttribute="top" secondItem="JQK-El-t9l" secondAttribute="bottom" constant="60" id="ap4-HX-yMT"/>
                             <constraint firstItem="8cA-aP-xUT" firstAttribute="trailing" secondItem="MaD-A2-Owb" secondAttribute="trailing" constant="20" id="bFx-tI-qJy"/>
                             <constraint firstItem="BIm-6g-UR2" firstAttribute="leading" secondItem="8cA-aP-xUT" secondAttribute="leading" constant="20" id="csu-5b-ufA"/>
-                            <constraint firstItem="8cA-aP-xUT" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kXE-5z-jbI" secondAttribute="trailing" constant="276" id="ff1-KH-WXY"/>
                             <constraint firstItem="MaD-A2-Owb" firstAttribute="leading" secondItem="8cA-aP-xUT" secondAttribute="leading" constant="20" id="fy2-D7-ekl"/>
                             <constraint firstItem="vjc-Tp-mU5" firstAttribute="leading" secondItem="8cA-aP-xUT" secondAttribute="leading" constant="20" id="hkJ-JV-GDK"/>
                             <constraint firstItem="JQK-El-t9l" firstAttribute="leading" secondItem="8cA-aP-xUT" secondAttribute="leading" constant="20" id="nJI-1V-pIT"/>
@@ -1626,25 +1631,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2CE-ep-Q9J">
-                                <rect key="frame" x="20" y="272" width="160.5" height="60"/>
+                                <rect key="frame" x="20" y="278" width="168.5" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160.5" id="zM1-mc-g32"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="50"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delicious!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9PD-gh-Z8J">
-                                <rect key="frame" x="20" y="188" width="86" height="24"/>
+                                <rect key="frame" x="20" y="188" width="86" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="86" id="B65-Rd-L5R"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Pacifico-Regular" family="Pacifico" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyc-LX-LRR">
-                                <rect key="frame" x="20" y="367" width="86" height="21"/>
+                                <rect key="frame" x="20" y="373" width="86" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="86" id="1Cm-NW-3ad"/>
                                 </constraints>
@@ -1653,7 +1658,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWJ-44-LFh">
-                                <rect key="frame" x="20" y="460" width="119" height="21"/>
+                                <rect key="frame" x="20" y="466" width="119" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="119" id="sgn-kv-2wh"/>
                                 </constraints>
@@ -1662,17 +1667,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SmU-KP-kIi">
-                                <rect key="frame" x="20" y="396" width="374" height="34"/>
+                                <rect key="frame" x="20" y="402" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpn-Go-0AY">
-                                <rect key="frame" x="20" y="489" width="374" height="34"/>
+                                <rect key="frame" x="20" y="495" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wKK-oj-Gpu">
-                                <rect key="frame" x="20" y="583" width="374" height="60"/>
+                                <rect key="frame" x="20" y="589" width="374" height="60"/>
                                 <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="M6Z-fP-sAD"/>
@@ -1686,7 +1691,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2l-Lk-2Sg">
-                                <rect key="frame" x="20" y="683" width="262" height="21"/>
+                                <rect key="frame" x="20" y="689" width="262" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="262" id="Zn1-jU-CiP"/>
                                 </constraints>
@@ -1695,7 +1700,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iis-XI-U39">
-                                <rect key="frame" x="290" y="678" width="38" height="30"/>
+                                <rect key="frame" x="290" y="684" width="38" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="38" id="9j2-0r-07T"/>
                                 </constraints>
@@ -1720,8 +1725,8 @@
                             <constraint firstItem="fik-Tx-sb3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9PD-gh-Z8J" secondAttribute="trailing" constant="308" id="OYD-B7-w7x"/>
                             <constraint firstItem="fik-Tx-sb3" firstAttribute="trailing" secondItem="wKK-oj-Gpu" secondAttribute="trailing" constant="20" id="QGA-Ic-sEx"/>
                             <constraint firstItem="fik-Tx-sb3" firstAttribute="trailing" secondItem="wpn-Go-0AY" secondAttribute="trailing" constant="20" id="SFJ-yE-d8s"/>
+                            <constraint firstItem="fik-Tx-sb3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2CE-ep-Q9J" secondAttribute="trailing" constant="225.5" id="WST-39-UUj"/>
                             <constraint firstItem="JWJ-44-LFh" firstAttribute="top" secondItem="SmU-KP-kIi" secondAttribute="bottom" constant="30" id="Wtt-GK-OPT"/>
-                            <constraint firstItem="fik-Tx-sb3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2CE-ep-Q9J" secondAttribute="trailing" constant="233.5" id="ZLX-xQ-cwN"/>
                             <constraint firstItem="wKK-oj-Gpu" firstAttribute="top" secondItem="wpn-Go-0AY" secondAttribute="bottom" constant="60" id="Zju-rP-6i9"/>
                             <constraint firstItem="iis-XI-U39" firstAttribute="top" secondItem="wKK-oj-Gpu" secondAttribute="bottom" constant="35" id="aOV-XS-gpg"/>
                             <constraint firstItem="wpn-Go-0AY" firstAttribute="leading" secondItem="fik-Tx-sb3" secondAttribute="leading" constant="20" id="bV1-dK-YIY"/>
@@ -2049,14 +2054,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="kitchenWishlistItemCell" id="CTz-jp-yrM" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="90"/>
+                                <rect key="frame" x="20" y="55.5" width="374" height="90.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CTz-jp-yrM" id="z8A-ds-Ev5">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="90.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmr-Bs-2eW">
-                                            <rect key="frame" x="200" y="34" width="135" height="21"/>
+                                            <rect key="frame" x="200" y="34" width="135" height="21.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="aid-Nn-DEs"/>
                                             </constraints>
