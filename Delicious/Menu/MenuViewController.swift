@@ -16,6 +16,7 @@ class MenuViewController: UIViewController, DatabaseListener {
     @IBOutlet var cookTime: UILabel!
     @IBOutlet var servingSize: UILabel!
     
+    // TagListView is an imported library that shows the tags of a recipe in a tag formation
     @IBOutlet weak var tagsListView: TagListView!
     
     var menu: Menu?
@@ -25,6 +26,7 @@ class MenuViewController: UIViewController, DatabaseListener {
     var instructions: [String] = []
     var notes: [String] = []
     
+    // Set up database controller and listener
     weak var databaseController: DatabaseProtocol?
     var listenerType: ListenerType = .menu
     
@@ -37,6 +39,7 @@ class MenuViewController: UIViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
+        // Set the tag list to font size 17
         tagsListView.textFont = UIFont.systemFont(ofSize: 17)
     }
     
@@ -44,8 +47,10 @@ class MenuViewController: UIViewController, DatabaseListener {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
         
+        // When the screen appears, set the navigation title to the menu name
         navigationItem.title = menu?.name
         
+        // When the screen appears, set the labels
         if let cookTime = menu?.cookTime {
             self.cookTime.text = "Cook time: \(cookTime)"
         } else {
@@ -58,13 +63,17 @@ class MenuViewController: UIViewController, DatabaseListener {
             self.servingSize.text = "Serving size: 0"
         }
         
+        // Remove all the existing tags
         tagsListView.removeAllTags()
         
+        // Empty all the lists
         self.recipeList = []
         self.ingredientsName = []
         self.ingredientsMeasurement = []
         self.instructions = []
         self.notes = []
+        
+        // If recipes exist in the menu, then append the details of the recipes to the lists above
         if let recipes = menu?.recipes {
             if recipes.count > 0 {
                 for recipe in recipes {
@@ -104,6 +113,7 @@ class MenuViewController: UIViewController, DatabaseListener {
             }
         }
         
+        // Append any extra menu items to the lists above
         if let extraIngredients = menu?.extraIngredientsName {
             for i in extraIngredients {
                 self.ingredientsName.append(i)
@@ -131,10 +141,12 @@ class MenuViewController: UIViewController, DatabaseListener {
        databaseController?.removeListener(listener: self)
     }
     
+    // When the menu changes, reload the elements on the screen
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         self.view.setNeedsDisplay()
     }
     
+    // Prepare the segues to the different screens
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editMenuSegue" {
             let destination = segue.destination as? EditMenuTableViewController

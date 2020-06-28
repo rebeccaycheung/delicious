@@ -49,7 +49,8 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
+    
+    // Number of items for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_BOOKMARKS:
@@ -61,6 +62,7 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         }
     }
     
+    // Populating the table view cells with the appropriate data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_BOOKMARKS {
             let bookmarksCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOKMARKS, for: indexPath) as! BookmarksTableViewCell
@@ -77,13 +79,7 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         }
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == SECTION_BOOKMARKS {
-            return true
-        }
-        return false
-    }
-    
+    // Deleting table view cells
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_BOOKMARKS {
             tableView.performBatchUpdates({
@@ -97,6 +93,8 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         }
     }
     
+    // Prepare the segues depending on what identifer it is
+    // Pass data if neccessary to the destination controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Check which cell was pressed and send the bookmark details to the editing screen
         if segue.identifier == "editBookmarkSegue", let cell = sender as? BookmarksTableViewCell {
@@ -109,9 +107,11 @@ class EditBookmarksListTableViewController: UITableViewController, DatabaseListe
         }
     }
     
+    // Display an action sheet for deleting an item
     func deleteAction(index: Int) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        // Delete the bookmark from the database
         let deleteAction = UIAlertAction(title: "Delete bookmark", style: .destructive) { action in
             
             let _ = self.databaseController?.deleteBookmark(bookmark: self.bookmarksList[index])

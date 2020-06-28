@@ -495,6 +495,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     // Delegate to add items to the recipe
     func addToRecipe(type: String, value: String, oldText: String?) {
         if recipe == nil {
+            // If recipe does not exist then create one
             recipe = Recipe()
             recipe?.name = "Default name"
             recipe?.source = "Default source"
@@ -513,7 +514,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Serving Size" {
             recipe?.servingSize = Int(value)!
         } else if type == "Instructions" {
-            // Check if the item existed
+            // Check if the item was editted
             if oldText != nil, oldText != "" {
                 // Replace the existing item with the new values
                 let index = recipe!.instructionsList!.firstIndex(of: oldText!)

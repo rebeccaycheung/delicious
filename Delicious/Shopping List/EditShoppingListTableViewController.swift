@@ -46,11 +46,13 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
         self.shoppingList = shoppingList
         tableView.reloadData()
     }
-
+    
+    // Number of sections in table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
+    
+    // Number of items for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_SHOPPING_LIST:
@@ -83,6 +85,7 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
         }
     }
     
+    // Deleting table view cells
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_SHOPPING_LIST {
             tableView.performBatchUpdates({
@@ -96,8 +99,8 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
         }
     }
     
+    // Prepare segue for the selected shopping item, pass the shopping item to the editing screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Prepare segue for the selected shopping item, pass the shopping item to the editing screen
         if segue.identifier == "editShoppingItemSegue", let cell = sender as? ShoppingListTableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
                 if indexPath.section == SECTION_SHOPPING_LIST {
@@ -108,9 +111,11 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
         }
     }
     
+    // Display an action sheet for deleting an item
     func deleteAction(index: Int) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        // Delete the shopping list from the database
         let deleteAction = UIAlertAction(title: "Delete shopping list item", style: .destructive) { action in
             
             let _ = self.databaseController?.deleteShoppingItem(shoppingItem: self.shoppingList[index])

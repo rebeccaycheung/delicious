@@ -44,10 +44,12 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         tableView.reloadData()
     }
     
+    // Number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
+    // Number of items for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if shoppingList.count > 0 {
             return shoppingList.count
@@ -55,13 +57,7 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         return 1
     }
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if shoppingList.count == 0 {
-//            return 56.5
-//        }
-//        return
-//    }
-    
+    // Populating the table view cells with the appropriate data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if shoppingList.count > 0 {
             let shoppingItemCell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell

@@ -39,15 +39,18 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload the table when wishlist change
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
         wishlistList = wishlist
         tableView.reloadData()
     }
     
+    // Number of sections in table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
+    
+    // Number of items for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_WISHLIST:
@@ -77,6 +80,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         return wishlistCell
     }
     
+    // Deleting table view cells
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_WISHLIST {
             tableView.performBatchUpdates({
@@ -90,6 +94,8 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
+    // Prepare the segues depending on what identifer it is
+    // Pass data if neccessary to the destination controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Prepare segue for the selected wishlist item, pass the wishlist item to the editing screen
         if segue.identifier == "editWishlistItemSegue", let cell = sender as? KitchenWishlistTableViewCell {
@@ -102,9 +108,11 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         }
     }
     
+    // Display an action sheet for deleting an item
     func deleteAction(index: Int) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        // Delete the wishlist item from the database
         let deleteAction = UIAlertAction(title: "Delete wishlist item", style: .destructive) { action in
             let _ = self.databaseController?.deleteWishlistItem(wishlistItem: self.wishlistList[index])
             self.wishlistList.remove(at: index)

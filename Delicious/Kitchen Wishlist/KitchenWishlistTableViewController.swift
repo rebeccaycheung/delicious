@@ -33,6 +33,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         databaseController?.addListener(listener: self)
     }
     
+    // When wishlist changes, reload table
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
         self.wishlist = wishlist
         tableView.reloadData()
@@ -43,10 +44,12 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         databaseController?.removeListener(listener: self)
     }
     
+    // Number of sections in table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
+    // Number of items in each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if wishlist.count > 0 {
             return wishlist.count
@@ -54,6 +57,7 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         return 1
     }
     
+    // Populating the table view cells with the appropriate data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
         

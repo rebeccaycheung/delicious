@@ -52,14 +52,17 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
        databaseController?.removeListener(listener: self)
     }
     
+    // Reload the table when the menu changes
     func onMenuChange(change: DatabaseChange, menu: [Menu]) {
         tableView.reloadData()
     }
     
+    // Number of sections for the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 13
     }
-
+    
+    // Number of items for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_NAME:
@@ -93,6 +96,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    // Header names for each section
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case SECTION_NAME:
@@ -116,6 +120,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    // Populating the table view cells with the appropriate data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditMenuTableViewCell
         cell.detailLabel.isHidden = true
@@ -187,6 +192,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    // Check which table view cell was selected and prepare the appropriate segue
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case SECTION_NAME:
@@ -228,6 +234,9 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    // Prepare the segues depending on what identifer it is
+    // Pass data if neccessary to the destination controller
+    // Pass delegates if neccessary to the destination controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editTextFieldSegue" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -313,6 +322,9 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    // If user deletes either ingredients, instructions or notes
+    // Call the function to show the action sheet before permanently deleting the item
+    // Reload the table
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if indexPath.section == SECTION_INCLUDED_RECIPES {
@@ -346,6 +358,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         }
     }
     
+    // Display an action sheet for deleting an item
     func deleteAction(item: String, index: Int) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -391,6 +404,7 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         self.present(actionSheet, animated: true, completion: nil)
     }
     
+    // Delegate to add items to the recipe
     func addToRecipe(type: String, value: String, oldText: String?) {
         if type == "Menu Name" {
             menu?.name = value
@@ -400,13 +414,16 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             menu?.servingSize = Int(value)
         } else if type == "Instructions" {
             if menu?.extraInstructions == nil {
-                print("got here")
+                // If element in menu does not exist then initialise it
                 menu?.extraInstructions = [String]()
             }
+            // Check if the item was editted
             if oldText != nil, oldText != "" {
+                // Replace the existing item with the new values
                 let index = menu!.extraInstructions!.firstIndex(of: oldText!)
                 menu!.extraInstructions![index!] = value
             } else {
+                // Append the item if it does not exist already
                 menu?.extraInstructions?.append(value)
             }
         } else if type == "Note" {
@@ -445,12 +462,14 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         tableView.reloadData()
     }
     
+    // Delegate to add recipe to menu to database
     func addRecipeToMenu(recipe: Recipe) {
         menu?.recipes?.append(recipe)
         let _ = databaseController?.addRecipeToMenu(recipe: recipe, menu: menu!)
         tableView.reloadData()
     }
     
+    // Save the menu to the database
     func saveMenu() {
         let _ = databaseController?.updateMenu(menu: menu!)
         tableView.reloadData()
