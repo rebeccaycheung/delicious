@@ -19,6 +19,7 @@ class AboutViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
     }
     
+    // Sign out user
     @IBAction func logOut(_ sender: Any) {
         do {
             try Auth.auth().signOut()

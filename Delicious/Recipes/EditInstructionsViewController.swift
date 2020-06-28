@@ -38,7 +38,7 @@ class EditInstructionsViewController: UIViewController {
         } else {
             let errorMsg = "Please ensure instructions are filled\n"
             
-            displayMessage(title: "", message: errorMsg)
+            displayMessage(title: "Error", message: errorMsg)
         }
     }
     

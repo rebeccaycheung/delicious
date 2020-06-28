@@ -45,7 +45,7 @@ class EditTextFieldViewController: UIViewController, UITextFieldDelegate {
             return
         } else {
             let errorMsg = "Please ensure \(labelTitle!) field if filled\n"
-            displayMessage(title: "", message: errorMsg)
+            displayMessage(title: "Error", message: errorMsg)
         }
     }
     
