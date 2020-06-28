@@ -21,6 +21,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Text Field delegate
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }

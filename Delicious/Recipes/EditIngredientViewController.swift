@@ -8,11 +8,13 @@
 
 import UIKit
 
+// Editing ingredients common class
 class EditIngredientViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var ingredient: UITextField!
     @IBOutlet weak var measurement: UITextField!
     
+    // Optional data to pass in
     var selectedIngredient: String?
     var selectedMeasurement: String?
     
@@ -28,10 +30,13 @@ class EditIngredientViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
+        // Set the text fields to the passed in data
         ingredient.text = selectedIngredient ?? ""
         measurement.text = selectedMeasurement ?? ""
     }
     
+    // On save, check if the text fields are filled
+    // Pass the data through the delegate back to the previous controller
     @IBAction func save(_ sender: Any) {
         if ingredient.text != "", measurement.text != "" {
             recipeDelegate?.addToRecipe(type: "Ingredient", value: ingredient.text!, oldText: selectedIngredient)
@@ -53,14 +58,17 @@ class EditIngredientViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Display alert message function
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // On return, hide soft keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 }
+

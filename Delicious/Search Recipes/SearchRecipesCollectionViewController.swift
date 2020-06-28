@@ -183,6 +183,7 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
         return cell
     }
     
+    // Same as the Home Screen collection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
@@ -190,14 +191,17 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     
+    // Same as the Home Screen collection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInsets
     }
     
+    // Same as the Home Screen collection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
     
+    // Check which item was selected
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if allSearchRecipes.count > 0 {
             // Create a Recipe for the item that was selected in the searched collection

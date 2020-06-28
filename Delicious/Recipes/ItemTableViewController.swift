@@ -8,8 +8,10 @@
 
 import UIKit
 
+// Common class for table
 class ItemTableViewController: UITableViewController, DatabaseListener{
     
+    // Passed in data
     var titleDataList: [String] = []
     var detailDataList: [String] = []
     var type = ""
@@ -20,6 +22,7 @@ class ItemTableViewController: UITableViewController, DatabaseListener{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // To make the cell the height of the content
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
         
@@ -31,14 +34,17 @@ class ItemTableViewController: UITableViewController, DatabaseListener{
         databaseController = appDelegate.databaseController
     }
     
+    // Number of sections in the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
+    // Number of items in the sections
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titleDataList.count
     }
     
+    // Populate the cells with the appropriate data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ItemTableViewCell
         let title = titleDataList[indexPath.row]
@@ -52,15 +58,19 @@ class ItemTableViewController: UITableViewController, DatabaseListener{
         return cell
     }
     
+    // If the screen is showing ingredients, when an ingredient is selected, show an action sheet
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if type == "ingredients" {
             showActionSheet(item: titleDataList[indexPath.row])
         }
     }
     
+    // Show action sheet function
     func showActionSheet(item: String) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        // If chosen to add the item to the shopping list, add it to the database
+        // On success, show a message
         let addAction = UIAlertAction(title: "Add \(item) to shopping list", style: .default) { action in
             let added = self.databaseController?.addShoppingItem(item: item, brand: "No brand", price: 0)
             if added != nil {
@@ -78,6 +88,7 @@ class ItemTableViewController: UITableViewController, DatabaseListener{
         self.present(actionSheet, animated: true, completion: nil)
     }
     
+    // Display alert message function
     func displayMessage(_ message: String, _ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))

@@ -39,6 +39,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
+        // Check if the user is editing an existing recipe or creating a new one or saving a searched recipe
         if (recipe != nil) {
             if recipe!.id != nil {
                 navigationItem.title = "Edit Recipe"
@@ -64,14 +65,17 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         databaseController?.removeListener(listener: self)
     }
     
+    // Reload the table when the recipe changes
     func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
         tableView.reloadData()
     }
     
+    // Number of sections for the table
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 14
     }
-
+    
+    // Number of items for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SECTION_NAME:
@@ -112,6 +116,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // Header names for each section
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case SECTION_NAME:
@@ -137,6 +142,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // Populating the table view cells with the appropriate data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! EditRecipeTableViewCell
         cell.detailLabel.isHidden = true
@@ -215,6 +221,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // Check which table view cell was selected and prepare the appropriate segue
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case SECTION_NAME:
@@ -262,6 +269,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // Prepare the segues depending on what identifer it is
+    // Pass data if neccessary to the destination controller
+    // Pass delegates if neccessary to the destination controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editTextFieldSegue" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -356,6 +366,10 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // If user deletes either ingredients, instructions, notes or tags
+    // If the recipe does not have an id, i.e. creating a new recipe or saving a searched recipe, then remove the item from the recipe's item list
+    // if the recipe does have an id, i.e. editing an existing recipe, then call the function to show the action sheet before permanently deleting the item
+    // Reload the table
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if indexPath.section == SECTION_INGREDIENT_LIST {
@@ -406,6 +420,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // Display an action sheet for deleting an item
     func deleteAction(item: String, index: Int) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -451,6 +466,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         self.present(actionSheet, animated: true, completion: nil)
     }
     
+    // When user saves the created recipe or searched recipe, add to the database and also add the tags to the database
     @IBAction func save(_ sender: Any) {
         if recipe?.name != nil {
             if recipe?.id == nil {
@@ -469,12 +485,14 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         }
     }
     
+    // Display alert function
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // Delegate to add items to the recipe
     func addToRecipe(type: String, value: String, oldText: String?) {
         if recipe == nil {
             recipe = Recipe()
@@ -495,10 +513,13 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Serving Size" {
             recipe?.servingSize = Int(value)!
         } else if type == "Instructions" {
+            // Check if the item existed
             if oldText != nil, oldText != "" {
+                // Replace the existing item with the new values
                 let index = recipe!.instructionsList!.firstIndex(of: oldText!)
                 recipe!.instructionsList![index!] = value
             } else {
+                // Append the item if it does not exist already
                 recipe?.instructionsList?.append(value)
             }
         } else if type == "Note" {
@@ -510,7 +531,6 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             }
         } else if type == "Ingredient" {
             if oldText != nil, oldText != "" {
-                print(oldText)
                 let index = recipe!.ingredientNamesList!.firstIndex(of: oldText!)
                 recipe!.ingredientNamesList![index!] = value
             } else {
@@ -531,6 +551,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         tableView.reloadData()
     }
     
+    // Save the recipe to the database
     func saveRecipe() {
         if recipe != nil {
             if recipe!.id != nil {
