@@ -102,7 +102,9 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
             return 1
         case SECTION_DELETE_RECIPE:
             if recipe != nil {
+                if recipe?.id != nil {
                     return 1
+                }
             }
             return 0
         default:
@@ -493,28 +495,29 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         } else if type == "Serving Size" {
             recipe?.servingSize = Int(value)!
         } else if type == "Instructions" {
-            if oldText != nil {
+            if oldText != nil, oldText != "" {
                 let index = recipe!.instructionsList!.firstIndex(of: oldText!)
                 recipe!.instructionsList![index!] = value
             } else {
                 recipe?.instructionsList?.append(value)
             }
         } else if type == "Note" {
-            if oldText != nil {
+            if oldText != nil, oldText != "" {
                 let index = recipe!.notesList!.firstIndex(of: oldText!)
                 recipe!.notesList![index!] = value
             } else {
                 recipe?.notesList?.append(value)
             }
         } else if type == "Ingredient" {
-            if oldText != nil {
+            if oldText != nil, oldText != "" {
+                print(oldText)
                 let index = recipe!.ingredientNamesList!.firstIndex(of: oldText!)
                 recipe!.ingredientNamesList![index!] = value
             } else {
                 recipe?.ingredientNamesList?.append(value)
             }
         } else if type == "Measurement" {
-            if oldText != nil {
+            if oldText != nil, oldText != "" {
                 let index = recipe!.ingredientMeasurementsList!.firstIndex(of: oldText!)
                 recipe!.ingredientMeasurementsList![index!] = value
             } else {

@@ -70,9 +70,7 @@ class MenuViewController: UIViewController, DatabaseListener {
                 for recipe in recipes {
                     recipeList.append(recipe.name)
                     if let tags = recipe.tagsList {
-                        for i in tags {
-                            tagsListView.addTags(i)
-                        }
+                        tagsListView.addTags(tags)
                     }
                     if let ingredientsName = recipe.ingredientNamesList {
                         if ingredientsName.count > 0 {
@@ -117,7 +115,7 @@ class MenuViewController: UIViewController, DatabaseListener {
             }
         }
         if let extraInstructions = menu?.extraInstructions {
-            for i in extraIngredients {
+            for i in extraInstructions {
                 self.instructions.append(i)
             }
         }

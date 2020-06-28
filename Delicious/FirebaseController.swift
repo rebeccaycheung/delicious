@@ -155,6 +155,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 parsedMenu!.name = change.document.data()["name"] as! String
                 parsedMenu!.cookTime = change.document.data()["cookTime"] as? Int
                 parsedMenu!.servingSize = change.document.data()["servingSize"] as? Int
+                parsedMenu!.extraIngredientsName = change.document.data()["extraIngredientsName"] as? [String]
+                parsedMenu!.extraIngredientsMeasurement = change.document.data()["extraIngredientsMeasurement"] as? [String]
+                parsedMenu!.extraInstructions = change.document.data()["extraInstructions"] as? [String]
+                parsedMenu!.notesList = change.document.data()["notesList"] as? [String]
                 parsedMenu!.recipes = [Recipe]()
                 if let recipeReferences = change.document.data()["recipes"] as? [DocumentReference] {
                     for reference in recipeReferences {

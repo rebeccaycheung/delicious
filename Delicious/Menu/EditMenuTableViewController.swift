@@ -220,8 +220,6 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
             performSegue(withIdentifier: "editTextFieldSegue", sender: self)
             break
         case SECTION_DELETE_MENU:
-            break
-        case SECTION_DELETE_MENU:
             deleteAction(item: "menu", index: 0)
             break
         default:
@@ -319,11 +317,30 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         if editingStyle == .delete {
             if indexPath.section == SECTION_INCLUDED_RECIPES {
                 tableView.performBatchUpdates({
-                    if (menu?.recipes) != nil {
-                        deleteAction(item: "recipe", index: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
-                        tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
-                    }
+                    deleteAction(item: "recipe", index: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadSections([SECTION_INCLUDED_RECIPES], with: .automatic)
+                }, completion: nil)
+            }
+            if indexPath.section == SECTION_EXTRA_INGREDIENTS {
+                tableView.performBatchUpdates({
+                    deleteAction(item: "ingredient", index: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadSections([SECTION_EXTRA_INGREDIENTS], with: .automatic)
+                }, completion: nil)
+            }
+            if indexPath.section == SECTION_EXTRA_INSTRUCTIONS {
+                tableView.performBatchUpdates({
+                    deleteAction(item: "instruction", index: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadSections([SECTION_EXTRA_INSTRUCTIONS], with: .automatic)
+                }, completion: nil)
+            }
+            if indexPath.section == SECTION_NOTES_LIST {
+                tableView.performBatchUpdates({
+                    deleteAction(item: "note", index: indexPath.row)
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadSections([SECTION_NOTES_LIST], with: .automatic)
                 }, completion: nil)
             }
         }
@@ -335,8 +352,21 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         let deleteAction = UIAlertAction(title: "Delete \(item)", style: .destructive) { action in
             switch item {
             case "recipe":
-                self.menu?.recipes?.remove(at: index)
                 let _ = self.databaseController?.removeRecipeFromMenu(recipe: self.menu!.recipes![index], menu: self.menu!)
+                self.menu?.recipes?.remove(at: index)
+                break
+            case "ingredient":
+                self.menu?.extraIngredientsName?.remove(at: index)
+                self.menu?.extraIngredientsMeasurement?.remove(at: index)
+                self.saveMenu()
+                break
+            case "instruction":
+                self.menu?.extraInstructions?.remove(at: index)
+                self.saveMenu()
+                break
+            case "note":
+                self.menu?.notesList?.remove(at: index)
+                self.saveMenu()
                 break
             case "menu":
                 self.databaseController?.deleteMenu(menu: self.menu!)
@@ -369,28 +399,41 @@ class EditMenuTableViewController: UITableViewController, DatabaseListener, AddT
         } else if type == "Serving Size" {
             menu?.servingSize = Int(value)
         } else if type == "Instructions" {
-            if oldText != nil {
+            if menu?.extraInstructions == nil {
+                print("got here")
+                menu?.extraInstructions = [String]()
+            }
+            if oldText != nil, oldText != "" {
                 let index = menu!.extraInstructions!.firstIndex(of: oldText!)
                 menu!.extraInstructions![index!] = value
             } else {
                 menu?.extraInstructions?.append(value)
             }
         } else if type == "Note" {
-            if oldText != nil {
+            if menu?.notesList == nil {
+                menu?.notesList = [String]()
+            }
+            if oldText != nil, oldText != "" {
                 let index = menu!.notesList!.firstIndex(of: oldText!)
                 menu!.notesList![index!] = value
             } else {
                 menu?.notesList?.append(value)
             }
         } else if type == "Ingredient" {
-            if oldText != nil {
+            if menu?.extraIngredientsName == nil {
+                menu?.extraIngredientsName = [String]()
+            }
+            if oldText != nil, oldText != "" {
                 let index = menu!.extraIngredientsName!.firstIndex(of: oldText!)
                 menu!.extraIngredientsName![index!] = value
             } else {
                 menu?.extraIngredientsName?.append(value)
             }
         } else if type == "Measurement" {
-            if oldText != nil {
+            if menu?.extraIngredientsMeasurement == nil {
+                menu?.extraIngredientsMeasurement = [String]()
+            }
+            if oldText != nil, oldText != "" {
                 let index = menu!.extraIngredientsMeasurement!.firstIndex(of: oldText!)
                 menu!.extraIngredientsMeasurement![index!] = value
             } else {
