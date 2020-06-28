@@ -12,7 +12,6 @@ import UIKit
 class KitchenWishlistTableViewController: UITableViewController, DatabaseListener {
     
     let SECTION_WISHLIST = 0
-    let SECTION_WISHLIST_TOTAL_PRICE = 1
     let CELL_WISHLIST_ITEM = "kitchenWishlistItemCell"
     var wishlist: [Wishlist] = []
     
@@ -46,68 +45,34 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case SECTION_WISHLIST:
-            if wishlist.count > 0 {
-                return wishlist.count
-            }
-            return 1
-        case SECTION_WISHLIST_TOTAL_PRICE:
-            return 1
-        default:
-            return 1
+        if wishlist.count > 0 {
+            return wishlist.count
         }
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == SECTION_WISHLIST {
-            if wishlist.count > 0 {
-                let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-                let wishlistItem = wishlist[indexPath.row]
-                wishlistCell.name.text = wishlistItem.name
-                wishlistCell.brand.text = wishlistItem.brand
-                wishlistCell.price.text = "$\(NSString(format: "%.2f", wishlistItem.price) as String)"
-                wishlistCell.name.isHidden = false
-                wishlistCell.brand.isHidden = false
-                wishlistCell.price.isHidden = false
-                wishlistCell.textLabel?.isHidden = true
-                if (wishlistItem.checked) {
-                    wishlistCell.accessoryType = .checkmark
-                }
-                return wishlistCell
+        let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
+        
+        if wishlist.count > 0 {
+            let wishlistItem = wishlist[indexPath.row]
+            wishlistCell.name.text = wishlistItem.name
+            wishlistCell.brand.text = wishlistItem.brand
+            wishlistCell.price.text = "$\(NSString(format: "%.2f", wishlistItem.price) as String)"
+            if (wishlistItem.checked) {
+                wishlistCell.accessoryType = .checkmark
             }
-            
-            let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            wishlistCell.textLabel?.text = "No wishlist items"
-            wishlistCell.textLabel?.isHidden = false
-            wishlistCell.name.isHidden = true
-            wishlistCell.brand.isHidden = true
-            wishlistCell.price.isHidden = true
             return wishlistCell
-        } else if indexPath.section == SECTION_WISHLIST_TOTAL_PRICE {
-            let totalPriceCell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: CELL_WISHLIST_ITEM)
-            totalPriceCell.textLabel?.text = "Total Price"
-            let price = calculateTotalPrice()
-            totalPriceCell.detailTextLabel?.text = "$\(NSString(format: "%.2f", price) as String)"
-            totalPriceCell.detailTextLabel?.textColor = UIColor(named: "Text")
-            return totalPriceCell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            return cell
         }
-    }
-    
-    // Method to calculat the total price of all wishlist items
-    func calculateTotalPrice() -> Float {
-        var price = Float(0)
-        for item in wishlist {
-            price = price + item.price
-        }
-        return price
+        
+        wishlistCell.name.text = "No wishlist items"
+        wishlistCell.brand.text = nil
+        wishlistCell.price.text = nil
+        return wishlistCell
     }
     
     // If item has been selected, check if the wishlist item is checked or not and update the database

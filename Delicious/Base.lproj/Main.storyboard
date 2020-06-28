@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="kitchenWishlistItemCell" rowHeight="90" id="649-uY-fHb" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="kitchenWishlistItemCell" id="649-uY-fHb" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="649-uY-fHb" id="d2o-ly-Uyy">
@@ -247,15 +247,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="shoppingItemCell" rowHeight="90" id="cYM-wf-aiC" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.5" width="374" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="cYM-wf-aiC" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
+                                <rect key="frame" x="20" y="55.5" width="374" height="91"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cYM-wf-aiC" id="bFZ-nT-2qd">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="91"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-9c-mOL">
-                                            <rect key="frame" x="219" y="35" width="135" height="20"/>
+                                            <rect key="frame" x="219" y="35" width="135" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="K8a-nz-oYY"/>
                                             </constraints>
@@ -1165,7 +1165,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shoppingItemCell" rowHeight="90" id="HnC-Yc-lYL" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="shoppingItemCell" id="HnC-Yc-lYL" customClass="ShoppingListTableViewCell" customModule="Delicious" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HnC-Yc-lYL" id="xM7-LY-xy3">
@@ -1182,9 +1182,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jU5-TU-a0W">
-                                            <rect key="frame" x="20" y="22" width="150" height="20.5"/>
+                                            <rect key="frame" x="20" y="22" width="200" height="20.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="n5U-vW-qfP"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="n5U-vW-qfP"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -1205,7 +1205,7 @@
                                         <constraint firstItem="jU5-TU-a0W" firstAttribute="top" secondItem="xM7-LY-xy3" secondAttribute="topMargin" constant="11" id="BJj-b0-6lP"/>
                                         <constraint firstItem="56a-uD-uMt" firstAttribute="top" secondItem="xM7-LY-xy3" secondAttribute="topMargin" constant="23" id="SMW-fv-GeE"/>
                                         <constraint firstItem="0O8-6F-NvP" firstAttribute="top" secondItem="jU5-TU-a0W" secondAttribute="bottom" constant="8" id="kKf-aI-HAk"/>
-                                        <constraint firstItem="56a-uD-uMt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jU5-TU-a0W" secondAttribute="trailing" constant="30" id="pSM-JY-HVa"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="jU5-TU-a0W" secondAttribute="trailing" constant="115" id="nK6-Qi-mHk"/>
                                         <constraint firstItem="56a-uD-uMt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0O8-6F-NvP" secondAttribute="trailing" constant="30" id="th0-31-gIo"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="56a-uD-uMt" secondAttribute="bottom" constant="24" id="vEa-K0-xhD"/>
                                         <constraint firstItem="0O8-6F-NvP" firstAttribute="leading" secondItem="xM7-LY-xy3" secondAttribute="leading" constant="20" id="wWh-Wy-fik"/>
@@ -2048,7 +2048,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="kitchenWishlistItemCell" rowHeight="90" id="CTz-jp-yrM" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="kitchenWishlistItemCell" id="CTz-jp-yrM" customClass="KitchenWishlistTableViewCell" customModule="Delicious" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CTz-jp-yrM" id="z8A-ds-Ev5">
@@ -2065,9 +2065,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tlu-NC-Q9c">
-                                            <rect key="frame" x="20" y="24" width="150" height="20.5"/>
+                                            <rect key="frame" x="20" y="24" width="200" height="20.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="9V4-3d-SKT"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="9V4-3d-SKT"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -2089,10 +2089,11 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="gmr-Bs-2eW" secondAttribute="trailing" id="Sr1-7c-LnD"/>
                                         <constraint firstItem="J13-pf-oeb" firstAttribute="top" secondItem="Tlu-NC-Q9c" secondAttribute="bottom" constant="8" id="YcL-Db-8n3"/>
                                         <constraint firstItem="gmr-Bs-2eW" firstAttribute="top" secondItem="z8A-ds-Ev5" secondAttribute="topMargin" constant="23" id="ZQg-wD-Gh2"/>
+                                        <constraint firstItem="gmr-Bs-2eW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z8A-ds-Ev5" secondAttribute="leadingMargin" constant="180" id="cYh-Et-Vaq"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="J13-pf-oeb" secondAttribute="trailing" constant="165" id="lfR-eu-KLV"/>
                                         <constraint firstItem="J13-pf-oeb" firstAttribute="leading" secondItem="z8A-ds-Ev5" secondAttribute="leading" constant="20" id="pOu-Cl-IJZ"/>
                                         <constraint firstItem="Tlu-NC-Q9c" firstAttribute="top" secondItem="z8A-ds-Ev5" secondAttribute="topMargin" constant="13" id="qhs-fb-rOQ"/>
-                                        <constraint firstItem="gmr-Bs-2eW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tlu-NC-Q9c" secondAttribute="trailing" constant="30" id="qzd-rP-08h"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Tlu-NC-Q9c" secondAttribute="trailing" constant="115" id="sNv-RJ-LQl"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

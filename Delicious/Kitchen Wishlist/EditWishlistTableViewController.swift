@@ -62,29 +62,20 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
     
     // Same as the Kitchen Wishlist Table View Controller
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
+        
         if indexPath.section == SECTION_WISHLIST {
-            let wishlistCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
             let wishlistItem = wishlistList[indexPath.row]
             wishlistCell.name.text = wishlistItem.name
             wishlistCell.brand.text = wishlistItem.brand
             wishlistCell.price.text = NSString(format: "%.2f", wishlistItem.price) as String
-            wishlistCell.name.isHidden = false
-            wishlistCell.brand.isHidden = false
-            wishlistCell.price.isHidden = false
-            wishlistCell.textLabel?.isHidden = true
-            return wishlistCell
         } else if indexPath.section == SECTION_ADD_WISHLIST {
-            let addCell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath) as! KitchenWishlistTableViewCell
-            addCell.textLabel?.text = "Add new wishlist item"
-            addCell.textLabel?.isHidden = false
-            addCell.name.isHidden = true
-            addCell.brand.isHidden = true
-            addCell.price.isHidden = true
-            return addCell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CELL_WISHLIST_ITEM, for: indexPath)
-            return cell
+            wishlistCell.name.text = "Add new wishlist item"
+            wishlistCell.brand.text = nil
+            wishlistCell.price.text = nil
         }
+        
+        return wishlistCell
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

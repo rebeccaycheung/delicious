@@ -70,18 +70,12 @@ class EditShoppingListTableViewController: UITableViewController, DatabaseListen
             shoppingItemCell.item.text = shoppingItem.item
             shoppingItemCell.price.text = "$\(NSString(format: "%.2f", shoppingItem.price) as String)"
             shoppingItemCell.brand.text = shoppingItem.brand
-            shoppingItemCell.textLabel?.isHidden = false
-            shoppingItemCell.item.isHidden = false
-            shoppingItemCell.price.isHidden = false
-            shoppingItemCell.brand.isHidden = false
             return shoppingItemCell
         } else if indexPath.section == SECTION_ADD_SHOPPING_ITEM {
             let addCell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
-            addCell.textLabel?.text = "Add new shopping item"
-            addCell.textLabel?.isHidden = false
-            addCell.item.isHidden = true
-            addCell.price.isHidden = true
-            addCell.brand.isHidden = true
+            addCell.item.text = "Add new shopping item"
+            addCell.price.text = nil
+            addCell.brand.text = nil
             return addCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath)

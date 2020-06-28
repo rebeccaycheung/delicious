@@ -55,6 +55,13 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         return 1
     }
     
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if shoppingList.count == 0 {
+//            return 56.5
+//        }
+//        return
+//    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if shoppingList.count > 0 {
             let shoppingItemCell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
@@ -63,10 +70,6 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
             // Format the price to convert a float to a string
             shoppingItemCell.price.text = "$\(NSString(format: "%.2f", shoppingItem.price) as String)"
             shoppingItemCell.brand.text = shoppingItem.brand
-            shoppingItemCell.item.isHidden = false
-            shoppingItemCell.price.isHidden = false
-            shoppingItemCell.brand.isHidden = false
-            shoppingItemCell.textLabel?.isHidden = true
             // Add check mark accessory if the shopping item has been checked
             if (shoppingItem.checked) {
                 shoppingItemCell.accessoryType = .checkmark
@@ -75,11 +78,9 @@ class ShoppingListTableViewController: UITableViewController, DatabaseListener {
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_SHOPPING_ITEM, for: indexPath) as! ShoppingListTableViewCell
-        cell.textLabel?.text = "No shopping items"
-        cell.textLabel?.isHidden = false
-        cell.item.isHidden = true
-        cell.price.isHidden = true
-        cell.brand.isHidden = true
+        cell.item.text = "No shopping items"
+        cell.price.text = nil
+        cell.brand.text = nil
         return cell
     }
     
