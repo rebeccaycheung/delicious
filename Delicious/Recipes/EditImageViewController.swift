@@ -9,15 +9,18 @@
 import UIKit
 import FirebaseStorage
 
+// Edit image common class
 class EditImageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DatabaseListener {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var uploadButton: UIButton!
     
+    // Optional data to pass
     var recipe: Recipe?
     var menu: Menu?
     var type = String()
     
+    // Reference to storage
     var storageReference = Storage.storage()
     
     // Initialise the indicator for the loading
@@ -32,6 +35,7 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
+        // Button style
         uploadButton.layer.cornerRadius = 23
         uploadButton.layer.borderWidth = 1
         uploadButton.layer.borderColor = UIColor.white.cgColor
@@ -41,6 +45,7 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         indicator.center = self.view.center
         self.view.addSubview(indicator)
         
+        // Load image, passing the image reference
         if let imageRef = recipe?.imageReference {
             loadImage(imageRef)
         } else if let imageRef = menu?.imageReference {
@@ -48,11 +53,14 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    // Load image function
     func loadImage(_ imageRef: String) {
         indicator.startAnimating()
         indicator.backgroundColor = UIColor.clear
         
+        // Check what the prefix is for the image reference
         if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
+            // Get the image from cloud storage
             let ref = self.storageReference.reference(forURL: imageRef)
             let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
                 do {
@@ -67,6 +75,7 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
                 }
             }
         } else if imageRef.hasPrefix("https://") {
+            // Download the image
             let url = URL(string: imageRef)
             let data = try? Data(contentsOf: url!)
             self.image.image = UIImage(data: data!)
@@ -75,34 +84,44 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    // On upload
     @IBAction func uploadButton(_ sender: Any) {
+        // Initialise the image picker controller
         let controller = UIImagePickerController()
         controller.allowsEditing = false
         controller.delegate = self
         
+        // Create an action sheet
         let actionSheet = UIAlertController(title: nil, message: "Select Option:", preferredStyle: .actionSheet)
         
+        // Present the camera
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { action in
             controller.sourceType = .camera
             self.present(controller, animated: true, completion: nil)
         }
         
+        // Present photo library
         let libraryAction = UIAlertAction(title: "Photo Library", style: .default) { action in
             controller.sourceType = .photoLibrary
             self.present(controller, animated: true, completion: nil)
         }
         
+        // Present photo album
         let albumAction = UIAlertAction(title: "Photo Album", style: .default) { action in
             controller.sourceType = .savedPhotosAlbum
             self.present(controller, animated: true, completion: nil)
         }
         
+        // Cancel action
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        // Check if camera is available
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             actionSheet.addAction(cameraAction)
             
         }
+        
+        // Add the actions to the action sheet
         actionSheet.addAction(libraryAction)
         actionSheet.addAction(albumAction)
         actionSheet.addAction(cancelAction)
@@ -110,12 +129,15 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         self.present(actionSheet, animated: true, completion: nil)
     }
     
+    // On save
     @IBAction func save(_ sender: Any) {
+        // Ensure there is an image uploaded
         guard let image = image.image else {
             displayMessage("Cannot save until a photo has been uploaded!", "Error")
             return
         }
         
+        // Get image data that was uploaded
         let date = UInt(Date().timeIntervalSince1970)
         let filename = "\(date).jpg"
         guard let data = image.jpegData(compressionQuality: 0.8) else {
@@ -123,6 +145,7 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
             return
         }
         
+        // Save data to file manager locally
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         let fileURL = documentsDirectory.appendingPathComponent(filename)
@@ -131,14 +154,18 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
             self.indicator.startAnimating()
             self.indicator.backgroundColor = UIColor.clear
             
+            // Attempt to write the image to the file manager
             try data.write(to: fileURL)
             
+            // Storage reference
             let storageRef = storageReference.reference()
             
             if type == "recipe" {
+                // Store the image with the recipe's id
                 let imageRef = storageRef.child("\(self.recipe!.id!).jpg")
                 uploadImage(imageRef: imageRef, data: data)
             } else {
+                // Store the image with the menu's id
                 let imageRef = storageRef.child("\(self.menu!.id!).jpg")
                 uploadImage(imageRef: imageRef, data: data)
             }
@@ -147,7 +174,9 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    // Upload image function
     func uploadImage(imageRef: StorageReference, data: Data) {
+        // Metadata of the image
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
         imageRef.putData(data, metadata: metadata) { (meta, error) in
@@ -159,6 +188,7 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
                         print("Download URL not found")
                         return
                     }
+                    // Add downloaded image to database
                     if self.type == "recipe" {
                         let _ = self.databaseController?.addImageToRecipe(recipe: self.recipe!, image: "\(downloadURL)")
                     } else {
@@ -184,6 +214,7 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         dismiss(animated: true, completion: nil)
     }
     
+    // Display alert message function
     func displayMessage(_ message: String,_ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { action in

@@ -21,7 +21,6 @@
 		92AFDE8724A8494D000BD572 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92AFDE8524A8493B000BD572 /* Pacifico-Regular.ttf */; };
 		92B6D17424A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17324A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift */; };
 		92B6D17824A5D9FD004F0CD6 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17724A5D9FD004F0CD6 /* EditImageViewController.swift */; };
-		92B6D17A24A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D17924A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift */; };
 		92E1ED2324A6E5250023BC78 /* EditInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E1ED2224A6E5250023BC78 /* EditInstructionsViewController.swift */; };
 		B31A817E2472BA100047B73B /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A817D2472BA100047B73B /* Recipe.swift */; };
 		B31A81822472BF560047B73B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A81812472BF560047B73B /* RecipeViewController.swift */; };
@@ -89,7 +88,6 @@
 		92AFDE8524A8493B000BD572 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
 		92B6D17324A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeToMenuDelegate.swift; sourceTree = "<group>"; };
 		92B6D17724A5D9FD004F0CD6 /* EditImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageViewController.swift; sourceTree = "<group>"; };
-		92B6D17924A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageToRecipeDelegate.swift; sourceTree = "<group>"; };
 		92E1ED2224A6E5250023BC78 /* EditInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInstructionsViewController.swift; sourceTree = "<group>"; };
 		B31A817D2472BA100047B73B /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		B31A81812472BF560047B73B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
@@ -185,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				B3CDC6B324829A7F00BD2041 /* AddToRecipeDelegate.swift */,
-				92B6D17924A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift */,
 				B31A817D2472BA100047B73B /* Recipe.swift */,
 				B31A81812472BF560047B73B /* RecipeViewController.swift */,
 				B355DE582476B5E200FD113D /* EditRecipeTableViewCell.swift */,
@@ -486,7 +483,6 @@
 				B3D40B8A248B760E00D91970 /* EditMenuTableViewCell.swift in Sources */,
 				B3E0568F247A32CE0046CBEE /* ItemTableViewController.swift in Sources */,
 				B355DE572476AD4000FD113D /* EditRecipeTableViewController.swift in Sources */,
-				92B6D17A24A61DF0004F0CD6 /* AddImageToRecipeDelegate.swift in Sources */,
 				B3D40B8C248BAB6300D91970 /* SegmentControlDelegate.swift in Sources */,
 				B3CDC6B424829A7F00BD2041 /* AddToRecipeDelegate.swift in Sources */,
 				92B6D17424A58CFA004F0CD6 /* AddRecipeToMenuDelegate.swift in Sources */,

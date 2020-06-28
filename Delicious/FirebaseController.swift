@@ -14,6 +14,7 @@ import FirebaseFirestoreSwift
 
 class FirebaseController: NSObject, DatabaseProtocol {
     
+    // Set up variables to use within the Controller
     var listeners = MulticastDelegate<DatabaseListener>()
     var authController: Auth
     var database: Firestore
@@ -61,7 +62,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         self.setUpWishlistListener()
     }
     
-    // All set up methods are similar - set up the listener for the item, parse a snapshot of the items in firebase and retrieve each item from the database
+    // All set up methods are similar in set up - set up the listener for the item, parse a snapshot of the items in firebase and retrieve each item from the database
     
     // MARK: Set up Recipes
     func setUpRecipeListener() {
