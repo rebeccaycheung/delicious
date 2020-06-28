@@ -88,6 +88,8 @@ class RecipeViewController: UIViewController, DatabaseListener {
             }
         }
         
+        let blankImage = UIImage()
+        self.recipeImage.image = blankImage
         // Load the image of the recipe
         if let image = recipe?.imageReference {
             // Start the indicator
@@ -101,7 +103,7 @@ class RecipeViewController: UIViewController, DatabaseListener {
             
             // Check what prefix the image reference is
             // If it is from cloud storage
-            if image.hasPrefix("gs://") {
+            if image.hasPrefix("gs://") || image.hasPrefix("https://firebasestorage") {
                 // Load the image from cloud storage
                 let ref = self.storageReference.reference(forURL: image)
                 let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
@@ -183,6 +185,7 @@ class RecipeViewController: UIViewController, DatabaseListener {
         }
     }
     
+    // When user taps on source
     @IBAction func sourceButton(_ sender: Any) {
         if let source = sourceButton.titleLabel?.text {
             // Make sure the source is an actual link

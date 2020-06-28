@@ -9,8 +9,7 @@
 import UIKit
 import FirebaseStorage
 
-class EditImageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class EditImageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DatabaseListener {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var uploadButton: UIButton!
     
@@ -21,8 +20,14 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
     // Initialise the indicator for the loading
     var indicator = UIActivityIndicatorView()
     
+    weak var databaseController: DatabaseProtocol?
+    var listenerType: ListenerType = .recipe
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
         
         uploadButton.layer.cornerRadius = 23
         uploadButton.layer.borderWidth = 1
@@ -30,14 +35,14 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         
         // Create a loading animation
         indicator.style = UIActivityIndicatorView.Style.medium
-        indicator.center = self.image.center
+        indicator.center = self.view.center
         self.view.addSubview(indicator)
         
         if let imageRef = recipe?.imageReference {
             indicator.startAnimating()
             indicator.backgroundColor = UIColor.clear
             
-            if imageRef.hasPrefix("gs://") {
+            if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
                 let ref = self.storageReference.reference(forURL: imageRef)
                 let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
                     do {
@@ -114,11 +119,13 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
         let fileURL = documentsDirectory.appendingPathComponent(filename)
         
         do {
+            self.indicator.startAnimating()
+            self.indicator.backgroundColor = UIColor.clear
+            
             try data.write(to: fileURL)
             
             let storageRef = storageReference.reference()
-            let imageRef = storageRef.child("test.jpg")
-            
+            let imageRef = storageRef.child("\(self.recipe!.id!).jpg")
             
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpg"
@@ -131,16 +138,13 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
                             print("Download URL not found")
                             return
                         }
-                        //self.recipe!.imageReference = "\(downloadURL)"
-                        //print(self.recipe!.imageReference)
-                        //let userImageRef = self.usersReference.document("\(userID)")
-                        //userImageRef.collection("images").document("\(date)").setData(["url": "\(downloadURL)"])
-                        //self.displayMessage("Image uploaded to Firebase", "Success")
+                        let _ = self.databaseController?.addImageToRecipe(recipe: self.recipe!, image: "\(downloadURL)")
+                        self.indicator.stopAnimating()
+                        self.indicator.hidesWhenStopped = true
+                        self.displayMessage("Image uploaded", "Success")
                     }
                 }
             }
-            
-            //self.navigationController?.popViewController(animated: true)
         } catch {
             displayMessage(error.localizedDescription, "Error")
         }
@@ -160,7 +164,33 @@ class EditImageViewController: UIViewController, UIImagePickerControllerDelegate
     
     func displayMessage(_ message: String,_ title: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { action in
+            self.navigationController?.popViewController(animated: true)
+        }))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func onRecipeListChange(change: DatabaseChange, recipe: [Recipe]) {
+        //
+    }
+    
+    func onMenuChange(change: DatabaseChange, menu: [Menu]) {
+        //
+    }
+    
+    func onTagListChange(change: DatabaseChange, tag: [Tag]) {
+        //
+    }
+    
+    func onBookmarksListChange(change: DatabaseChange, bookmarks: [Bookmarks]) {
+        //
+    }
+    
+    func onShoppingListChange(change: DatabaseChange, shoppingList: [ShoppingList]) {
+        //
+    }
+    
+    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        //
     }
 }

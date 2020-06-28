@@ -542,6 +542,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    func addImageToRecipe(recipe: Recipe, image: String) {
+        if let recipeRef = recipeRef?.document(recipe.id!) {
+            recipeRef.updateData(["imageReference": image])
+        }
+    }
+    
     func updateRecipe(recipe: Recipe) {
         if let recipeRef = recipeRef?.document(recipe.id!) {
             let name = recipe.name

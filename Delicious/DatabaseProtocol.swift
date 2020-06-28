@@ -57,6 +57,7 @@ protocol DatabaseProtocol: AnyObject {
     func deleteWishlistItem(wishlistItem: Wishlist)
     
     func addRecipe(recipe: Recipe)
+    func addImageToRecipe(recipe: Recipe, image: String)
     func updateRecipe(recipe: Recipe)
     func deleteRecipe(recipe: Recipe)
     

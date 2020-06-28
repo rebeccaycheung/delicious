@@ -107,7 +107,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                     cell.recipeImage.contentMode = .center
                     
                     // Check what the image reference's prefix is
-                    if imageRef.hasPrefix("gs://") {
+                    if imageRef.hasPrefix("gs://") || imageRef.hasPrefix("https://firebasestorage") {
                         // Load the image from Firestore
                         let ref = self.storageReference.reference(forURL: imageRef)
                         let _ = ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
