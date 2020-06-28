@@ -54,9 +54,17 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
     // MARK: - Search Bar Delegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // If there is no text end immediately
-        guard let searchText = searchBar.text, searchText.count > 0 else {
-            return;
+        guard let searchText = searchBar.text else {
+            return
         }
+        
+        // Check if the search text has any errors
+        if !isSearchTextErrorFree(searchText: searchText) {
+            return
+        }
+        
+        // Format the search text
+        let formattedSearchText = formatSearchText(searchText: searchText)
         
         // Start animating the indicator
         indicator.startAnimating()
@@ -71,7 +79,30 @@ class SearchRecipesCollectionViewController: UICollectionViewController, UISearc
         URLSession.shared.invalidateAndCancel()
         
         // Call the API
-        loadRecipes(recipe: searchText)
+        loadRecipes(recipe: formattedSearchText)
+    }
+    
+    // Error check the search text to make sure it can be searched
+    func isSearchTextErrorFree(searchText: String) -> Bool {
+        if searchText.hasPrefix(" ") {
+            return false
+        }
+        if searchText.hasSuffix(" ") {
+            return false
+        }
+        if searchText.count <= 0 {
+            return false
+        }
+        return true
+    }
+    
+    // Format the search text to replace spaces
+    func formatSearchText(searchText: String) -> String {
+        var formattedSearchText = searchText
+        if searchText.contains(" ") {
+            formattedSearchText = searchText.replacingOccurrences(of: " ", with: "%20")
+        }
+        return formattedSearchText
     }
     
     // MARK: - Call API

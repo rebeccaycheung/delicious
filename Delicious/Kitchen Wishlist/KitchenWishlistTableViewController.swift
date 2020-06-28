@@ -32,16 +32,15 @@ class KitchenWishlistTableViewController: UITableViewController, DatabaseListene
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
     }
+    
+    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
+        self.wishlist = wishlist
+        tableView.reloadData()
+    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
-    }
-    
-    // Reload table when wishlist changes
-    func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
-        self.wishlist = wishlist
-        tableView.reloadData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

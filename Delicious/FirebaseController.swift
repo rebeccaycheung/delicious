@@ -697,7 +697,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         } else if listener.listenerType == ListenerType.shoppingList || listener.listenerType == ListenerType.all {
             listener.onShoppingListChange (change: .update, shoppingList: shoppingItemList)
         } else if listener.listenerType == ListenerType.wishlist || listener.listenerType == ListenerType.all {
-            listener.onWishlistChange (change: .update, wishlist: wishlistList)
+            listener.onWishlistChange(change: .update, wishlist: wishlistList)
         } else if listener.listenerType == ListenerType.recipe || listener.listenerType == ListenerType.all {
             listener.onRecipeListChange(change: .update, recipe: recipeList)
         } else if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all {

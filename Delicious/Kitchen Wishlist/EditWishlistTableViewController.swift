@@ -33,18 +33,17 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
     }
     
-    // Reload the table when the wishlist list changes
     func onWishlistChange(change: DatabaseChange, wishlist: [Wishlist]) {
         wishlistList = wishlist
         tableView.reloadData()
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -78,13 +77,6 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         return wishlistCell
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == SECTION_WISHLIST {
-            return true
-        }
-        return false
-    }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && indexPath.section == SECTION_WISHLIST {
             tableView.performBatchUpdates({
@@ -115,6 +107,7 @@ class EditWishlistTableViewController: UITableViewController, DatabaseListener {
         
         let deleteAction = UIAlertAction(title: "Delete wishlist item", style: .destructive) { action in
             let _ = self.databaseController?.deleteWishlistItem(wishlistItem: self.wishlistList[index])
+            self.wishlistList.remove(at: index)
             self.tableView.reloadData()
         }
         
