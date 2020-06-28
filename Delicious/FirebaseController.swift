@@ -497,8 +497,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func updateMenu(menu: Menu) {
         if let menuRef = menuRef?.document(menu.id!) {
             let name = menu.name
-            let cookTime = menu.cookTime
-            let servingSize = menu.servingSize
+            let cookTime = menu.cookTime ?? 0
+            let servingSize = menu.servingSize ?? 0
             let extraIngredientsName = menu.extraIngredientsName ?? []
             let extraIngredientsMeasurement = menu.extraIngredientsMeasurement ?? []
             let extraInstructions = menu.extraInstructions ?? []
