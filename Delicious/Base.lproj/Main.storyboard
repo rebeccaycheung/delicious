@@ -504,17 +504,8 @@
                                 <color key="textColor" name="Main"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made with Firebase, https://github.com/ElaWorkshop/TagListView" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHa-t2-8Bc">
-                                <rect key="frame" x="20" y="428" width="374" height="41"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="374" id="uys-qI-D50"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zfO-Iw-Ep0">
-                                <rect key="frame" x="20" y="669" width="374" height="30"/>
+                                <rect key="frame" x="20" y="668" width="374" height="30"/>
                                 <state key="normal" title="Sign Out"/>
                                 <connections>
                                     <action selector="logOut:" destination="cVk-jf-nBs" eventType="touchUpInside" id="R2d-5S-2qv"/>
@@ -529,20 +520,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5iu-f3-8NC">
+                                <rect key="frame" x="20" y="388" width="374" height="200"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="dI3-cN-ZP2"/>
+                                </constraints>
+                                <string key="text">Made with Firebase, including Firestore, Cloud Storage and Authentication, https://github.com/ElaWorkshop/TagListView. With the help of StackOverflow, including https://stackoverflow.com/questions/30484268/refresh-container-view-holding-uitableview-swift/30485630, https://stackoverflow.com/questions/30003814/how-can-i-pop-specific-view-controller-in-swift, https://developer.apple.com/documentation/uikit/text_display_and_fonts/adding_a_custom_font_to_your_app</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Ip2-b1-qDX" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="3qr-EW-933"/>
                             <constraint firstItem="On5-Id-0e5" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="4UG-M3-U7u"/>
-                            <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="OHa-t2-8Bc" secondAttribute="trailing" constant="20" id="7b7-4W-y1A"/>
-                            <constraint firstItem="OHa-t2-8Bc" firstAttribute="top" secondItem="Ip2-b1-qDX" secondAttribute="bottom" constant="120" id="Gfn-DO-DPW"/>
+                            <constraint firstItem="5iu-f3-8NC" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="6EO-db-sre"/>
+                            <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="5iu-f3-8NC" secondAttribute="trailing" constant="20" id="9wt-R0-hhk"/>
+                            <constraint firstItem="5iu-f3-8NC" firstAttribute="top" secondItem="Ip2-b1-qDX" secondAttribute="bottom" constant="80" id="LpZ-wb-mJk"/>
                             <constraint firstItem="zfO-Iw-Ep0" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="LtD-Gx-a7s"/>
-                            <constraint firstItem="OHa-t2-8Bc" firstAttribute="leading" secondItem="jUi-S1-EDf" secondAttribute="leading" constant="20" id="XiV-Au-6VA"/>
                             <constraint firstItem="Ip2-b1-qDX" firstAttribute="top" secondItem="On5-Id-0e5" secondAttribute="bottom" constant="8" id="bFB-XC-iQe"/>
                             <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="zfO-Iw-Ep0" secondAttribute="trailing" constant="20" id="jeO-dt-qUr"/>
-                            <constraint firstItem="zfO-Iw-Ep0" firstAttribute="top" secondItem="OHa-t2-8Bc" secondAttribute="bottom" constant="200" id="qBM-Do-l2V"/>
                             <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="Ip2-b1-qDX" secondAttribute="trailing" constant="20" id="qJ9-RB-F6O"/>
                             <constraint firstItem="On5-Id-0e5" firstAttribute="top" secondItem="jUi-S1-EDf" secondAttribute="top" constant="100" id="rdr-Vw-evZ"/>
+                            <constraint firstItem="zfO-Iw-Ep0" firstAttribute="top" secondItem="5iu-f3-8NC" secondAttribute="bottom" constant="80" id="rmA-nF-L8M"/>
                             <constraint firstItem="jUi-S1-EDf" firstAttribute="trailing" secondItem="On5-Id-0e5" secondAttribute="trailing" constant="20" id="xia-sv-waL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jUi-S1-EDf"/>
