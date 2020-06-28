@@ -81,7 +81,12 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_NAME:
             return 1
         case SECTION_IMAGE:
-            return 1
+            if recipe != nil {
+                if recipe?.id != nil {
+                    return 1
+                }
+            }
+            return 0
         case SECTION_SOURCE:
             return 1
         case SECTION_COOK_TIME:
@@ -122,7 +127,12 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
         case SECTION_NAME:
             return "Recipe Name"
         case SECTION_IMAGE:
-            return "Image/Video"
+            if recipe != nil {
+                if recipe?.id != nil {
+                    return "Image"
+                }
+            }
+            return ""
         case SECTION_SOURCE:
             return "Source"
         case SECTION_COOK_TIME:
@@ -495,6 +505,7 @@ class EditRecipeTableViewController: UITableViewController, DatabaseListener, Ad
     
     // Delegate to add items to the recipe
     func addToRecipe(type: String, value: String, oldText: String?) {
+        print(type)
         if recipe == nil {
             // If recipe does not exist then create one
             recipe = Recipe()
